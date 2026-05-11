@@ -1408,9 +1408,7 @@ body.is-solving .site-footer{display:none!important}
         <a class="topnav-link" id="tnav-orig" href="/quiz/orig/" onclick="event.preventDefault();gotoPage('orig')">
           <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>オリジナル問題
         </a>
-        <a class="topnav-link" id="tnav-mock" href="/quiz/mock/" onclick="event.preventDefault();gotoPage('mock')">
-          <svg viewBox="0 0 16 16"><path d="M8 1l2 4h4l-3 3 1 4-4-2-4 2 1-4L2 5h4z"/></svg>オリジナル模試
-        </a>
+        <!-- オリジナル模試は当面非表示 -->
         <a class="topnav-link" id="tnav-dash" href="/dashboard/" onclick="event.preventDefault();gotoPage('dash')">
           <svg viewBox="0 0 16 16"><path d="M2 13L5 8l3 2 3-5 3 2"/></svg>記録・分析
         </a>
@@ -1482,9 +1480,7 @@ body.is-solving .site-footer{display:none!important}
       <a class="mobile-nav-item" id="mnav-orig" href="/quiz/orig/" onclick="event.preventDefault();gotoPage('orig');closeMobileDrawer()">
         <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 1"/></svg>オリジナル問題
       </a>
-      <a class="mobile-nav-item" id="mnav-mock" href="/quiz/mock/" onclick="event.preventDefault();gotoPage('mock');closeMobileDrawer()">
-        <svg viewBox="0 0 16 16"><path d="M8 1l2 4h4l-3 3 1 4-4-2-4 2 1-4L2 5h4z"/></svg>オリジナル模試
-      </a>
+      <!-- オリジナル模試は当面非表示 -->
       <a class="mobile-nav-item" id="mnav-dash" href="/dashboard/" onclick="event.preventDefault();gotoPage('dash');closeMobileDrawer()">
         <svg viewBox="0 0 16 16"><path d="M2 13L5 8l3 2 3-5 3 2"/></svg>記録・分析
       </a>
@@ -1843,24 +1839,7 @@ body.is-solving .site-footer{display:none!important}
 
     </div>
 
-    <!-- MOCK EXAM SELECT -->
-    <div class="page" id="page-mock">
-      <nav class="breadcrumb" aria-label="パンくずリスト">
-        <ol class="breadcrumb-list">
-          <li class="breadcrumb-item"><a href="/" onclick="event.preventDefault();gotoPage('quiz-start')" title="第二種衛生管理者試験対策">二衛マスター</a></li>
-          <li class="breadcrumb-item breadcrumb-current" aria-current="page">オリジナル模試</li>
-        </ol>
-      </nav>
-      <h2 class="page-title">オリジナル模試</h2>
-      <div class="page-sub">令和7年度の過去問データから、科目別配分で16問をランダム出題</div>
-      <div class="mock-grid" id="mock-grid"></div>
-    </div>
-
-    <!-- MOCK SCORE -->
-    <div class="page" id="page-mock-score">
-      <h2 class="page-title">模試結果</h2>
-      <div id="mock-score-body"></div>
-    </div>
+    <!-- オリジナル模試は当面非表示 -->
 
     <!-- GLOSSARY -->
     <div class="page" id="page-glossary">
@@ -3289,7 +3268,7 @@ function enterApp(){
   handleDailyFirstVisit();
 }
 
-const PAGE_TITLES={'quiz-start':'問題を解く','past-config':'過去問','quiz':'問題','score':'結果','dash':'記録・分析','review':'復習','analytics':'記録・分析','glossary':'用語解説','orig':'オリジナル問題','mock':'オリジナル模試','mock-score':'模試結果','ichimondou':'一問一答','ichimondou-score':'一問一答・結果'};
+const PAGE_TITLES={'quiz-start':'問題を解く','past-config':'過去問','quiz':'問題','score':'結果','dash':'記録・分析','review':'復習','analytics':'記録・分析','glossary':'用語解説','orig':'オリジナル問題','ichimondou':'一問一答','ichimondou-score':'一問一答・結果'};
 const NAV_PAGE_MAP = {'orig':'orig','quiz-start':'quiz-start','dash':'dash','review':'review','glossary':'glossary','ichimondou':'ichimondou'};
 
 // ページごとのSEOメタ情報
@@ -3330,12 +3309,6 @@ const PAGE_SEO = {
     path:  '/glossary/',
     hash:  '#glossary'
   },
-  'mock': {
-    title: 'オリジナル模試｜二衛マスター（第二種衛生管理者試験）',
-    desc:  '第二種衛生管理者試験の本番形式模擬試験。50問・120分で試験本番に向けた実力確認が可能（プレミアム機能）。',
-    path:  '/quiz/mock/',
-    hash:  '#mock'
-  },
   'ichimondou': {
     title: '一問一答｜二衛マスター（第二種衛生管理者試験）',
     desc:  '第二種衛生管理者試験の重要知識を一問一答形式で確認。短時間で基礎知識の定着を進められます。',
@@ -3365,7 +3338,7 @@ function _updatePageMeta(id) {
   if (ogDesc)  ogDesc.content  = seo.desc;
   // GitHub Pagesでは /review/ のような仮想パスをリロードすると404になるため、
   // 公開環境では常に /#review のようなハッシュURLにする。
-  if (!['quiz','score','mock-score','ichimondou-score'].includes(id)) {
+  if (!['quiz','score','ichimondou-score'].includes(id)) {
     try {
       const hash = seo.hash || '';
       const url = location.pathname.replace(/\/(quiz|dashboard|review|glossary).*/, '/') + hash;
@@ -3902,12 +3875,12 @@ function gotoPage(id){
   // topnav: orig / past / dash / review / glossary
   {
     const fromOrig = (id==='quiz'||id==='score') && quizState.mode==='orig';
-    const inMockFlow = id==='mock'||id==='mock-score'||(id==='quiz'&&typeof mockState!=='undefined'&&mockState.patternId)||(id==='score'&&typeof mockState!=='undefined'&&mockState.patternId);
+    const inMockFlow = false; // オリジナル模試は当面非表示
     const fromPastNav = !fromOrig && !inMockFlow && (id==='past-config'||(id==='quiz'&&quizState.mode==='past')||(id==='score'&&quizState.mode==='past'));
     const map = {
       'orig':     id==='orig' || fromOrig,
       'past':     fromPastNav,
-      'mock':     inMockFlow,
+      // 'mock':  inMockFlow,
       'ichimondou': id==='ichimondou' || id==='ichimondou-score',
       'dash':     id==='dash',
       'review':   id==='review',
@@ -3960,14 +3933,14 @@ function _resolveInitialPage() {
     '/dashboard/':   'dash',
     '/review/':      'review',
     '/glossary/':    'glossary',
-    '/quiz/mock/':   'mock',
+    // '/quiz/mock/': 'mock',
     '/account/':     'dash'
   };
   // パスで判定（後方互換としてhashも見る）
   const path = location.pathname;
   const hashMap = {
     '#past':'past-config','#orig':'orig','#ichimondou':'ichimondou','#dash':'dash',
-    '#review':'review','#glossary':'glossary','#mock':'mock','#account':'dash'
+    '#review':'review','#glossary':'glossary','#account':'dash'
   };
   return pathMap[path] || hashMap[location.hash] || 'quiz-start';
 }
@@ -4540,10 +4513,10 @@ function showMockScore(){
     </div>
     <div class="mock-field-breakdown">${fieldHTML}</div>
     <div style="display:flex;gap:8px;margin-top:4px">
-      <button class="btn-ghost" style="flex:1" onclick="gotoPage('mock')">模試一覧へ</button>
-      <button class="btn-primary" style="flex:1" onclick="startMockExam(${mockState.patternId})">もう一度</button>
+      <button class="btn-ghost" style="flex:1" onclick="gotoPage('quiz-start')">トップへ</button>
+      <button class="btn-primary" style="flex:1" onclick="gotoPage('quiz-start')">もう一度</button>
     </div>`;
-  gotoPage('mock-score');
+  gotoPage('quiz-start');
 }
 
 function beginQuiz(){
