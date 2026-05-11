@@ -376,7 +376,7 @@ h2.section-label .tip-icon{width:13px;height:13px;font-size:9px}
 .mode-card-desc{font-size:12px;color:var(--text2);line-height:1.55}
 .lock-badge{position:absolute;top:10px;right:10px;font-size:12px;padding:2px 7px;border-radius:4px;background:var(--bg3);color:var(--text3);font-weight:500}
 .year-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:22px}
-.year-btn{padding:8px 4px;border-radius:var(--r);border:1.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:14px;cursor:pointer;font-family:var(--font);transition:all .15s;text-align:center;line-height:1.3}
+.year-btn{display:flex;align-items:center;justify-content:center;min-height:3.25em;padding:8px 6px;border-radius:var(--r);border:1.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:13px;cursor:pointer;font-family:var(--font);transition:all .15s;text-align:center;line-height:1.35;overflow-wrap:anywhere}
 .year-btn:hover{background:var(--bg3);border-color:var(--text2)}
 .year-btn.on{border-color:var(--ink);background:var(--sel-s);color:var(--text);font-weight:600}
 .year-btn .yr-pct{display:block;font-size:12px;font-family:var(--mono);margin-top:2px;color:var(--text3);opacity:.7}
@@ -402,11 +402,14 @@ h2.section-label .tip-icon{width:13px;height:13px;font-size:9px}
 .q-card{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:20px 22px;margin-bottom:10px;box-shadow:none}
 .q-head{display:flex;align-items:flex-start;justify-content:flex-start;gap:10px;margin-bottom:12px}
 .q-head .bookmark-btn{margin-left:auto;align-self:flex-start}
-.q-meta{display:flex;align-items:center;gap:6px 10px;margin-bottom:12px;flex-wrap:wrap;overflow:visible}
+.q-meta{display:flex;align-items:flex-start;gap:6px 10px;margin-bottom:12px;flex-wrap:wrap;overflow:visible}
 .q-head .q-meta{margin-bottom:0;flex:1;min-width:0}
-.q-meta-item{display:inline-flex;align-items:center;gap:4px;min-width:0;max-width:100%;height:18px}
+.q-meta-item{display:inline-flex;align-items:flex-start;gap:4px;min-width:0;max-width:100%;min-height:18px}
+.q-meta-item.q-meta-field{align-self:center;align-items:center;height:18px}
+.q-meta-item.diff-wrap,.q-meta-item.freq-item{align-self:center;align-items:center;height:18px}
+.q-meta-item.q-meta-year{flex:1 1 7.5rem;min-width:min(100%,7rem);max-width:min(100%,15rem);align-self:flex-start}
 .q-meta-label{font-size:12px;color:var(--text3);font-weight:500;white-space:nowrap;line-height:1.2}
-.q-meta-value{font-size:12px;color:var(--text);font-weight:600;white-space:nowrap;line-height:1.2}
+.q-meta-value{font-size:12px;color:var(--text);font-weight:600;line-height:1.35;white-space:normal;overflow-wrap:anywhere}
 .q-num{font-size:14px;font-family:var(--mono);color:var(--text3)}
 .q-text{font-size:var(--fs-body);line-height:1.8;color:var(--text);font-family:var(--font);white-space:pre-line}
 .bookmark-btn{width:38px;height:38px;border-radius:var(--r);border:1.5px solid var(--border2);background:#fff;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;box-shadow:var(--sh)}
@@ -905,6 +908,7 @@ a.glos-article-link:hover{color:var(--text);text-decoration-color:var(--ink)}
   .q-head{align-items:flex-start;gap:8px;margin-bottom:8px}
   .q-head .q-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;flex:1;min-width:0;max-width:100%;overflow:visible}
   .q-meta-item{gap:3px;min-width:0;max-width:100%;padding:0;border:none;background:transparent}
+  .q-meta-item.q-meta-year{flex:1 1 100%;max-width:100%;min-width:0}
   .q-meta-label,.q-meta-value{font-size:11px}
   .q-meta-label{white-space:normal;line-height:1.25}
   .q-meta-value{white-space:normal;line-height:1.25;font-weight:600}
@@ -1222,8 +1226,9 @@ body.is-solving .site-footer{display:none!important}
 .freq-star.on{color:var(--ink)}
 .freq-star.off{color:var(--bg4)}
 /* Year tags in exp */
-.exp-year-history{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text3)}
-.exp-year-pill{display:inline-block;background:var(--bg3);color:var(--text2);border-radius:3px;padding:1px 6px;font-family:var(--mono);font-size:11px;margin:1px}
+.exp-year-history{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text3);line-height:1.45;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px}
+.exp-year-history::before{content:'この分野の類似問題の出題年：';flex:0 0 auto}
+.exp-year-pill{display:inline-block;background:var(--bg3);color:var(--text2);border-radius:3px;padding:1px 6px;font-family:var(--mono);font-size:11px;margin:1px;white-space:nowrap}
 /* Feedback badge on answer */
 .answer-feedback{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-sub);font-weight:700;letter-spacing:.02em;margin-bottom:8px;padding:5px 14px;border-radius:20px}
 .answer-feedback.correct{color:var(--green);background:var(--grn-s);border:1.5px solid var(--grn-b)}
@@ -1942,9 +1947,30 @@ body.is-solving .site-footer{display:none!important}
   </footer>
 </div>
 
-
+<!-- CSV 取り込みデータを QUESTIONS 等へ反映する（eisei2-master-data.js の末尾から呼ばれる） -->
+<script>
+var FIELDS = [
+  { id: 'law', name: '関係法令' },
+  { id: 'rights', name: '労働衛生' },
+  { id: 'limit', name: '労働生理' }
+];
+function applyCsvImportedQuestions() {
+  if (typeof CSV_IMPORTED_QUESTIONS === 'undefined' || !Array.isArray(CSV_IMPORTED_QUESTIONS)) return;
+  var rows = CSV_IMPORTED_QUESTIONS;
+  var origSet = (typeof CSV_IMPORTED_ORIG_POOL_YEARS !== 'undefined' && Array.isArray(CSV_IMPORTED_ORIG_POOL_YEARS))
+    ? new Set(CSV_IMPORTED_ORIG_POOL_YEARS) : new Set();
+  BASE_QUESTIONS = rows.filter(function (q) {
+    return q && q.year != null && q.year !== '' && !origSet.has(q.year);
+  });
+  QUESTIONS = rows.slice();
+  var yset = new Set();
+  BASE_QUESTIONS.forEach(function (q) {
+    if (q.year != null && q.year !== '') yset.add(q.year);
+  });
+  YEARS = Array.from(yset).sort(function (a, b) { return b - a; });
+}
+</script>
 <script src="eisei2-master-data.js"></script>
-<script src="_generated_r7_questions.js"></script>
 <script src="eisei2-data-glossary.js"></script>
 <script src="eisei2-data-original.js"></script>
 <script>
@@ -2854,12 +2880,13 @@ function diffStarsHTML(ev){
 // --- Past-question year history in exp ---
 function buildYearHistoryHTML(q){
   if(!q.num) return '';
+  if(typeof isAnyOrigQuestion==='function' && isAnyOrigQuestion(q)) return '';
   // Find other past questions with similar context (same field, nearby question numbers)
   const sameField=BASE_QUESTIONS.filter(bq=>bq.field===q.field&&bq.year&&bq.num);
   const nearby=sameField.filter(bq=>bq.id!==q.id&&Math.abs(bq.num-q.num)<=2&&bq.year!==q.year);
   if(nearby.length===0) return '';
   const years=[...new Set(nearby.map(bq=>bq.year))].sort();
-  return `<div class="exp-year-history">この分野の類似問題の出題年：${years.map(y=>`<span class="exp-year-pill">${y}年</span>`).join('')}</div>`;
+  return `<div class="exp-year-history">${years.map(y=>`<span class="exp-year-pill">${y}年</span>`).join('')}</div>`;
 }
 
 // ===== MASTER DATA (external): loaded via eisei2-master-data.js =====
@@ -4694,7 +4721,7 @@ function renderQScoreReplay(sr){
     <span class="q-meta-item freq-item">${freqStarsHTML(getFrequencyEvidence(q))}</span>`:'';
   document.getElementById('q-meta').innerHTML=`
     <span class="q-meta-item q-meta-field"><span class="q-meta-label">${f.name}</span></span>
-    <span class="q-meta-item"><span class="q-meta-value">${sourceLabel}</span></span>${starsHTML}`;
+    <span class="q-meta-item q-meta-year"><span class="q-meta-value">${sourceLabel}</span></span>${starsHTML}`;
   updateBookmarkButton(q);
   document.getElementById('q-body').textContent=formatExamQuestionBodyText(q.text||'');
   document.getElementById('opts').innerHTML=q.opts.map((o,j)=>
@@ -4707,7 +4734,7 @@ function renderQScoreReplay(sr){
   const kaisetsuHTML=(quizState.mode==='past'||!q.kaisetsu)?'':buildKaisetsu(q.kaisetsu,q);
   const isOrig=!!q.unit;
   const expHTML=isOrig?buildRichExp(q.exp,q.opts,q.ans):`<div class="exp-text">${q.exp}</div>`;
-  const yearHistHTML=(quizState.mode!=='past'&&!isOrig&&q.year)?buildYearHistoryHTML(q):'';
+  const yearHistHTML=(quizState.mode!=='past'&&!isAnyOrigQuestion(q)&&q.year)?buildYearHistoryHTML(q):'';
   const feedbackLabel=correct
     ? `<div class="answer-feedback correct">正解</div>`
     : `<div class="answer-feedback wrong">不正解</div>`;
@@ -4754,7 +4781,7 @@ function renderQ(){ window.scrollTo({top:0,behavior:"instant"});
 	    <span class="q-meta-item freq-item">${freqStarsHTML(getFrequencyEvidence(q))}</span>`:'';
 	  document.getElementById('q-meta').innerHTML=`
 	    <span class="q-meta-item q-meta-field"><span class="q-meta-label">${f.name}</span></span>
-	    <span class="q-meta-item"><span class="q-meta-value">${sourceLabel}</span></span>${starsHTML}`;
+	    <span class="q-meta-item q-meta-year"><span class="q-meta-value">${sourceLabel}</span></span>${starsHTML}`;
 	  updateBookmarkButton(q);
 	  document.getElementById('q-body').textContent=formatExamQuestionBodyText(q.text||'');
   document.getElementById('opts').innerHTML=q.opts.map((o,i)=>
@@ -4795,7 +4822,7 @@ function pickOpt(i){
   const kaisetsuHTML = (quizState.mode === 'past' || !q.kaisetsu) ? '' : buildKaisetsu(q.kaisetsu, q);
   const isOrig = !!q.unit;
   const expHTML = isOrig ? buildRichExp(q.exp, q.opts, q.ans) : `<div class="exp-text">${q.exp}</div>`;
-  const yearHistHTML = (quizState.mode !== 'past' && !isOrig && q.year) ? buildYearHistoryHTML(q) : '';
+  const yearHistHTML = (quizState.mode !== 'past' && !isAnyOrigQuestion(q) && q.year) ? buildYearHistoryHTML(q) : '';
   // Answer feedback text
   const feedbackLabel = correct
     ? `<div class="answer-feedback correct">${STREAK_MSGS[u.streak||0]||'正解'}</div>`
