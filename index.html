@@ -1422,7 +1422,7 @@ body.is-solving .site-footer{display:none!important}
         <a class="topnav-link" id="tnav-review" href="/review/" onclick="event.preventDefault();gotoPage('review')">
           <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>復習
         </a>
-        <a class="topnav-link" id="tnav-glossary" href="/glossary/" onclick="event.preventDefault();gotoPage('glossary')">
+        <a class="topnav-link" id="tnav-glossary" href="/terms/">
           <svg viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>用語解説
         </a>
       </nav>
@@ -1494,7 +1494,7 @@ body.is-solving .site-footer{display:none!important}
       <a class="mobile-nav-item" id="mnav-review" href="/review/" onclick="event.preventDefault();gotoPage('review');closeMobileDrawer()">
         <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>復習
       </a>
-      <a class="mobile-nav-item" id="mnav-glossary" href="/glossary/" onclick="event.preventDefault();gotoPage('glossary');closeMobileDrawer()">
+      <a class="mobile-nav-item" id="mnav-glossary" href="/terms/" onclick="closeMobileDrawer()">
         <svg viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>用語解説
       </a>
 
@@ -4078,13 +4078,21 @@ window.addEventListener('popstate', function(e) {
 
 // URLハッシュに基づいた初期ページ解決
 function _resolveInitialPage() {
+  // 旧 URL（/#glossary・/glossary/）を用語一覧の静的ページへ
+  if (typeof location !== 'undefined' && location.protocol !== 'file:') {
+    const pn = location.pathname;
+    const isGlossaryPath = pn === '/glossary/' || pn === '/glossary';
+    if (location.hash === '#glossary' || isGlossaryPath) {
+      try { location.replace('/terms/'); } catch (e) { /* noop */ }
+      return 'quiz-start';
+    }
+  }
   const pathMap = {
     '/quiz/past/':   'past-config',
     '/quiz/orig/':   'orig',
     '/quiz/ichimondou/': 'ichimondou',
     '/dashboard/':   'dash',
     '/review/':      'review',
-    '/glossary/':    'glossary',
     // '/quiz/mock/': 'mock',
     '/account/':     'dash'
   };
@@ -4092,7 +4100,7 @@ function _resolveInitialPage() {
   const path = location.pathname;
   const hashMap = {
     '#past':'past-config','#orig':'orig','#ichimondou':'ichimondou','#dash':'dash',
-    '#review':'review','#glossary':'glossary','#account':'dash'
+    '#review':'review','#account':'dash'
   };
   return pathMap[path] || hashMap[location.hash] || 'quiz-start';
 }
