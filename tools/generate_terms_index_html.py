@@ -73,8 +73,6 @@ def main() -> None:
         if not fp.is_file():
             continue
         cat = term_cat.get(term, "その他")
-        if cat not in CAT_ORDER:
-            continue
         rows.append((cat, term, slug))
 
     if not rows:
@@ -122,6 +120,8 @@ def main() -> None:
     for c in by_cat:
         if c not in cat_keys and c != "その他":
             cat_keys.append(c)
+    if "その他" in by_cat:
+        cat_keys.append("その他")
 
     def term_key(t: tuple[str, str]) -> str:
         term, _slug = t
@@ -150,13 +150,13 @@ def main() -> None:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>用語解説一覧｜二衛マスター（第二種衛生管理者試験）</title>
+<title>用語解説一覧（全記事索引）｜二衛マスター（第二種衛生管理者試験）</title>
 <meta name="description" content="第二種衛生管理者試験の重要用語を一覧し、各用語の解説記事へリンクします。関係法令・労働衛生・労働生理の語句を網羅的に整理しています。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="{html.escape(base + "/terms/", quote=True)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{html.escape(base + "/terms/", quote=True)}">
-<meta property="og:title" content="用語解説一覧｜二衛マスター">
+<meta property="og:title" content="用語解説一覧（全記事索引）｜二衛マスター">
 <meta property="og:description" content="試験で出やすい用語ごとの解説記事への索引です。">
 <meta property="og:locale" content="ja_JP">
 <script type="application/ld+json">
@@ -306,6 +306,29 @@ a:hover {{ opacity: 0.9; }}
   font-size: 15px;
 }}
 .search input:focus {{ border-color: rgba(0,0,0,0.35); }}
+.chips {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}}
+.chip {{
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid var(--border2);
+  background: var(--bg);
+  color: var(--text2);
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all .15s;
+}}
+.chip:hover {{ background: var(--bg2); color: var(--text); }}
+.chip.on {{
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}}
 /* ===== LIST ===== */
 .section {{
   background: var(--bg);
@@ -390,14 +413,22 @@ a:hover {{ opacity: 0.9; }}
   <nav class="breadcrumb" aria-label="パンくずリスト">
     <a href="/">トップ</a><span class="breadcrumb-sep">/</span><span>用語解説</span>
   </nav>
-  <h1 class="page-title">用語解説一覧</h1>
-  <p class="lead">第二種衛生管理者試験で頻出の用語を科目別にまとめています。詳細は各用語の解説記事で確認が可能です。</p>
+  <h1 class="page-title">用語解説一覧（全記事索引）</h1>
+  <p class="lead">第二種衛生管理者試験で頻出の用語を科目別にまとめ、各用語の解説記事（静的HTML）へ直接リンクします。上の検索・科目フィルタで目的の用語に素早く到達できます。</p>
 
   <div class="meta-row">
     <span class="pill">全 <span id="terms-total">{len(rows)}</span> 記事</span>
     <div class="search" role="search" aria-label="用語検索">
       <input id="q" type="search" inputmode="search" placeholder="例：WBGT、局所排気装置、衛生委員会…" autocomplete="off">
     </div>
+  </div>
+
+  <div class="chips" aria-label="科目フィルタ">
+    <button type="button" class="chip on" data-cat="all">すべて</button>
+    <button type="button" class="chip" data-cat="関係法令">関係法令</button>
+    <button type="button" class="chip" data-cat="労働衛生">労働衛生</button>
+    <button type="button" class="chip" data-cat="労働生理">労働生理</button>
+    <button type="button" class="chip" data-cat="その他">その他</button>
   </div>
 
   <section class="section" aria-label="用語一覧">
@@ -418,9 +449,11 @@ a:hover {{ opacity: 0.9; }}
   window.scrollTo(0, 0);
 
   const q = document.getElementById('q');
+  const chips = Array.from(document.querySelectorAll('.chip[data-cat]'));
   const cats = Array.from(document.querySelectorAll('.terms-idx-cat'));
   const totalEl = document.getElementById('terms-total');
   const hitEl = document.getElementById('terms-hit');
+  let activeCat = 'all';
 
   function norm(s) {{
     return (s || '').toString().trim().toLowerCase();
@@ -431,12 +464,14 @@ a:hover {{ opacity: 0.9; }}
     let shown = 0;
 
     cats.forEach(sec => {{
+      const cat = sec.querySelector('h2')?.textContent || '';
+      const catOk = (activeCat === 'all') || (cat === activeCat);
       const items = Array.from(sec.querySelectorAll('li'));
       let anyInCat = 0;
       items.forEach(li => {{
         const a = li.querySelector('a');
         const t = norm(a?.textContent || '');
-        const ok = (!query || t.includes(query));
+        const ok = catOk && (!query || t.includes(query));
         li.classList.toggle('hide', !ok);
         if(ok) {{ anyInCat++; shown++; }}
       }});
@@ -445,9 +480,9 @@ a:hover {{ opacity: 0.9; }}
 
     if(totalEl) totalEl.textContent = String({len(rows)});
     if(hitEl) {{
-      hitEl.textContent = query
+      hitEl.textContent = query || activeCat !== 'all'
         ? `表示：${{shown}}件`
-        : '';\n    }}\n  }}\n\n  q.addEventListener('input', apply);\n  apply();\n}})();\n</script>
+        : '';\n    }}\n  }}\n\n  q.addEventListener('input', apply);\n  chips.forEach(btn => {{\n    btn.addEventListener('click', () => {{\n      chips.forEach(b => b.classList.remove('on'));\n      btn.classList.add('on');\n      activeCat = btn.dataset.cat || 'all';\n      apply();\n    }});\n  }});\n  apply();\n}})();\n</script>
 </body>
 </html>
 """
