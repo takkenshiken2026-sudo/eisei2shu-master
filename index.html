@@ -2009,6 +2009,34 @@ function applyCsvImportedQuestions() {
 let glosActiveCat = 'all';
 let _glossaryCsvPromise = null;
 
+// SEO記事（eisei-articles/dist/terms をサイトの /terms/ に公開したときにリンクします）
+function glosResolveArticleBase(){
+  try{
+    if(typeof location!=='undefined' && location.protocol!=='file:')
+      return '/terms';
+  }catch(e){}
+  return 'https://dai2shu-eisei.example/terms';
+}
+const GLOS_ARTICLE_BASE = glosResolveArticleBase();
+let _glosArticleSlugMap = null;
+let _glosArticleSlugPromise = null;
+function loadGlossaryArticleSlugMap(){
+  if(_glosArticleSlugPromise) return _glosArticleSlugPromise;
+  _glosArticleSlugPromise = fetch('docs/glossary-article-slugs.json',{cache:'no-store'})
+    .then(function(res){
+      if(!res.ok) throw new Error('slug map '+res.status);
+      return res.json();
+    })
+    .then(function(j){
+      _glosArticleSlugMap = (j && typeof j==='object') ? j : {};
+    })
+    .catch(function(err){
+      console.warn('[glossary] glossary-article-slugs.json を読めません:', err && err.message ? err.message : err);
+      _glosArticleSlugMap = {};
+    });
+  return _glosArticleSlugPromise;
+}
+
 function glosEscapeHtml(s){
   return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -2089,15 +2117,18 @@ function loadGlossaryFromCsv(){
   return _glossaryCsvPromise;
 }
 
-/* 外部サイトの用語詳細ページへの導線は一時オフ（個別記事URLのリンク切れ回避）。復活時は GLOS_ARTICLE_BASE + articleSlug を返す実装へ。 */
-function glosArticleHref(_g){
-  return '';
+function glosArticleHref(g){
+  if(!_glosArticleSlugMap || typeof g.term!=='string') return '';
+  const slug = _glosArticleSlugMap[g.term.trim()];
+  if(!slug) return '';
+  const base = String(GLOS_ARTICLE_BASE||'').replace(/\/$/,'');
+  return base+'/'+slug+'.html';
 }
 
 async function renderGlossary(){
   const staticSec = document.querySelector('.glos-static-section');
   if (staticSec) staticSec.remove();
-  await loadGlossaryFromCsv();
+  await Promise.all([loadGlossaryFromCsv(), loadGlossaryArticleSlugMap()]);
   if (glosActiveCat === 'exam') glosActiveCat = 'all';
   const cats = [
     {id:'all',label:'すべて'},
@@ -2150,7 +2181,7 @@ function renderGlossaryList(){
       </div>
       <div class="glos-body">
         <div class="glos-desc">${descHtml}</div>
-        ${glosArticleHref(g) ? `<a class="glos-article-link" href="${glosArticleHref(g)}" target="_blank" rel="noopener noreferrer">詳しい解説記事を読む</a>` : ''}
+        ${glosArticleHref(g) ? `<a class="glos-article-link" href="${glosEscapeHtml(glosArticleHref(g))}" target="_blank" rel="noopener noreferrer">詳しい解説記事を読む</a>` : ''}
         ${g.diagram ? renderGlosDiagram(g.diagram) : ''}
       </div>
     </div>`;
@@ -3094,8 +3125,10 @@ function openSidebar(){ openMobileDrawer(); }
 function closeSidebar(){ closeMobileDrawer(); }
 
 // ===== SUPABASE =====
-const SUPABASE_URL = 'https://czxrmmbpvocprrwhmuir.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_RS9eVE-YsfWg8waxyVjOWA_dIl1cb9x';
+// ダッシュボード Settings → API の「Copy」で貼る（手入力禁止）。i と l、qql と qqsl に注意。
+// 本番のみ GitHub Actions の secrets（SUPABASE_URL / SUPABASE_KEY）で上書きする場合は .github/workflows/deploy-pages.yml を参照。
+const SUPABASE_URL = 'https://ujysjdaboqqslkljjjtn.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_I6hAL709aNvw29iHMLsAOQ_EmfkZoSQ';
 const _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 function isValidPassword(p){
@@ -3154,7 +3187,17 @@ async function doLogin(){
   const e=document.getElementById('login-email').value.trim(),p=document.getElementById('login-pw').value;
   if(!e||!p){document.getElementById('login-err').textContent='メールとパスワードを入力してください';return}
   document.getElementById('login-err').textContent='ログイン中...';
-  const {data,error}=await _sb.auth.signInWithPassword({email:e,password:p});
+  let data, error;
+  try{
+    ({data,error}=await _sb.auth.signInWithPassword({email:e,password:p}));
+  }catch(net){
+    const m=net&&net.message?String(net.message):String(net);
+    document.getElementById('login-err').textContent=m.includes('fetch')||m.includes('Failed')
+      ? 'ログインできませんでした: Supabase に接続できていません。URL・拡張機能を確認してください。'
+      : ('ログインできませんでした: '+m);
+    console.error('[signIn]',net);
+    return;
+  }
   if(error){
     const msg = error.message || '';
     document.getElementById('login-err').textContent =
@@ -3178,7 +3221,17 @@ async function doRegister(){
   if(!n||!e||!p){document.getElementById('reg-err').textContent='すべての項目を入力してください';return}
   if(!isValidPassword(p)){document.getElementById('reg-err').textContent=passwordRuleMessage();return}
   document.getElementById('reg-err').textContent='登録中...';
-  const {data,error}=await _sb.auth.signUp({email:e,password:p,options:{data:{name:n}}});
+  let data, error;
+  try{
+    ({data,error}=await _sb.auth.signUp({email:e,password:p,options:{data:{name:n}}}));
+  }catch(net){
+    const m=net&&net.message?String(net.message):String(net);
+    document.getElementById('reg-err').textContent=m.includes('fetch')||m.includes('Failed')
+      ? '登録できませんでした: ブラウザが Supabase に接続できていません。ページソースで SUPABASE_URL が …qqsl…（qq の直後に s）か確認し、…qql…（s 抜け）になっていないか・本番デプロイが最新かを確認してください。'
+      : ('登録できませんでした: '+m);
+    console.error('[signUp]',net);
+    return;
+  }
   if(error){
     const rmsg = error.message || '';
     document.getElementById('reg-err').textContent =
