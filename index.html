@@ -1857,9 +1857,8 @@ body.is-solving .site-footer{display:none!important}
         <input class="glossary-search" id="glos-search" type="text" placeholder="用語を検索..." oninput="filterGlossary()">
         <div class="glossary-cats" id="glos-cats"></div>
       </div>
-      <div id="glossary-list">
-<!-- SEO: 静的用語解説（JS無効時・クローラ向け抜粋。全件は docs/glossary-terms-checklist.csv を fetch して表示） -->
-<section class="glos-static-section" aria-label="用語解説一覧（抜粋）">
+      <!-- SEO: 静的用語解説（JS無効時・クローラ向け抜粋。全件は docs/glossary-terms-checklist.csv を fetch して表示） -->
+      <section class="glos-static-section" aria-label="用語解説一覧（抜粋）">
 <p class="glos-static-intro"><strong><a href="/terms/" target="_blank" rel="noopener noreferrer">SEO向けの用語→記事一覧（静的HTML）</a></strong>では、クローラが確実に辿れる実リンクだけで全記事へ誘導します。下のインタラクティブ一覧は JavaScript で <code>docs/glossary-terms-checklist.csv</code> を読み込みます（<code>file://</code> では取得できない場合があるため、簡易サーバー推奨）。以下は用語の抜粋です。</p>
 <div class="glos-cat-section" data-cat="law">
 <h3 class="glos-cat-heading">関係法令</h3>
@@ -1894,8 +1893,8 @@ body.is-solving .site-footer{display:none!important}
   <p class="glos-static-desc" itemprop="description">空気中酸素の不足により起きる障害です。タンク内や下水道などでの作業では、測定・換気・立入禁止などの手順が安全管理の中心になります。</p>
 </article>
 </div>
-</section>
-</div>
+      </section>
+      <div id="glossary-list"></div>
     </div>
 
     <!-- JS無効時のフォールバック (SEOクローラー向け静的コンテンツ) -->
@@ -6693,7 +6692,8 @@ window.addEventListener('load', function(){
   if (!gp || !gp.classList.contains('active')) return;
   var listEl = document.getElementById('glossary-list');
   if (!listEl || typeof renderGlossary !== 'function') return;
-  if (listEl.querySelector('.glos-static-section') && typeof GLOSSARY_DATA !== 'undefined' && Array.isArray(GLOSSARY_DATA)) {
+  // 静的SEOブロックは #glossary-list の外（page-glossary 直下）にある
+  if (gp.querySelector('.glos-static-section') && typeof GLOSSARY_DATA !== 'undefined' && Array.isArray(GLOSSARY_DATA)) {
     renderGlossary();
   }
 });
