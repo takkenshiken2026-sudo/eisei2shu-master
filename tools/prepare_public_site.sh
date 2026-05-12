@@ -19,7 +19,8 @@ for f in \
   eisei2-master-data.js \
   _generated_r7_questions.js \
   eisei2-data-glossary.js \
-  eisei2-data-original.js
+  eisei2-data-original.js \
+  docs/glossary-article-slugs.json
 do
   if [[ ! -e "$f" ]]; then
     echo "prepare_public_site.sh: 必須ファイルがありません: $f" >&2
@@ -32,5 +33,19 @@ if [[ ! -d q ]]; then
   exit 1
 fi
 cp -R q "$OUT/"
+if [[ -d "$ROOT/terms" ]]; then
+  cp -R "$ROOT/terms" "$OUT/terms"
+  python3 "$ROOT/tools/generate_terms_index_html.py" \
+    --slug-json "$ROOT/docs/glossary-article-slugs.json" \
+    --csv "$ROOT/docs/glossary-terms-checklist.csv" \
+    --terms-dir "$OUT/terms" \
+    --out "$OUT/terms/index.html" \
+    --base "https://eisei2shu-master.jp"
+  python3 "$ROOT/tools/generate_terms_sitemap.py" \
+    --terms-dir "$OUT/terms" \
+    --out "$OUT/sitemap-terms.xml" \
+    --base "https://eisei2shu-master.jp"
+fi
+bash "$ROOT/tools/verify_supabase_url_in_html.sh" "$OUT/index.html"
 n="$(find "$OUT" -type f | wc -l | tr -d ' ')"
 echo "prepare_public_site.sh: $OUT に $n ファイルを配置しました。"
