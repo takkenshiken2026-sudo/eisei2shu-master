@@ -2,7 +2,6 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<!-- GA: 本番では gtag.js を読み込み測定IDを設定 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>二衛マスター｜第二種衛生管理者試験 過去問・模擬試験・用語解説で合格を目指す無料学習サイト</title>
 
@@ -26,6 +25,9 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二衛マスター｜第二種衛生管理者試験 無料学習プラットフォーム">
 <meta name="twitter:description" content="過去問演習・オリジナル問題・本番形式模擬試験・重要用語解説を完全網羅。年度別・分野別に絞った効率学習で合格を目指す。">
+
+<!-- Analytics -->
+<script defer src="/site-analytics.js"></script>
 
 <!-- Schema.org 構造化データ -->
 <script type="application/ld+json">
@@ -74,7 +76,7 @@
         {"@type": "ListItem", "position": 1, "name": "トップ", "item": "https://eisei2shu-master.jp/"},
         {"@type": "ListItem", "position": 2, "name": "過去問", "item": "https://eisei2shu-master.jp/#past"},
         {"@type": "ListItem", "position": 3, "name": "オリジナル問題", "item": "https://eisei2shu-master.jp/#orig"},
-        {"@type": "ListItem", "position": 4, "name": "用語解説", "item": "https://eisei2shu-master.jp/#glossary"}
+        {"@type": "ListItem", "position": 4, "name": "用語解説", "item": "https://eisei2shu-master.jp/terms/"}
       ]
     }
   ]
@@ -376,7 +378,7 @@ h2.section-label .tip-icon{width:13px;height:13px;font-size:9px}
 .mode-card-desc{font-size:12px;color:var(--text2);line-height:1.55}
 .lock-badge{position:absolute;top:10px;right:10px;font-size:12px;padding:2px 7px;border-radius:4px;background:var(--bg3);color:var(--text3);font-weight:500}
 .year-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:22px}
-.year-btn{display:flex;align-items:center;justify-content:center;min-height:3.25em;padding:8px 6px;border-radius:var(--r);border:1.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:13px;cursor:pointer;font-family:var(--font);transition:all .15s;text-align:center;line-height:1.35;overflow-wrap:anywhere}
+.year-btn{padding:8px 4px;border-radius:var(--r);border:1.5px solid var(--border2);background:var(--bg2);color:var(--text2);font-size:14px;cursor:pointer;font-family:var(--font);transition:all .15s;text-align:center;line-height:1.3}
 .year-btn:hover{background:var(--bg3);border-color:var(--text2)}
 .year-btn.on{border-color:var(--ink);background:var(--sel-s);color:var(--text);font-weight:600}
 .year-btn .yr-pct{display:block;font-size:12px;font-family:var(--mono);margin-top:2px;color:var(--text3);opacity:.7}
@@ -402,14 +404,11 @@ h2.section-label .tip-icon{width:13px;height:13px;font-size:9px}
 .q-card{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:20px 22px;margin-bottom:10px;box-shadow:none}
 .q-head{display:flex;align-items:flex-start;justify-content:flex-start;gap:10px;margin-bottom:12px}
 .q-head .bookmark-btn{margin-left:auto;align-self:flex-start}
-.q-meta{display:flex;align-items:flex-start;gap:6px 10px;margin-bottom:12px;flex-wrap:wrap;overflow:visible}
+.q-meta{display:flex;align-items:center;gap:6px 10px;margin-bottom:12px;flex-wrap:wrap;overflow:visible}
 .q-head .q-meta{margin-bottom:0;flex:1;min-width:0}
-.q-meta-item{display:inline-flex;align-items:flex-start;gap:4px;min-width:0;max-width:100%;min-height:18px}
-.q-meta-item.q-meta-field{align-self:center;align-items:center;height:18px}
-.q-meta-item.diff-wrap,.q-meta-item.freq-item{align-self:center;align-items:center;height:18px}
-.q-meta-item.q-meta-year{flex:1 1 7.5rem;min-width:min(100%,7rem);max-width:min(100%,15rem);align-self:flex-start}
+.q-meta-item{display:inline-flex;align-items:center;gap:4px;min-width:0;max-width:100%;height:18px}
 .q-meta-label{font-size:12px;color:var(--text3);font-weight:500;white-space:nowrap;line-height:1.2}
-.q-meta-value{font-size:12px;color:var(--text);font-weight:600;line-height:1.35;white-space:normal;overflow-wrap:anywhere}
+.q-meta-value{font-size:12px;color:var(--text);font-weight:600;white-space:nowrap;line-height:1.2}
 .q-num{font-size:14px;font-family:var(--mono);color:var(--text3)}
 .q-text{font-size:var(--fs-body);line-height:1.8;color:var(--text);font-family:var(--font);white-space:pre-line}
 .bookmark-btn{width:38px;height:38px;border-radius:var(--r);border:1.5px solid var(--border2);background:#fff;color:var(--text2);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;box-shadow:var(--sh)}
@@ -829,9 +828,7 @@ details.rich-detail summary{display:none}
 .glos-tag{padding:2px 8px;border-radius:10px;font-size:12px;font-weight:500;letter-spacing:.02em;flex-shrink:0}
 .glos-term{font-size:var(--fs-body);font-weight:600;flex:1;font-family:var(--font)}
 .glos-reading{font-size:var(--fs-sub);color:var(--text3);margin-left:4px;font-weight:400}
-.glos-summary{font-size:14px;color:var(--text2);margin-left:auto;max-width:min(200px,28vw);text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:none;padding:0}
-a.glos-head-article{flex-shrink:0;font-size:13px;font-weight:600;color:var(--ink);text-decoration:none;padding:5px 10px;border-radius:8px;border:1.5px solid var(--border2);background:var(--bg2);font-family:var(--font);white-space:nowrap;transition:background .15s,border-color .15s,color .15s}
-a.glos-head-article:hover{background:var(--bg3);border-color:var(--text2);color:var(--text)}
+.glos-summary{font-size:14px;color:var(--text2);margin-left:auto;max-width:200px;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:none;padding:0}
 .glos-chevron{width:14px;height:14px;stroke:var(--text3);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0;transition:transform .2s}
 .glos-card.open .glos-chevron{transform:rotate(180deg)}
 
@@ -910,7 +907,6 @@ a.glos-article-link:hover{color:var(--text);text-decoration-color:var(--ink)}
   .q-head{align-items:flex-start;gap:8px;margin-bottom:8px}
   .q-head .q-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;flex:1;min-width:0;max-width:100%;overflow:visible}
   .q-meta-item{gap:3px;min-width:0;max-width:100%;padding:0;border:none;background:transparent}
-  .q-meta-item.q-meta-year{flex:1 1 100%;max-width:100%;min-width:0}
   .q-meta-label,.q-meta-value{font-size:11px}
   .q-meta-label{white-space:normal;line-height:1.25}
   .q-meta-value{white-space:normal;line-height:1.25;font-weight:600}
@@ -1228,9 +1224,8 @@ body.is-solving .site-footer{display:none!important}
 .freq-star.on{color:var(--ink)}
 .freq-star.off{color:var(--bg4)}
 /* Year tags in exp */
-.exp-year-history{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text3);line-height:1.45;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px}
-.exp-year-history::before{content:'この分野の類似問題の出題年：';flex:0 0 auto}
-.exp-year-pill{display:inline-block;background:var(--bg3);color:var(--text2);border-radius:3px;padding:1px 6px;font-family:var(--mono);font-size:11px;margin:1px;white-space:nowrap}
+.exp-year-history{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:12px;color:var(--text3)}
+.exp-year-pill{display:inline-block;background:var(--bg3);color:var(--text2);border-radius:3px;padding:1px 6px;font-family:var(--mono);font-size:11px;margin:1px}
 /* Feedback badge on answer */
 .answer-feedback{display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-sub);font-weight:700;letter-spacing:.02em;margin-bottom:8px;padding:5px 14px;border-radius:20px}
 .answer-feedback.correct{color:var(--green);background:var(--grn-s);border:1.5px solid var(--grn-b)}
@@ -1422,7 +1417,7 @@ body.is-solving .site-footer{display:none!important}
         <a class="topnav-link" id="tnav-review" href="/review/" onclick="event.preventDefault();gotoPage('review')">
           <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>復習
         </a>
-        <a class="topnav-link" id="tnav-glossary" href="/glossary/" onclick="event.preventDefault();gotoPage('glossary')">
+        <a class="topnav-link" id="tnav-glossary" href="/terms/">
           <svg viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>用語解説
         </a>
       </nav>
@@ -1494,7 +1489,7 @@ body.is-solving .site-footer{display:none!important}
       <a class="mobile-nav-item" id="mnav-review" href="/review/" onclick="event.preventDefault();gotoPage('review');closeMobileDrawer()">
         <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>復習
       </a>
-      <a class="mobile-nav-item" id="mnav-glossary" href="/glossary/" onclick="event.preventDefault();gotoPage('glossary');closeMobileDrawer()">
+      <a class="mobile-nav-item" id="mnav-glossary" href="/terms/">
         <svg viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>用語解説
       </a>
 
@@ -1848,60 +1843,7 @@ body.is-solving .site-footer{display:none!important}
 
     <!-- オリジナル模試は当面非表示 -->
 
-    <!-- GLOSSARY -->
-    <div class="page" id="page-glossary">
-      <nav class="breadcrumb" aria-label="パンくずリスト">
-        <ol class="breadcrumb-list">
-          <li class="breadcrumb-item"><a href="/" onclick="event.preventDefault();gotoPage('quiz-start')" title="第二種衛生管理者試験対策">二衛マスター</a></li>
-          <li class="breadcrumb-item breadcrumb-current" aria-current="page">用語解説</li>
-        </ol>
-      </nav>
-      <h2 class="page-title">言葉解説</h2>
-      <div class="page-sub">試験で出やすい用語を、定義のほか試験での押さえ方・学び方まで丁寧に解説します（図解つきの項目もあります）</div>
-      <div class="glossary-toolbar">
-        <input class="glossary-search" id="glos-search" type="text" placeholder="用語を検索..." oninput="filterGlossary()">
-        <div class="glossary-cats" id="glos-cats"></div>
-      </div>
-      <div id="glossary-list">
-<!-- SEO: 静的用語解説（JS無効時・クローラ向け抜粋。全件は docs/glossary-terms-checklist.csv を fetch して表示） -->
-<section class="glos-static-section" aria-label="用語解説一覧（抜粋）">
-<p class="glos-static-intro"><strong><a href="/terms/">SEO向けの用語→記事一覧（静的HTML）</a></strong>では、クローラが確実に辿れる実リンクだけで全記事へ誘導します。下のインタラクティブ一覧は JavaScript で <code>docs/glossary-terms-checklist.csv</code> を読み込みます（<code>file://</code> では取得できない場合があるため、簡易サーバー推奨）。以下は用語の抜粋です。</p>
-<div class="glos-cat-section" data-cat="law">
-<h3 class="glos-cat-heading">関係法令</h3>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">労働安全衛生法</h4>
-  <p class="glos-static-desc" itemprop="description">労働者の命と健康を守るための基本法です。事業者には安全衛生管理体制の整備、危険・有害要因の低減、教育、健康診断など幅広い義務があり、個別の数値基準や手続きは労働安全衛生規則や産業ごとの予防規則で補われます。</p>
-</article>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">衛生管理者</h4>
-  <p class="glos-static-desc" itemprop="description">事業者が選任する、労働衛生の専門的管理者です。事業場の規模や業種に応じて常勤区分や人数などの要件が定められ、衛生委員会や産業医と連携して職場の衛生面を担います。</p>
-</article>
-</div>
-<div class="glos-cat-section" data-cat="rights">
-<h3 class="glos-cat-heading">労働衛生</h3>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">WBGT</h4>
-  <p class="glos-static-desc" itemprop="description">暑熱環境での温熱負荷を表す指標です。気温・湿度・輻射熱などを総合して評価し、熱中症対策や作業・休憩の判断に用いられます。</p>
-</article>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">局所排気装置</h4>
-  <p class="glos-static-desc" itemprop="description">有害物の発生源付近で汚染空気を捕集し、ダクトで排出する装置です。希釈換気より発散源対策として優先されやすい考え方が試験でも問われます。</p>
-</article>
-</div>
-<div class="glos-cat-section" data-cat="limit">
-<h3 class="glos-cat-heading">労働生理</h3>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">じん肺</h4>
-  <p class="glos-static-desc" itemprop="description">長期の粉じんばく露による肺の線維化疾患です。作業環境管理と健康診断・管理区分による就業上の措置が、法令と衛生工学の両面から頻出です。</p>
-</article>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">酸素欠乏症</h4>
-  <p class="glos-static-desc" itemprop="description">空気中酸素の不足により起きる障害です。タンク内や下水道などでの作業では、測定・換気・立入禁止などの手順が安全管理の中心になります。</p>
-</article>
-</div>
-</section>
-</div>
-    </div>
+    <!-- GLOSSARY (removed): /terms/ に統一 -->
 
     <!-- JS無効時のフォールバック (SEOクローラー向け静的コンテンツ) -->
     <noscript>
@@ -2011,61 +1953,6 @@ function applyCsvImportedQuestions() {
 let glosActiveCat = 'all';
 let _glossaryCsvPromise = null;
 
-// SEO記事: 本番は /terms/ 。ローカルではリポジトリ直下の dist/terms/ を指す（Finder の dist → terms）。
-function glosResolveArticleBase(){
-  try{
-    if(typeof location==='undefined')
-      return 'https://eisei2shu-master.jp/terms';
-    if(location.protocol==='file:')
-      return 'dist/terms';
-    const host=(location.hostname||'').toLowerCase();
-    const loopback=host==='localhost'||host==='127.0.0.1'||host==='[::1]';
-    if((location.protocol==='http:'||location.protocol==='https:')&&loopback)
-      return '/dist/terms';
-    if(location.protocol==='http:'||location.protocol==='https:')
-      return '/terms';
-  }catch(e){}
-  return 'https://eisei2shu-master.jp/terms';
-}
-const GLOS_ARTICLE_BASE = glosResolveArticleBase();
-let _glosArticleSlugMap = null;
-let _glosArticleSlugPromise = null;
-function loadGlossaryArticleSlugMap(){
-  if(_glosArticleSlugPromise) return _glosArticleSlugPromise;
-  const inlineEl = document.getElementById('glos-article-slug-map-json');
-  if(inlineEl && inlineEl.textContent && inlineEl.textContent.trim()){
-    try{
-      _glosArticleSlugMap = JSON.parse(inlineEl.textContent);
-      _glosArticleSlugPromise = Promise.resolve();
-      return _glosArticleSlugPromise;
-    }catch(err){
-      console.warn('[glossary] 埋め込みJSONの解析に失敗:', err && err.message ? err.message : err);
-    }
-  }
-  if(typeof location !== 'undefined' && location.protocol === 'file:'){
-    _glosArticleSlugMap = _glosArticleSlugMap || {};
-    _glosArticleSlugPromise = Promise.resolve();
-    return _glosArticleSlugPromise;
-  }
-  const ctrlSlug = new AbortController();
-  const tidSlug = setTimeout(function(){ try{ ctrlSlug.abort(); }catch(e){} }, 12000);
-  _glosArticleSlugPromise = fetch('docs/glossary-article-slugs.json',{cache:'no-store', signal: ctrlSlug.signal})
-    .then(function(res){
-      clearTimeout(tidSlug);
-      if(!res.ok) throw new Error('slug map '+res.status);
-      return res.json();
-    })
-    .then(function(j){
-      _glosArticleSlugMap = (j && typeof j==='object') ? j : {};
-    })
-    .catch(function(err){
-      clearTimeout(tidSlug);
-      console.warn('[glossary] glossary-article-slugs.json を読めません:', err && err.message ? err.message : err);
-      _glosArticleSlugMap = {};
-    });
-  return _glosArticleSlugPromise;
-}
-
 function glosEscapeHtml(s){
   return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -2128,7 +2015,6 @@ function parseGlossaryCsv(text){
 
 function loadGlossaryFromCsv(){
   if (_glossaryCsvPromise) return _glossaryCsvPromise;
-  // file:// では相対 fetch が完了しないことがあり、一覧が永遠に出ない原因になる
   if (typeof location !== 'undefined' && location.protocol === 'file:') {
     _glossaryCsvPromise = Promise.resolve();
     return _glossaryCsvPromise;
@@ -2155,12 +2041,9 @@ function loadGlossaryFromCsv(){
   return _glossaryCsvPromise;
 }
 
-function glosArticleHref(g){
-  if(!_glosArticleSlugMap || typeof g.term!=='string') return '';
-  const slug = _glosArticleSlugMap[g.term.trim()];
-  if(!slug) return '';
-  const base = String(GLOS_ARTICLE_BASE||'').replace(/\/$/,'');
-  return base+'/'+slug+'.html';
+/* 外部サイトの用語詳細ページへの導線は一時オフ（個別記事URLのリンク切れ回避）。復活時は GLOS_ARTICLE_BASE + articleSlug を返す実装へ。 */
+function glosArticleHref(_g){
+  return '';
 }
 
 function renderGlossary(){
@@ -2175,9 +2058,8 @@ function renderGlossary(){
     const catEl = document.getElementById('glos-cats');
     if (!catEl) return;
     catEl.innerHTML = cats.map(c=>`<button type="button" class="gcat-btn${glosActiveCat===c.id?' active':''}" onclick="setGlosCat('${c.id}', this)">${c.label}</button>`).join('');
-    // fetch が返らない環境でも空にならないよう、先に同梱データで描画してから CSV/slug を待つ
     renderGlossaryList();
-    void Promise.all([loadGlossaryFromCsv(), loadGlossaryArticleSlugMap()])
+    void loadGlossaryFromCsv()
       .then(function(){ renderGlossaryList(); })
       .catch(function(e){
         console.warn('[glossary] 背景読み込みエラー:', e && e.message ? e.message : e);
@@ -2204,7 +2086,7 @@ function renderGlossaryList(){
   if (!listEl) return;
   if (typeof GLOSSARY_DATA === 'undefined' || !Array.isArray(GLOSSARY_DATA)) {
     if (listEl && !document.getElementById('glos-fallback-help')) {
-      listEl.insertAdjacentHTML('afterbegin', '<div id="glos-fallback-help" class="glos-static-intro" style="background:#fff8e6;border:1px solid #e6c86a;color:#5a4a20;margin-bottom:12px"><strong>用語データ（eisei2-data-glossary.js）が読み込めていません。</strong><br>① <code>index.html</code> と同じフォルダにそのファイルがあるか確認　② ダブルクリックではなく <code>python3 -m http.server 8080</code> で <code>http://127.0.0.1:8080/</code> から開く　③ 静的な全記事一覧は <a href="/terms/">/terms/</a> を開いてください。</div>');
+      listEl.insertAdjacentHTML('afterbegin', '<div id="glos-fallback-help" class="glos-static-intro" style="background:#fff8e6;border:1px solid #e6c86a;color:#5a4a20;margin-bottom:12px"><strong>用語データ（eisei2-data-glossary.js）が読み込めていません。</strong><br>① <code>index.html</code> と同じフォルダにそのファイルがあるか確認　② ダブルクリックではなく <code>python3 -m http.server 8080</code> で <code>http://127.0.0.1:8080/</code> から開く　③ 静的な全記事一覧は <a href="/terms/" target="_blank" rel="noopener noreferrer">/terms/</a> を開いてください。</div>');
     }
     return;
   }
@@ -2225,13 +2107,6 @@ function renderGlossaryList(){
     listEl.innerHTML = filtered.map(g=>{
     const readSpan = g.reading ? `<span class="glos-reading">（${glosEscapeHtml(g.reading)}）</span>` : '';
     const descHtml = glosEscapeHtml(g.desc).replace(/\n/g, '<br>');
-    const artHref = glosArticleHref(g);
-    const headArticle = artHref
-      ? `<a class="glos-head-article" href="${glosEscapeHtml(artHref)}" onclick="event.stopPropagation()" target="_blank" rel="noopener noreferrer">詳細記事へ</a>`
-      : '';
-    const bodyArticle = artHref
-      ? `<a class="glos-article-link" href="${glosEscapeHtml(artHref)}" target="_blank" rel="noopener noreferrer">詳しい解説記事を読む</a>`
-      : '';
     const catLabel = catNames[g.cat] || 'その他';
     return `
     <div class="glos-card" id="gc-${g.id}">
@@ -2239,12 +2114,11 @@ function renderGlossaryList(){
         <span class="glos-tag" style="background:var(--bg3);color:var(--text2)">${catLabel}</span>
         <span class="glos-term">${glosEscapeHtml(g.term)}${readSpan}</span>
         <span class="glos-summary">${glosEscapeHtml(g.summary)}</span>
-        ${headArticle}
         <svg class="glos-chevron" viewBox="0 0 14 14"><path d="M4 5l3 4 3-4"/></svg>
       </div>
       <div class="glos-body">
         <div class="glos-desc">${descHtml}</div>
-        ${bodyArticle}
+        ${glosArticleHref(g) ? `<a class="glos-article-link" href="${glosArticleHref(g)}" target="_blank" rel="noopener noreferrer">詳しい解説記事を読む</a>` : ''}
         ${g.diagram ? renderGlosDiagram(g.diagram) : ''}
       </div>
     </div>`;
@@ -2978,13 +2852,12 @@ function diffStarsHTML(ev){
 // --- Past-question year history in exp ---
 function buildYearHistoryHTML(q){
   if(!q.num) return '';
-  if(typeof isAnyOrigQuestion==='function' && isAnyOrigQuestion(q)) return '';
   // Find other past questions with similar context (same field, nearby question numbers)
   const sameField=BASE_QUESTIONS.filter(bq=>bq.field===q.field&&bq.year&&bq.num);
   const nearby=sameField.filter(bq=>bq.id!==q.id&&Math.abs(bq.num-q.num)<=2&&bq.year!==q.year);
   if(nearby.length===0) return '';
   const years=[...new Set(nearby.map(bq=>bq.year))].sort();
-  return `<div class="exp-year-history">${years.map(y=>`<span class="exp-year-pill">${y}年</span>`).join('')}</div>`;
+  return `<div class="exp-year-history">この分野の類似問題の出題年：${years.map(y=>`<span class="exp-year-pill">${y}年</span>`).join('')}</div>`;
 }
 
 // ===== MASTER DATA (external): loaded via eisei2-master-data.js =====
@@ -3451,10 +3324,10 @@ const PAGE_SEO = {
     hash:  '#review'
   },
   'glossary': {
-    title: '用語解説｜二衛マスター（第二種衛生管理者試験）',
-    desc:  '第二種衛生管理者試験の重要用語を図解でわかりやすく解説。関係法令・労働衛生・労働生理の必須語句を網羅。',
-    path:  '/glossary/',
-    hash:  '#glossary'
+    title: '用語解説一覧｜二衛マスター（第二種衛生管理者試験）',
+    desc:  '第二種衛生管理者試験で頻出の用語を科目別にまとめ、各用語の解説記事（静的HTML）へ直接リンクします。',
+    path:  '/terms/',
+    hash:  ''
   },
   'ichimondou': {
     title: '一問一答｜二衛マスター（第二種衛生管理者試験）',
@@ -3487,8 +3360,7 @@ function _updatePageMeta(id) {
   // 公開環境では常に /#review のようなハッシュURLにする。
   if (!['quiz','score','ichimondou-score'].includes(id)) {
     if (typeof location !== 'undefined' && location.protocol === 'file:') {
-      // file:// では pushState も hash 更新も、環境によって Chrome が
-      // 「Unsafe attempt to load URL … from frame」と出すことがあるため URL は触らない
+      // file:// では URL 操作が Chrome で「Unsafe attempt … from frame」になることがあるため触らない
     } else {
       try {
         const hash = seo.hash || '';
@@ -4060,7 +3932,7 @@ function gotoPage(id){
   if(id==='orig')        renderOrigPage();
   if(id==='quiz-start')  { renderDailyStatus(); }
   if(id==='mock')        renderMockPage();
-  if(id==='glossary')    renderGlossary();
+  // glossary は廃止（/terms/ に統一）
   if(id==='past-config') buildYearGrid();
   window.scrollTo(0,0);
 }
@@ -4084,7 +3956,7 @@ function _resolveInitialPage() {
     '/quiz/ichimondou/': 'ichimondou',
     '/dashboard/':   'dash',
     '/review/':      'review',
-    '/glossary/':    'glossary',
+    // glossary は廃止（/terms/ に統一）
     // '/quiz/mock/': 'mock',
     '/account/':     'dash'
   };
@@ -4092,7 +3964,7 @@ function _resolveInitialPage() {
   const path = location.pathname;
   const hashMap = {
     '#past':'past-config','#orig':'orig','#ichimondou':'ichimondou','#dash':'dash',
-    '#review':'review','#glossary':'glossary','#account':'dash'
+    '#review':'review','#account':'dash'
   };
   return pathMap[path] || hashMap[location.hash] || 'quiz-start';
 }
@@ -4846,7 +4718,7 @@ function renderQScoreReplay(sr){
     <span class="q-meta-item freq-item">${freqStarsHTML(getFrequencyEvidence(q))}</span>`:'';
   document.getElementById('q-meta').innerHTML=`
     <span class="q-meta-item q-meta-field"><span class="q-meta-label">${f.name}</span></span>
-    <span class="q-meta-item q-meta-year"><span class="q-meta-value">${sourceLabel}</span></span>${starsHTML}`;
+    <span class="q-meta-item"><span class="q-meta-value">${sourceLabel}</span></span>${starsHTML}`;
   updateBookmarkButton(q);
   document.getElementById('q-body').textContent=formatExamQuestionBodyText(q.text||'');
   document.getElementById('opts').innerHTML=q.opts.map((o,j)=>
@@ -4859,7 +4731,7 @@ function renderQScoreReplay(sr){
   const kaisetsuHTML=(quizState.mode==='past'||!q.kaisetsu)?'':buildKaisetsu(q.kaisetsu,q);
   const isOrig=!!q.unit;
   const expHTML=isOrig?buildRichExp(q.exp,q.opts,q.ans):`<div class="exp-text">${q.exp}</div>`;
-  const yearHistHTML=(quizState.mode!=='past'&&!isAnyOrigQuestion(q)&&q.year)?buildYearHistoryHTML(q):'';
+  const yearHistHTML=(quizState.mode!=='past'&&!isOrig&&q.year)?buildYearHistoryHTML(q):'';
   const feedbackLabel=correct
     ? `<div class="answer-feedback correct">正解</div>`
     : `<div class="answer-feedback wrong">不正解</div>`;
@@ -4906,7 +4778,7 @@ function renderQ(){ window.scrollTo({top:0,behavior:"instant"});
 	    <span class="q-meta-item freq-item">${freqStarsHTML(getFrequencyEvidence(q))}</span>`:'';
 	  document.getElementById('q-meta').innerHTML=`
 	    <span class="q-meta-item q-meta-field"><span class="q-meta-label">${f.name}</span></span>
-	    <span class="q-meta-item q-meta-year"><span class="q-meta-value">${sourceLabel}</span></span>${starsHTML}`;
+	    <span class="q-meta-item"><span class="q-meta-value">${sourceLabel}</span></span>${starsHTML}`;
 	  updateBookmarkButton(q);
 	  document.getElementById('q-body').textContent=formatExamQuestionBodyText(q.text||'');
   document.getElementById('opts').innerHTML=q.opts.map((o,i)=>
@@ -4947,7 +4819,7 @@ function pickOpt(i){
   const kaisetsuHTML = (quizState.mode === 'past' || !q.kaisetsu) ? '' : buildKaisetsu(q.kaisetsu, q);
   const isOrig = !!q.unit;
   const expHTML = isOrig ? buildRichExp(q.exp, q.opts, q.ans) : `<div class="exp-text">${q.exp}</div>`;
-  const yearHistHTML = (quizState.mode !== 'past' && !isAnyOrigQuestion(q) && q.year) ? buildYearHistoryHTML(q) : '';
+  const yearHistHTML = (quizState.mode !== 'past' && !isOrig && q.year) ? buildYearHistoryHTML(q) : '';
   // Answer feedback text
   const feedbackLabel = correct
     ? `<div class="answer-feedback correct">${STREAK_MSGS[u.streak||0]||'正解'}</div>`
@@ -6693,16 +6565,7 @@ loadDB();
   renderOrigPage();
   gotoPage('quiz-start');
 })();
-// 用語ページが表示されたまま JS の初期化順で一覧が描画されなかった場合の再試行
-window.addEventListener('load', function(){
-  var gp = document.getElementById('page-glossary');
-  if (!gp || !gp.classList.contains('active')) return;
-  var listEl = document.getElementById('glossary-list');
-  if (!listEl || typeof renderGlossary !== 'function') return;
-  if (listEl.querySelector('.glos-static-section') && typeof GLOSSARY_DATA !== 'undefined' && Array.isArray(GLOSSARY_DATA)) {
-    renderGlossary();
-  }
-});
+// glossary は廃止（/terms/ に統一）
 // Supabaseセッションがあればログイン済みユーザーに切り替え
 (async function(){
   const {data:{session}}=await _sb.auth.getSession();
