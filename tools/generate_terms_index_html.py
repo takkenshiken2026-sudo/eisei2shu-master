@@ -27,7 +27,7 @@ def load_term_category(csv_path: Path) -> dict[str, str]:
         rows = list(reader)
     if len(rows) < 2:
         return {}
-    header = [str(c).strip() for c in rows[0]]
+    header = [str(c).lstrip("\ufeff").strip() for c in rows[0]]
     try:
         ic = header.index("カテゴリ")
         it = header.index("用語")
@@ -73,6 +73,8 @@ def main() -> None:
         if not fp.is_file():
             continue
         cat = term_cat.get(term, "その他")
+        if cat not in CAT_ORDER:
+            continue
         rows.append((cat, term, slug))
 
     if not rows:
@@ -120,8 +122,6 @@ def main() -> None:
     for c in by_cat:
         if c not in cat_keys and c != "その他":
             cat_keys.append(c)
-    if "その他" in by_cat:
-        cat_keys.append("その他")
 
     def term_key(t: tuple[str, str]) -> str:
         term, _slug = t
@@ -150,13 +150,13 @@ def main() -> None:
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>用語解説一覧（全記事索引）｜二衛マスター（第二種衛生管理者試験）</title>
+<title>用語解説一覧｜二衛マスター（第二種衛生管理者試験）</title>
 <meta name="description" content="第二種衛生管理者試験の重要用語を一覧し、各用語の解説記事へリンクします。関係法令・労働衛生・労働生理の語句を網羅的に整理しています。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="{html.escape(base + "/terms/", quote=True)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{html.escape(base + "/terms/", quote=True)}">
-<meta property="og:title" content="用語解説一覧（全記事索引）｜二衛マスター">
+<meta property="og:title" content="用語解説一覧｜二衛マスター">
 <meta property="og:description" content="試験で出やすい用語ごとの解説記事への索引です。">
 <meta property="og:locale" content="ja_JP">
 <script type="application/ld+json">
@@ -239,6 +239,22 @@ a:hover {{ opacity: 0.9; }}
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 20px 20px 56px;
+}}
+.breadcrumb {{
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 6px;
+}}
+.breadcrumb a {{
+  color: var(--text3);
+  text-decoration: none;
+}}
+.breadcrumb a:hover {{
+  text-decoration: underline;
+}}
+.breadcrumb-sep {{
+  margin: 0 6px;
+  color: var(--bg3);
 }}
 .page-title {{
   font-size: 1.55rem;
@@ -370,7 +386,10 @@ a:hover {{ opacity: 0.9; }}
 </header>
 
 <main class="container">
-  <h1 class="page-title">用語解説一覧（全記事索引）</h1>
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <a href="/">トップ</a><span class="breadcrumb-sep">/</span><span>用語解説</span>
+  </nav>
+  <h1 class="page-title">用語解説一覧</h1>
   <p class="lead">第二種衛生管理者試験で頻出の用語を科目別にまとめています。詳細は各用語の解説記事で確認が可能です。</p>
 
   <div class="meta-row">
