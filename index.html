@@ -76,7 +76,7 @@
         {"@type": "ListItem", "position": 1, "name": "トップ", "item": "https://eisei2shu-master.jp/"},
         {"@type": "ListItem", "position": 2, "name": "過去問", "item": "https://eisei2shu-master.jp/#past"},
         {"@type": "ListItem", "position": 3, "name": "オリジナル問題", "item": "https://eisei2shu-master.jp/#orig"},
-        {"@type": "ListItem", "position": 4, "name": "用語解説", "item": "https://eisei2shu-master.jp/#glossary"}
+        {"@type": "ListItem", "position": 4, "name": "用語解説", "item": "https://eisei2shu-master.jp/terms/"}
       ]
     }
   ]
@@ -1417,7 +1417,7 @@ body.is-solving .site-footer{display:none!important}
         <a class="topnav-link" id="tnav-review" href="/review/" onclick="event.preventDefault();gotoPage('review')">
           <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>復習
         </a>
-        <a class="topnav-link" id="tnav-glossary" href="/glossary/" onclick="event.preventDefault();gotoPage('glossary')">
+        <a class="topnav-link" id="tnav-glossary" href="/terms/">
           <svg viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>用語解説
         </a>
       </nav>
@@ -1489,7 +1489,7 @@ body.is-solving .site-footer{display:none!important}
       <a class="mobile-nav-item" id="mnav-review" href="/review/" onclick="event.preventDefault();gotoPage('review');closeMobileDrawer()">
         <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>復習
       </a>
-      <a class="mobile-nav-item" id="mnav-glossary" href="/glossary/" onclick="event.preventDefault();gotoPage('glossary');closeMobileDrawer()">
+      <a class="mobile-nav-item" id="mnav-glossary" href="/terms/">
         <svg viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>用語解説
       </a>
 
@@ -1843,60 +1843,7 @@ body.is-solving .site-footer{display:none!important}
 
     <!-- オリジナル模試は当面非表示 -->
 
-    <!-- GLOSSARY -->
-    <div class="page" id="page-glossary">
-      <nav class="breadcrumb" aria-label="パンくずリスト">
-        <ol class="breadcrumb-list">
-          <li class="breadcrumb-item"><a href="/" onclick="event.preventDefault();gotoPage('quiz-start')" title="第二種衛生管理者試験対策">二衛マスター</a></li>
-          <li class="breadcrumb-item breadcrumb-current" aria-current="page">用語解説</li>
-        </ol>
-      </nav>
-      <h2 class="page-title">言葉解説</h2>
-      <div class="page-sub">試験で出やすい用語を、定義のほか試験での押さえ方・学び方まで丁寧に解説します（図解つきの項目もあります）</div>
-      <div class="glossary-toolbar">
-        <input class="glossary-search" id="glos-search" type="text" placeholder="用語を検索..." oninput="filterGlossary()">
-        <div class="glossary-cats" id="glos-cats"></div>
-      </div>
-      <div id="glossary-list">
-<!-- SEO: 静的用語解説（JS無効時・クローラ向け抜粋。全件は docs/glossary-terms-checklist.csv を fetch して表示） -->
-<section class="glos-static-section" aria-label="用語解説一覧（抜粋）">
-<p class="glos-static-intro"><strong><a href="/terms/" target="_blank" rel="noopener noreferrer">SEO向けの用語→記事一覧（静的HTML）</a></strong>では、クローラが確実に辿れる実リンクだけで全記事へ誘導します。下のインタラクティブ一覧は JavaScript で <code>docs/glossary-terms-checklist.csv</code> を読み込みます（<code>file://</code> では取得できない場合があるため、簡易サーバー推奨）。以下は用語の抜粋です。</p>
-<div class="glos-cat-section" data-cat="law">
-<h3 class="glos-cat-heading">関係法令</h3>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">労働安全衛生法</h4>
-  <p class="glos-static-desc" itemprop="description">労働者の命と健康を守るための基本法です。事業者には安全衛生管理体制の整備、危険・有害要因の低減、教育、健康診断など幅広い義務があり、個別の数値基準や手続きは労働安全衛生規則や産業ごとの予防規則で補われます。</p>
-</article>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">衛生管理者</h4>
-  <p class="glos-static-desc" itemprop="description">事業者が選任する、労働衛生の専門的管理者です。事業場の規模や業種に応じて常勤区分や人数などの要件が定められ、衛生委員会や産業医と連携して職場の衛生面を担います。</p>
-</article>
-</div>
-<div class="glos-cat-section" data-cat="rights">
-<h3 class="glos-cat-heading">労働衛生</h3>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">WBGT</h4>
-  <p class="glos-static-desc" itemprop="description">暑熱環境での温熱負荷を表す指標です。気温・湿度・輻射熱などを総合して評価し、熱中症対策や作業・休憩の判断に用いられます。</p>
-</article>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">局所排気装置</h4>
-  <p class="glos-static-desc" itemprop="description">有害物の発生源付近で汚染空気を捕集し、ダクトで排出する装置です。希釈換気より発散源対策として優先されやすい考え方が試験でも問われます。</p>
-</article>
-</div>
-<div class="glos-cat-section" data-cat="limit">
-<h3 class="glos-cat-heading">労働生理</h3>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">じん肺</h4>
-  <p class="glos-static-desc" itemprop="description">長期の粉じんばく露による肺の線維化疾患です。作業環境管理と健康診断・管理区分による就業上の措置が、法令と衛生工学の両面から頻出です。</p>
-</article>
-<article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
-  <h4 class="glos-static-term" itemprop="name">酸素欠乏症</h4>
-  <p class="glos-static-desc" itemprop="description">空気中酸素の不足により起きる障害です。タンク内や下水道などでの作業では、測定・換気・立入禁止などの手順が安全管理の中心になります。</p>
-</article>
-</div>
-</section>
-</div>
-    </div>
+    <!-- GLOSSARY (removed): /terms/ に統一 -->
 
     <!-- JS無効時のフォールバック (SEOクローラー向け静的コンテンツ) -->
     <noscript>
@@ -3377,10 +3324,10 @@ const PAGE_SEO = {
     hash:  '#review'
   },
   'glossary': {
-    title: '用語解説｜二衛マスター（第二種衛生管理者試験）',
-    desc:  '第二種衛生管理者試験の重要用語を図解でわかりやすく解説。関係法令・労働衛生・労働生理の必須語句を網羅。',
-    path:  '/glossary/',
-    hash:  '#glossary'
+    title: '用語解説一覧｜二衛マスター（第二種衛生管理者試験）',
+    desc:  '第二種衛生管理者試験で頻出の用語を科目別にまとめ、各用語の解説記事（静的HTML）へ直接リンクします。',
+    path:  '/terms/',
+    hash:  ''
   },
   'ichimondou': {
     title: '一問一答｜二衛マスター（第二種衛生管理者試験）',
@@ -3985,7 +3932,7 @@ function gotoPage(id){
   if(id==='orig')        renderOrigPage();
   if(id==='quiz-start')  { renderDailyStatus(); }
   if(id==='mock')        renderMockPage();
-  if(id==='glossary')    renderGlossary();
+  // glossary は廃止（/terms/ に統一）
   if(id==='past-config') buildYearGrid();
   window.scrollTo(0,0);
 }
@@ -4009,7 +3956,7 @@ function _resolveInitialPage() {
     '/quiz/ichimondou/': 'ichimondou',
     '/dashboard/':   'dash',
     '/review/':      'review',
-    '/glossary/':    'glossary',
+    // glossary は廃止（/terms/ に統一）
     // '/quiz/mock/': 'mock',
     '/account/':     'dash'
   };
@@ -4017,7 +3964,7 @@ function _resolveInitialPage() {
   const path = location.pathname;
   const hashMap = {
     '#past':'past-config','#orig':'orig','#ichimondou':'ichimondou','#dash':'dash',
-    '#review':'review','#glossary':'glossary','#account':'dash'
+    '#review':'review','#account':'dash'
   };
   return pathMap[path] || hashMap[location.hash] || 'quiz-start';
 }
@@ -6618,16 +6565,7 @@ loadDB();
   renderOrigPage();
   gotoPage('quiz-start');
 })();
-// 用語ページが表示されたまま JS の初期化順で一覧が描画されなかった場合の再試行
-window.addEventListener('load', function(){
-  var gp = document.getElementById('page-glossary');
-  if (!gp || !gp.classList.contains('active')) return;
-  var listEl = document.getElementById('glossary-list');
-  if (!listEl || typeof renderGlossary !== 'function') return;
-  if (listEl.querySelector('.glos-static-section') && typeof GLOSSARY_DATA !== 'undefined' && Array.isArray(GLOSSARY_DATA)) {
-    renderGlossary();
-  }
-});
+// glossary は廃止（/terms/ に統一）
 // Supabaseセッションがあればログイン済みユーザーに切り替え
 (async function(){
   const {data:{session}}=await _sb.auth.getSession();
