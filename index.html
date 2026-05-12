@@ -74,7 +74,7 @@
         {"@type": "ListItem", "position": 1, "name": "トップ", "item": "https://eisei2shu-master.jp/"},
         {"@type": "ListItem", "position": 2, "name": "過去問", "item": "https://eisei2shu-master.jp/#past"},
         {"@type": "ListItem", "position": 3, "name": "オリジナル問題", "item": "https://eisei2shu-master.jp/#orig"},
-        {"@type": "ListItem", "position": 4, "name": "用語解説", "item": "https://eisei2shu-master.jp/#glossary"}
+        {"@type": "ListItem", "position": 4, "name": "用語解説", "item": "https://eisei2shu-master.jp/terms/"}
       ]
     }
   ]
@@ -1417,7 +1417,7 @@ body.is-solving .site-footer{display:none!important}
         <a class="topnav-link" id="tnav-review" href="/review/" onclick="event.preventDefault();gotoPage('review')">
           <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>復習
         </a>
-        <a class="topnav-link" id="tnav-glossary" href="/glossary/" onclick="event.preventDefault();gotoPage('glossary')">
+        <a class="topnav-link" id="tnav-glossary" href="/terms/">
           <svg viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>用語解説
         </a>
       </nav>
@@ -1489,7 +1489,7 @@ body.is-solving .site-footer{display:none!important}
       <a class="mobile-nav-item" id="mnav-review" href="/review/" onclick="event.preventDefault();gotoPage('review');closeMobileDrawer()">
         <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>復習
       </a>
-      <a class="mobile-nav-item" id="mnav-glossary" href="/glossary/" onclick="event.preventDefault();gotoPage('glossary');closeMobileDrawer()">
+      <a class="mobile-nav-item" id="mnav-glossary" href="/terms/">
         <svg viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>用語解説
       </a>
 
@@ -3446,8 +3446,8 @@ const PAGE_SEO = {
   'glossary': {
     title: '用語解説｜二衛マスター（第二種衛生管理者試験）',
     desc:  '第二種衛生管理者試験の重要用語を図解でわかりやすく解説。関係法令・労働衛生・労働生理の必須語句を網羅。',
-    path:  '/glossary/',
-    hash:  '#glossary'
+    path:  '/terms/',
+    hash:  ''
   },
   'ichimondou': {
     title: '一問一答｜二衛マスター（第二種衛生管理者試験）',
@@ -4006,7 +4006,22 @@ function shareIchiResultToX(){
   openTwitterShareIntent(`二衛マスター（第二種衛生管理者試験）で一問一答を解きました。\n正答率 ${pct}%（${s}/${att}問）\n合格を目指して学習を続けています。`);
 }
 
+function navigateToGlossaryList(){
+  try{
+    if(typeof location!=='undefined' && location.protocol==='file:'){
+      var u = new URL('terms/', location.href);
+      location.href = u.href;
+      return;
+    }
+  }catch(_e){}
+  location.href = '/terms/';
+}
+
 function gotoPage(id){
+  if(id==='glossary'){
+    navigateToGlossaryList();
+    return;
+  }
   if(id==='ichimondou') syncIchiPageVisibility();
   if(id!=='quiz') showNextBtn(false, null);
   document.body.classList.toggle('is-solving', id==='quiz' || (id==='ichimondou' && ichiState.active));
@@ -4029,7 +4044,7 @@ function gotoPage(id){
       'ichimondou': id==='ichimondou' || id==='ichimondou-score',
       'dash':     id==='dash',
       'review':   id==='review',
-      'glossary': id==='glossary',
+      'glossary': false,
     };
     Object.entries(map).forEach(([k,active])=>{
       const tn = document.getElementById('tnav-'+k);
@@ -4053,7 +4068,6 @@ function gotoPage(id){
   if(id==='orig')        renderOrigPage();
   if(id==='quiz-start')  { renderDailyStatus(); }
   if(id==='mock')        renderMockPage();
-  if(id==='glossary')    renderGlossary();
   if(id==='past-config') buildYearGrid();
   window.scrollTo(0,0);
 }
