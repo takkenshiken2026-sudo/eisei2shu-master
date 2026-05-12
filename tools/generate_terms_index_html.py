@@ -123,6 +123,10 @@ def main() -> None:
     if "その他" in by_cat:
         cat_keys.append("その他")
 
+    def term_key(t: tuple[str, str]) -> str:
+        term, _slug = t
+        return term
+
     for cat in cat_keys:
         items = by_cat.get(cat)
         if not items:
@@ -130,7 +134,7 @@ def main() -> None:
         body_sections.append(f'<section class="terms-idx-cat" aria-labelledby="cat-{html.escape(cat, quote=True)}">')
         body_sections.append(f'  <h2 id="cat-{html.escape(cat, quote=True)}">{html.escape(cat)}</h2>')
         body_sections.append('  <ul class="terms-idx-list">')
-        for term, slug in sorted(items, key=lambda x: x[0]):
+        for term, slug in sorted(items, key=term_key):
             href = f"/terms/{html.escape(slug, quote=True)}.html"
             body_sections.append(
                 f'    <li><a href="{href}">{html.escape(term)}</a></li>'
@@ -176,7 +180,7 @@ def main() -> None:
   --r: 6px;
   --r2: 10px;
   --sh: 0 1px 3px rgba(0,0,0,0.07);
-  --max-w: 900px;
+  --max-w: 1160px;
 }}
 *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
 body {{
@@ -285,30 +289,6 @@ a:hover {{ opacity: 0.9; }}
   font-size: 15px;
 }}
 .search input:focus {{ border-color: rgba(0,0,0,0.35); }}
-.chips {{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}}
-.chip {{
-  cursor: pointer;
-  user-select: none;
-  border: 1px solid var(--border2);
-  background: var(--bg);
-  color: var(--text2);
-  padding: 7px 10px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 700;
-  transition: all .15s;
-}}
-.chip:hover {{ background: var(--bg2); color: var(--text); }}
-.chip.on {{
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
-}}
-
 /* ===== LIST ===== */
 .section {{
   background: var(--bg);
@@ -354,7 +334,8 @@ a:hover {{ opacity: 0.9; }}
   gap: 8px;
   text-decoration: none;
   color: var(--ink);
-  font-weight: 700;
+  font-weight: 400;
+  font-size: 14px;
 }}
 .terms-idx-list a:hover {{ text-decoration: underline; }}
 .badge {{
@@ -390,20 +371,13 @@ a:hover {{ opacity: 0.9; }}
 
 <main class="container">
   <h1 class="page-title">用語解説一覧（全記事索引）</h1>
-  <p class="lead">第二種衛生管理者試験で頻出の用語を科目別にまとめ、各用語の<strong>解説記事（静的HTML）</strong>へ直接リンクします。上の検索・科目フィルタで目的の用語に素早く到達できます。</p>
+  <p class="lead">第二種衛生管理者試験で頻出の用語を科目別にまとめています。詳細は各用語の解説記事で確認が可能です。</p>
 
   <div class="meta-row">
     <span class="pill">全 <span id="terms-total">{len(rows)}</span> 記事</span>
     <div class="search" role="search" aria-label="用語検索">
       <input id="q" type="search" inputmode="search" placeholder="例：WBGT、局所排気装置、衛生委員会…" autocomplete="off">
     </div>
-  </div>
-
-  <div class="chips" aria-label="科目フィルタ">
-    <button type="button" class="chip on" data-cat="all">すべて</button>
-    <button type="button" class="chip" data-cat="関係法令">関係法令</button>
-    <button type="button" class="chip" data-cat="労働衛生">労働衛生</button>
-    <button type="button" class="chip" data-cat="労働生理">労働生理</button>
   </div>
 
   <section class="section" aria-label="用語一覧">
@@ -418,11 +392,9 @@ a:hover {{ opacity: 0.9; }}
 <script>
 (() => {{
   const q = document.getElementById('q');
-  const chips = Array.from(document.querySelectorAll('.chip[data-cat]'));
   const cats = Array.from(document.querySelectorAll('.terms-idx-cat'));
   const totalEl = document.getElementById('terms-total');
   const hitEl = document.getElementById('terms-hit');
-  let activeCat = 'all';
 
   function norm(s) {{
     return (s || '').toString().trim().toLowerCase();
@@ -433,14 +405,12 @@ a:hover {{ opacity: 0.9; }}
     let shown = 0;
 
     cats.forEach(sec => {{
-      const cat = sec.getAttribute('aria-labelledby')?.replace(/^cat-/, '') || '';
-      const catOk = (activeCat === 'all') || (sec.querySelector('h2')?.textContent === activeCat) || (cat === activeCat);
       const items = Array.from(sec.querySelectorAll('li'));
       let anyInCat = 0;
       items.forEach(li => {{
         const a = li.querySelector('a');
         const t = norm(a?.textContent || '');
-        const ok = catOk && (!query || t.includes(query));
+        const ok = (!query || t.includes(query));
         li.classList.toggle('hide', !ok);
         if(ok) {{ anyInCat++; shown++; }}
       }});
@@ -449,9 +419,9 @@ a:hover {{ opacity: 0.9; }}
 
     if(totalEl) totalEl.textContent = String({len(rows)});
     if(hitEl) {{
-      hitEl.textContent = query || activeCat !== 'all'
+      hitEl.textContent = query
         ? `表示：${{shown}}件`
-        : '';\n    }}\n  }}\n\n  chips.forEach(btn => {{\n    btn.addEventListener('click', () => {{\n      chips.forEach(b => b.classList.remove('on'));\n      btn.classList.add('on');\n      activeCat = btn.dataset.cat || 'all';\n      apply();\n    }});\n  }});\n  q.addEventListener('input', apply);\n  apply();\n}})();\n</script>
+        : '';\n    }}\n  }}\n\n  q.addEventListener('input', apply);\n  apply();\n}})();\n</script>
 </body>
 </html>
 """
