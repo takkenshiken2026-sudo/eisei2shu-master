@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://eisei2shu-master.jp/sitemap.xml
+Sitemap: https://eisei2shu-master.jp/sitemap-terms.xml
