@@ -74,7 +74,7 @@
   --r: 6px;
   --r2: 10px;
   --sh: 0 1px 3px rgba(0,0,0,0.07);
-  --max-w: 720px;
+  --max-w: 1160px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: #f0f0f1; color: var(--text); -webkit-font-smoothing: antialiased; }
@@ -310,6 +310,12 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </head>
 <body>
 
+
+<script>
+  // ブラウザのスクロール復元で「下に戻る」を防ぐ（常に先頭表示）
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(_e) {}
+  window.scrollTo(0, 0);
+</script>
 <header class="site-header">
   <div class="site-header-inner">
     <a href="/terms/" class="header-back">
@@ -407,13 +413,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <li>「フィットテストは一度実施すれば永久的に有効」→ <strong>誤り</strong>（定期的・体型変化時等に再実施が必要）</li>
 </ul>
 <hr />
-<h2>この記事に関連する過去問を解く</h2>
-<ul>
-<li><a href="/kakomon/reiwa7-koki-173.html">令和7年後期 第173問（保護具の種類）</a></li>
-<li><a href="/kakomon/reiwa6-koki-174.html">令和6年後期 第174問（フィットテスト）</a></li>
-<li><a href="/original/91.html">オリジナル問題 第91問（防じんと防毒）</a></li>
-</ul>
-  </article>
+</article>
 
   
 </div>

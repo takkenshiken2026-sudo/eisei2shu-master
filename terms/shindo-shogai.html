@@ -74,7 +74,7 @@
   --r: 6px;
   --r2: 10px;
   --sh: 0 1px 3px rgba(0,0,0,0.07);
-  --max-w: 720px;
+  --max-w: 1160px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: #f0f0f1; color: var(--text); -webkit-font-smoothing: antialiased; }
@@ -310,6 +310,12 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </head>
 <body>
 
+
+<script>
+  // ブラウザのスクロール復元で「下に戻る」を防ぐ（常に先頭表示）
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(_e) {}
+  window.scrollTo(0, 0);
+</script>
 <header class="site-header">
   <div class="site-header-inner">
     <a href="/terms/" class="header-back">
@@ -415,13 +421,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <li>「チェーンソー作業で振動障害は起こらない」→ <strong>誤り</strong>（代表的な原因作業）</li>
 </ul>
 <hr />
-<h2>この記事に関連する過去問を解く</h2>
-<ul>
-<li><a href="/kakomon/reiwa7-koki-49.html">令和7年後期 第49問（振動白ろう）</a></li>
-<li><a href="/kakomon/reiwa6-koki-50.html">令和6年後期 第50問（予防対策）</a></li>
-<li><a href="/original/29.html">オリジナル問題 第29問（症状）</a></li>
-</ul>
-  </article>
+</article>
 
   
 </div>

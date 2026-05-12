@@ -35,9 +35,8 @@ def md_to_html(md_text):
 
 def extract_related_links(html_body):
     """
-    記事末尾の「関連過去問へのリンク」セクションをHTMLから抽出し、
-    専用デザインのボックスに変換して返す。
-    元のセクションは article_body から除去する。
+    記事末尾の「関連過去問」セクションをHTMLから除去する。
+    過去問リンクはリンク切れが発生しやすく、UXを損なうため現状は表示しない。
     """
     # <h2>が「関連過去問」を含むセクションを検出
     pattern = r'<h2[^>]*>.*?関連過去問.*?</h2>(.*?)(?=<h2|$)'
@@ -45,34 +44,10 @@ def extract_related_links(html_body):
     if not match:
         return html_body, ""
 
-    links_block = match.group(1)
     # article_body からセクションごと除去
     full_section = match.group(0)
     clean_body = html_body.replace(full_section, "").strip()
-
-    # <li> 内の <a> を抽出
-    link_pattern = r'<a href="([^"]+)">([^<]+)</a>'
-    links = re.findall(link_pattern, links_block)
-
-    if not links:
-        return clean_body, ""
-
-    link_items = ""
-    for href, text in links:
-        link_items += f'''
-    <a href="{href}" class="related-link">
-      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-      {text}
-    </a>'''
-
-    related_box = f'''
-  <div class="related-box">
-    <div class="related-box-title">関連過去問を解く</div>
-    <div class="related-links">{link_items}
-    </div>
-  </div>'''
-
-    return clean_body, related_box
+    return clean_body, ""
 
 
 def build_page(md_path, template):

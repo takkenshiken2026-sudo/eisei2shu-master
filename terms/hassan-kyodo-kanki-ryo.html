@@ -74,7 +74,7 @@
   --r: 6px;
   --r2: 10px;
   --sh: 0 1px 3px rgba(0,0,0,0.07);
-  --max-w: 720px;
+  --max-w: 1160px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: #f0f0f1; color: var(--text); -webkit-font-smoothing: antialiased; }
@@ -310,6 +310,12 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </head>
 <body>
 
+
+<script>
+  // ブラウザのスクロール復元で「下に戻る」を防ぐ（常に先頭表示）
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(_e) {}
+  window.scrollTo(0, 0);
+</script>
 <header class="site-header">
   <div class="site-header-inner">
     <a href="/terms/" class="header-back">
@@ -399,13 +405,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <li>「発散強度が同じなら有害物の種類によらず必要換気量は同じ」→ <strong>誤り</strong>（許容濃度が物質により異なるため、必要換気量も異なる）</li>
 </ul>
 <hr />
-<h2>この記事に関連する過去問を解く</h2>
-<ul>
-<li><a href="/kakomon/reiwa7-koki-149.html">令和7年後期 第149問（必要換気量の計算）</a></li>
-<li><a href="/kakomon/reiwa6-koki-150.html">令和6後期 第150問（発散強度との関係）</a></li>
-<li><a href="/original/79.html">オリジナル問題 第79問（局所排気との比較）</a></li>
-</ul>
-  </article>
+</article>
 
   
 </div>

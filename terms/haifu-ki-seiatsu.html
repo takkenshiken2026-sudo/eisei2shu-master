@@ -74,7 +74,7 @@
   --r: 6px;
   --r2: 10px;
   --sh: 0 1px 3px rgba(0,0,0,0.07);
-  --max-w: 720px;
+  --max-w: 1160px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: #f0f0f1; color: var(--text); -webkit-font-smoothing: antialiased; }
@@ -310,6 +310,12 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </head>
 <body>
 
+
+<script>
+  // ブラウザのスクロール復元で「下に戻る」を防ぐ（常に先頭表示）
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(_e) {}
+  window.scrollTo(0, 0);
+</script>
 <header class="site-header">
   <div class="site-header-inner">
     <a href="/terms/" class="header-back">
@@ -408,13 +414,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <li>「排風機を大きくすれば圧力損失の問題は必ず解決する」→ <strong>誤り</strong>（根本的な原因（閉塞等）の解消が必要）</li>
 </ul>
 <hr />
-<h2>この記事に関連する過去問を解く</h2>
-<ul>
-<li><a href="/kakomon/reiwa7-koki-125.html">令和7年後期 第125問（静圧と風量）</a></li>
-<li><a href="/kakomon/reiwa6-koki-126.html">令和6年後期 第126問（特性曲線）</a></li>
-<li><a href="/original/67.html">オリジナル問題 第67問（風量不足の原因）</a></li>
-</ul>
-  </article>
+</article>
 
   
 </div>

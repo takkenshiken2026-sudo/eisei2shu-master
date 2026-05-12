@@ -27,7 +27,7 @@ def load_term_category(csv_path: Path) -> dict[str, str]:
         rows = list(reader)
     if len(rows) < 2:
         return {}
-    header = [str(c).strip() for c in rows[0]]
+    header = [str(c).lstrip("\ufeff").strip() for c in rows[0]]
     try:
         ic = header.index("カテゴリ")
         it = header.index("用語")
@@ -123,6 +123,10 @@ def main() -> None:
     if "その他" in by_cat:
         cat_keys.append("その他")
 
+    def term_key(t: tuple[str, str]) -> str:
+        term, _slug = t
+        return term
+
     for cat in cat_keys:
         items = by_cat.get(cat)
         if not items:
@@ -130,7 +134,7 @@ def main() -> None:
         body_sections.append(f'<section class="terms-idx-cat" aria-labelledby="cat-{html.escape(cat, quote=True)}">')
         body_sections.append(f'  <h2 id="cat-{html.escape(cat, quote=True)}">{html.escape(cat)}</h2>')
         body_sections.append('  <ul class="terms-idx-list">')
-        for term, slug in sorted(items, key=lambda x: x[0]):
+        for term, slug in sorted(items, key=term_key):
             href = f"/terms/{html.escape(slug, quote=True)}.html"
             body_sections.append(
                 f'    <li><a href="{href}">{html.escape(term)}</a></li>'
@@ -158,38 +162,327 @@ def main() -> None:
 <script type="application/ld+json">
 {ld_json}
 </script>
+<script defer src="/site-analytics.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-body{{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Hiragino Sans","Noto Sans JP",sans-serif;line-height:1.65;margin:0;background:#f6f7f9;color:#1a1a1a;}}
-.wrap{{max-width:880px;margin:0 auto;padding:24px 18px 48px;}}
-header{{margin-bottom:28px;}}
-h1{{font-size:1.45rem;margin:0 0 10px;}}
-.lead{{font-size:0.95rem;color:#444;margin:0;}}
-.breadcrumb{{font-size:0.88rem;margin-bottom:18px;color:#555;}}
-.breadcrumb a{{color:#0b57d0;}}
-.terms-idx-cat{{margin-top:28px;}}
-.terms-idx-cat h2{{font-size:1.1rem;border-bottom:2px solid #dde1e7;padding-bottom:6px;margin:0 0 12px;}}
-.terms-idx-list{{list-style:none;padding:0;margin:0;columns:2;column-gap:28px;}}
-@media(max-width:640px){{.terms-idx-list{{columns:1;}}}}
-.terms-idx-list li{{break-inside:avoid;margin:0 0 8px 0;padding-left:0;}}
-.terms-idx-list a{{color:#0b57d0;text-decoration:none;font-weight:500;}}
-.terms-idx-list a:hover{{text-decoration:underline;}}
-footer{{margin-top:40px;font-size:0.85rem;color:#666;border-top:1px solid #dde1e7;padding-top:16px;}}
+:root {{
+  --bg: #ffffff;
+  --bg2: #f4f4f5;
+  --bg3: #e4e4e7;
+  --text: #111111;
+  --text2: #555555;
+  --text3: #888888;
+  --ink: #333333;
+  --border: rgba(0,0,0,0.10);
+  --border2: rgba(0,0,0,0.18);
+  --font: 'Noto Sans JP', sans-serif;
+  --r: 6px;
+  --r2: 10px;
+  --sh: 0 1px 3px rgba(0,0,0,0.07);
+  --max-w: 1160px;
+}}
+*, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+body {{
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.8;
+  background: #f0f0f1;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}}
+a {{ color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }}
+a:hover {{ opacity: 0.9; }}
+
+/* ===== HEADER ===== */
+.site-header {{
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}}
+.site-header-inner {{
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}}
+.header-back {{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text3);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: var(--r);
+  border: 1px solid var(--border2);
+  background: var(--bg);
+  transition: all .15s;
+}}
+.header-back:hover {{ background: var(--bg2); color: var(--text); opacity: 1; }}
+.header-back svg {{ width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }}
+.header-logo {{
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}}
+.header-sep {{ color: var(--text3); font-size: 13px; }}
+
+/* ===== LAYOUT ===== */
+.container {{
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 20px 20px 56px;
+}}
+.breadcrumb {{
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 6px;
+}}
+.breadcrumb a {{
+  color: var(--text3);
+  text-decoration: none;
+}}
+.breadcrumb a:hover {{
+  text-decoration: underline;
+}}
+.breadcrumb-sep {{
+  margin: 0 6px;
+  color: var(--bg3);
+}}
+.page-title {{
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 12px 0 10px;
+}}
+.lead {{
+  font-size: 15px;
+  color: var(--text2);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}}
+.meta-row {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  align-items: center;
+  margin: 16px 0 18px;
+}}
+.pill {{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text2);
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 6px 10px;
+}}
+.search {{
+  flex: 1;
+  min-width: min(420px, 100%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}}
+.search input {{
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--r2);
+  border: 1.5px solid var(--border2);
+  background: var(--bg);
+  color: var(--text);
+  outline: none;
+  font-size: 15px;
+}}
+.search input:focus {{ border-color: rgba(0,0,0,0.35); }}
+.chips {{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}}
+.chip {{
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid var(--border2);
+  background: var(--bg);
+  color: var(--text2);
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: all .15s;
+}}
+.chip:hover {{ background: var(--bg2); color: var(--text); }}
+.chip.on {{
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}}
+/* ===== LIST ===== */
+.section {{
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  box-shadow: var(--sh);
+  padding: 18px 18px 6px;
+  margin-top: 14px;
+}}
+.terms-idx-cat {{
+  margin-top: 16px;
+}}
+.terms-idx-cat:first-child {{
+  margin-top: 4px;
+}}
+.terms-idx-cat h2 {{
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}}
+.terms-idx-list {{
+  list-style: none;
+  columns: 2;
+  column-gap: 22px;
+  margin-bottom: 10px;
+}}
+@media (max-width: 760px) {{
+  .terms-idx-list {{ columns: 1; }}
+  .search {{ min-width: 100%; }}
+}}
+.terms-idx-list li {{
+  break-inside: avoid;
+  margin: 0 0 8px;
+}}
+.terms-idx-list a {{
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 400;
+  font-size: 14px;
+}}
+.terms-idx-list a:hover {{ text-decoration: underline; }}
+.badge {{
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text3);
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  border-radius: 999px;
+  padding: 1px 7px;
+}}
+.hide {{ display: none !important; }}
+.footer {{
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--text3);
+  text-align: center;
+}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-<nav class="breadcrumb" aria-label="パンくず"><a href="/">トップ</a> ／ 用語解説一覧</nav>
-<h1>用語解説一覧（全記事索引）</h1>
-<p class="lead">第二種衛生管理者試験で頻出の用語を科目別に並べ、各用語の<strong>解説記事（静的HTML）</strong>へ直接リンクします。検索エンジンは本ページと各記事のリンク関係を確実に辿れます。</p>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="header-back" href="/">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 3.5L5 8l4.5 4.5"/></svg>
+      トップへ
+    </a>
+    <a class="header-logo" href="/">二衛マスター</a>
+    <span class="header-sep">/</span>
+    <span style="font-size:13px;color:var(--text3);font-weight:700">用語解説一覧</span>
+  </div>
 </header>
-<main>
+
+<main class="container">
+  <nav class="breadcrumb" aria-label="パンくずリスト">
+    <a href="/">トップ</a><span class="breadcrumb-sep">/</span><span>用語解説</span>
+  </nav>
+  <h1 class="page-title">用語解説一覧（全記事索引）</h1>
+  <p class="lead">第二種衛生管理者試験で頻出の用語を科目別にまとめ、各用語の解説記事（静的HTML）へ直接リンクします。上の検索・科目フィルタで目的の用語に素早く到達できます。</p>
+
+  <div class="meta-row">
+    <span class="pill">全 <span id="terms-total">{len(rows)}</span> 記事</span>
+    <div class="search" role="search" aria-label="用語検索">
+      <input id="q" type="search" inputmode="search" placeholder="例：WBGT、局所排気装置、衛生委員会…" autocomplete="off">
+    </div>
+  </div>
+
+  <div class="chips" aria-label="科目フィルタ">
+    <button type="button" class="chip on" data-cat="all">すべて</button>
+    <button type="button" class="chip" data-cat="関係法令">関係法令</button>
+    <button type="button" class="chip" data-cat="労働衛生">労働衛生</button>
+    <button type="button" class="chip" data-cat="労働生理">労働生理</button>
+    <button type="button" class="chip" data-cat="その他">その他</button>
+  </div>
+
+  <section class="section" aria-label="用語一覧">
 {body_html}
+    <div class="footer">
+      <span id="terms-hit"></span>
+      <div style="margin-top:10px">学習アプリ本体は <a href="/">トップ</a> から利用できます。</div>
+    </div>
+  </section>
 </main>
-<footer>
-<p>アプリ内のインタラクティブな用語カードは <a href="/">トップ</a> の「用語解説」からも利用できます。</p>
-</footer>
-</div>
+
+<script>
+(() => {{
+  // ブラウザのスクロール復元で「下に戻る」を防ぐ（常に先頭表示）
+  try {{
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  }} catch(_e) {{}}
+  window.scrollTo(0, 0);
+
+  const q = document.getElementById('q');
+  const chips = Array.from(document.querySelectorAll('.chip[data-cat]'));
+  const cats = Array.from(document.querySelectorAll('.terms-idx-cat'));
+  const totalEl = document.getElementById('terms-total');
+  const hitEl = document.getElementById('terms-hit');
+  let activeCat = 'all';
+
+  function norm(s) {{
+    return (s || '').toString().trim().toLowerCase();
+  }}
+
+  function apply() {{
+    const query = norm(q.value);
+    let shown = 0;
+
+    cats.forEach(sec => {{
+      const cat = sec.querySelector('h2')?.textContent || '';
+      const catOk = (activeCat === 'all') || (cat === activeCat);
+      const items = Array.from(sec.querySelectorAll('li'));
+      let anyInCat = 0;
+      items.forEach(li => {{
+        const a = li.querySelector('a');
+        const t = norm(a?.textContent || '');
+        const ok = catOk && (!query || t.includes(query));
+        li.classList.toggle('hide', !ok);
+        if(ok) {{ anyInCat++; shown++; }}
+      }});
+      sec.classList.toggle('hide', anyInCat === 0);
+    }});
+
+    if(totalEl) totalEl.textContent = String({len(rows)});
+    if(hitEl) {{
+      hitEl.textContent = query || activeCat !== 'all'
+        ? `表示：${{shown}}件`
+        : '';\n    }}\n  }}\n\n  q.addEventListener('input', apply);\n  chips.forEach(btn => {{\n    btn.addEventListener('click', () => {{\n      chips.forEach(b => b.classList.remove('on'));\n      btn.classList.add('on');\n      activeCat = btn.dataset.cat || 'all';\n      apply();\n    }});\n  }});\n  apply();\n}})();\n</script>
 </body>
 </html>
 """

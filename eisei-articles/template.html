@@ -54,6 +54,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script defer src="/site-analytics.js"></script>
 
 <style>
 :root {
@@ -258,42 +259,6 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   margin: 36px 0;
 }
 
-/* ===== 関連過去問リンクセクション ===== */
-.related-box {
-  background: var(--bg);
-  border: 1px solid var(--border2);
-  border-radius: var(--r2);
-  padding: 20px;
-  margin-top: 48px;
-}
-.related-box-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text3);
-  letter-spacing: .06em;
-  margin-bottom: 12px;
-}
-.related-links {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.related-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  background: var(--bg2);
-  border-radius: var(--r);
-  text-decoration: none;
-  color: var(--text);
-  font-size: 14px;
-  border: 1px solid var(--border);
-  transition: all .15s;
-}
-.related-link:hover { background: var(--bg3); border-color: var(--border2); }
-.related-link svg { width: 14px; height: 14px; stroke: var(--text3); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
-
 /* ===== FOOTER ===== */
 .site-footer {
   border-top: 1px solid var(--border);
@@ -309,6 +274,12 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </style>
 </head>
 <body>
+
+<script>
+  // ブラウザのスクロール復元で「下に戻る」を防ぐ（常に先頭表示）
+  try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch(_e) {}
+  window.scrollTo(0, 0);
+</script>
 
 <header class="site-header">
   <div class="site-header-inner">
@@ -341,7 +312,6 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
     {{body}}
   </article>
 
-  {{related_box}}
 </div>
 
 <footer class="site-footer">
