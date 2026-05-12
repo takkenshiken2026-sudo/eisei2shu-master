@@ -411,6 +411,12 @@ a:hover {{ opacity: 0.9; }}
 
 <script>
 (() => {{
+  // ブラウザのスクロール復元で「下に戻る」を防ぐ（常に先頭表示）
+  try {{
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  }} catch(_e) {{}}
+  window.scrollTo(0, 0);
+
   const q = document.getElementById('q');
   const cats = Array.from(document.querySelectorAll('.terms-idx-cat'));
   const totalEl = document.getElementById('terms-total');
