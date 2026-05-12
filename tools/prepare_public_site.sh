@@ -12,6 +12,7 @@ for f in \
   about.html \
   privacy-terms.html \
   site-pages.css \
+  site-analytics.js \
   CNAME \
   robots.txt \
   sitemap.xml \

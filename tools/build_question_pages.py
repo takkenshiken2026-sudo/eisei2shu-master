@@ -251,6 +251,7 @@ def build_question_html(page: dict, rel_path: Path) -> str:
 <meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:url" content="{html.escape(canonical)}">
 <meta name="twitter:card" content="summary">
+<script defer src="/site-analytics.js"></script>
 <link rel="stylesheet" href="{html.escape(css_href)}">
 <script type="application/ld+json">
 {json.dumps(json_ld, ensure_ascii=False, indent=2)}
@@ -311,6 +312,7 @@ def write_q_hub(out_root: Path, n_past: int, n_orig: int, base_url: str, site_pr
 <title>問題一覧（静的ページ）｜二衛マスター</title>
 <meta name="description" content="第二種衛生管理者試験対策「二衛マスター」の過去問・オリジナル問題の静的ページ入口。各問の URL は検索・共有に利用できます。">
 <link rel="canonical" href="{html.escape(canonical)}">
+<script defer src="/site-analytics.js"></script>
 <link rel="stylesheet" href="{html.escape(css_href)}">
 </head>
 <body class="q-static-body">
