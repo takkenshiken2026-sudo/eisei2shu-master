@@ -2372,6 +2372,7 @@ function awardBadgeById(id, u){
   if(u.badges[id]) return null;
   u.badges[id] = Date.now();
   saveUser(u);
+  enqueueBadgeEarnPopups([badge]);
   return badge;
 }
 
@@ -3950,6 +3951,7 @@ function answerIchi(userAnswer) {
     saveAnswerToSupabase(baseQ, pickedIdx, correct, elapsed);
     const newBadges = checkAndAwardBadges({ correct, sessionResults: [], u });
     if (newBadges.length) saveUser(u);
+    enqueueBadgeEarnPopups(newBadges);
     checkMissionAllComplete();
   }
   if (u) {
@@ -4975,6 +4977,7 @@ function pickOpt(i){
   // Badge check (per-answer)
   const newBadges=checkAndAwardBadges({correct,sessionResults:quizState.sessionResults,u});
   if(newBadges.length) saveUser(u);
+  enqueueBadgeEarnPopups(newBadges);
   checkMissionAllComplete();
   renderBookmarkNote(q, 'bookmark-note-wrap', { onlyAfterPick: true });
 }
@@ -5232,10 +5235,15 @@ function saveMissionCert(){
   a.click();
 }
 
+function dismissMissionPopup(){
+  document.getElementById('mission-popup-overlay')?.classList.remove('open');
+  setTimeout(tryOpenNextBadgeEarnPopup, 40);
+}
 function closeMissionPopup(e){
-  if(e.target === document.getElementById('mission-popup-overlay')){
-    document.getElementById('mission-popup-overlay').classList.remove('open');
-  }
+  const ov = document.getElementById('mission-popup-overlay');
+  if (!ov) return;
+  if (e && e.target !== ov) return;
+  dismissMissionPopup();
 }
 
 function canvasToBlob(canvas){
@@ -5251,6 +5259,30 @@ async function copyImageBlobToClipboard(blob){
 }
 
 let currentBadgeShareId = null;
+/** バッジ獲得モーダルを順に出すキュー（ミッション完了・レベルアップと競合しないよう遅延表示） */
+let _badgeEarnQueue = [];
+function anyBadgeBlockingOverlayOpen(){
+  const ids = ['mission-popup-overlay','level-up-share-overlay','support-letter-overlay','study-diary-nudge-overlay','study-diary-overlay','study-diary-timeline-overlay'];
+  for (let i = 0; i < ids.length; i++) {
+    const el = document.getElementById(ids[i]);
+    if (el && el.classList.contains('open')) return true;
+  }
+  return false;
+}
+function enqueueBadgeEarnPopups(newBadges){
+  if (!newBadges || !newBadges.length) return;
+  newBadges.forEach(function (b) { _badgeEarnQueue.push(b.id); });
+  setTimeout(tryOpenNextBadgeEarnPopup, 80);
+}
+function tryOpenNextBadgeEarnPopup(){
+  const badgeOv = document.getElementById('badge-share-overlay');
+  if (badgeOv && badgeOv.classList.contains('open')) return;
+  if (anyBadgeBlockingOverlayOpen()) return;
+  if (!_badgeEarnQueue.length) return;
+  const id = _badgeEarnQueue.shift();
+  openBadgeShare(id);
+}
+
 const SHARE_URL = 'https://eisei2shu-master.jp';
 const SHARE_TWITTER_HASHTAGS = '衛生管理者,第二種衛生管理者,二衛マスター';
 /** X Web Intent 用：本文・公式URL・ハッシュタグをパラメータで渡す（投稿欄に読み込まれる） */
@@ -5278,6 +5310,10 @@ function shareSessionResultToX(){
 function getBadgeShareText(badge){
   return `二衛マスター（第二種衛生管理者試験）で「${badge.name}」バッジを獲得しました。\n${badge.desc}\n合格を目指して学習を続けています。`;
 }
+function dismissBadgeShareOverlay(){
+  document.getElementById('badge-share-overlay')?.classList.remove('open');
+  setTimeout(tryOpenNextBadgeEarnPopup, 40);
+}
 function openBadgeShare(id){
   const u=getUserData();
   if(!u || !u.badges || !u.badges[id]) return;
@@ -5293,7 +5329,7 @@ function openBadgeShare(id){
 }
 function closeBadgeShare(e){
   const overlay=document.getElementById('badge-share-overlay');
-  if(!e || e.target===overlay) overlay?.classList.remove('open');
+  if(!e || e.target===overlay) dismissBadgeShareOverlay();
 }
 
 const SUPPORT_LETTER_DEPRECATED_IDS = new Set([
@@ -5721,6 +5757,10 @@ function drawLevelUpShareCard(lu){
   ctx.fillText(`累計 ${lu.totalAnswered} 問解答`, W/2, 576);
   return canvas;
 }
+function dismissLevelUpShareOverlay(){
+  document.getElementById('level-up-share-overlay')?.classList.remove('open');
+  setTimeout(tryOpenNextBadgeEarnPopup, 40);
+}
 function openLevelUpShare(lu){
   if(!lu) return;
   currentLevelUpShare=lu;
@@ -5733,7 +5773,7 @@ function openLevelUpShare(lu){
 }
 function closeLevelUpShare(e){
   const overlay=document.getElementById('level-up-share-overlay');
-  if(!e || e.target===overlay) overlay?.classList.remove('open');
+  if(!e || e.target===overlay) dismissLevelUpShareOverlay();
 }
 function shareLevelUpToX(){
   const lu=currentLevelUpShare;
@@ -6014,8 +6054,16 @@ function showScore(){
   // session-end badge check
   const sessionNewBadges=checkAndAwardBadges({correct,sessionResults:res,u});
   if(sessionNewBadges.length) saveUser(u);
+  if(sessionNewBadges.length){
+    sessionNewBadges.forEach(function(b){ _badgeEarnQueue.push(b.id); });
+  }
   // 復習からの場合はスコア画面をスキップして復習リストに戻る
-  if(quizState.fromReview){ quizState.fromReview=false; gotoPage('review'); return; }
+  if(quizState.fromReview){
+    quizState.fromReview=false;
+    gotoPage('review');
+    if(sessionNewBadges.length) setTimeout(tryOpenNextBadgeEarnPopup, 400);
+    return;
+  }
   gotoPage('score');
   // Session-end message
   const fb = getSessionFeedback(pct, res.length, res, u);
@@ -6056,6 +6104,8 @@ function showScore(){
     </div>`).join('');
   if(fb.levelUp){
     setTimeout(()=>openLevelUpShare(fb.levelUp), 380);
+  } else if(sessionNewBadges.length){
+    setTimeout(tryOpenNextBadgeEarnPopup, 450);
   }
 }
 
@@ -6788,7 +6838,7 @@ window.addEventListener('load', function(){
         Xに投稿してシェアする
       </button>
     </div>
-    <button class="mission-popup-close" onclick="document.getElementById('mission-popup-overlay').classList.remove('open')">閉じる</button>
+    <button class="mission-popup-close" onclick="dismissMissionPopup()">閉じる</button>
   </div>
 </div>
 <!-- SUPPORT LETTER POPUP -->
@@ -6815,7 +6865,7 @@ window.addEventListener('load', function(){
         Xに投稿する
       </button>
     </div>
-    <button class="mission-popup-close" onclick="document.getElementById('level-up-share-overlay').classList.remove('open')">閉じる</button>
+    <button class="mission-popup-close" onclick="dismissLevelUpShareOverlay()">閉じる</button>
   </div>
 </div>
 <!-- BADGE SHARE POPUP -->
@@ -6833,7 +6883,7 @@ window.addEventListener('load', function(){
         Xに投稿する
       </button>
     </div>
-    <button class="mission-popup-close" onclick="document.getElementById('badge-share-overlay').classList.remove('open')">閉じる</button>
+    <button class="mission-popup-close" onclick="dismissBadgeShareOverlay()">閉じる</button>
   </div>
 </div>
 <!-- STUDY DIARY NUDGE（当日解答50回以上・1日1回まで。回数は同一問題の再解答も含む） -->
