@@ -74,7 +74,7 @@
         {"@type": "ListItem", "position": 1, "name": "トップ", "item": "https://eisei2shu-master.jp/"},
         {"@type": "ListItem", "position": 2, "name": "過去問", "item": "https://eisei2shu-master.jp/#past"},
         {"@type": "ListItem", "position": 3, "name": "オリジナル問題", "item": "https://eisei2shu-master.jp/#orig"},
-        {"@type": "ListItem", "position": 4, "name": "用語解説", "item": "https://eisei2shu-master.jp/#glossary"}
+        {"@type": "ListItem", "position": 4, "name": "用語解説", "item": "https://eisei2shu-master.jp/terms/"}
       ]
     }
   ]
@@ -3430,37 +3430,38 @@ const PAGE_SEO = {
   'past-config': {
     title: '過去問演習｜二衛マスター（第二種衛生管理者試験）',
     desc:  '第二種衛生管理者試験の過去問を年度別・科目別に絞り込んで学習。関係法令・労働衛生・労働生理の3科目に対応。',
-    path:  '/quiz/past/',
+    // canonical は静的ホストで実在するトップ＋ハッシュ（/quiz/past/ は404になりうる）
+    path:  '/#past',
     hash:  '#past'
   },
   'orig': {
     title: 'オリジナル問題｜二衛マスター（第二種衛生管理者試験）',
     desc:  '第二種衛生管理者試験対策のオリジナル練習問題。関係法令・労働衛生・労働生理の単元別データを収録（デモ）。',
-    path:  '/quiz/orig/',
+    path:  '/#orig',
     hash:  '#orig'
   },
   'dash': {
     title: '記録・学習分析｜二衛マスター（第二種衛生管理者試験）',
     desc:  '学習日記カレンダー・獲得バッジ・レベルや分野別正答率で、学習の振り返りと弱点把握ができます。',
-    path:  '/dashboard/',
+    path:  '/#dash',
     hash:  '#dash'
   },
   'review': {
     title: '復習｜二衛マスター（第二種衛生管理者試験）',
     desc:  '不正解・未解答の演習問題を分野別にまとめて復習。弱点問題を集中的に解いて定着率を上げる。',
-    path:  '/review/',
+    path:  '/#review',
     hash:  '#review'
   },
   'glossary': {
     title: '用語解説｜二衛マスター（第二種衛生管理者試験）',
     desc:  '第二種衛生管理者試験の重要用語を図解でわかりやすく解説。関係法令・労働衛生・労働生理の必須語句を網羅。',
-    path:  '/glossary/',
+    path:  '/terms/',
     hash:  '#glossary'
   },
   'ichimondou': {
     title: '一問一答｜二衛マスター（第二種衛生管理者試験）',
     desc:  '第二種衛生管理者試験の重要知識を一問一答形式で確認。短時間で基礎知識の定着を進められます。',
-    path:  '/quiz/ichimondou/',
+    path:  '/#ichimondou',
     hash:  '#ichimondou'
   }
 };
