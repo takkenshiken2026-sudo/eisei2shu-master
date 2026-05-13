@@ -1422,9 +1422,6 @@ body.is-solving .site-footer{display:none!important}
         <a class="topnav-link" id="tnav-review" href="/review/" onclick="event.preventDefault();gotoPage('review')">
           <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>復習
         </a>
-        <a class="topnav-link" id="tnav-articles" href="/articles/">
-          <svg viewBox="0 0 16 16"><path d="M4 2.5h8a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1v-10a1 1 0 011-1z"/><path d="M6 6h4M6 9h4M6 12h2"/></svg>試験ガイド
-        </a>
         <a class="topnav-link" id="tnav-glossary" href="/terms/">
           <svg viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>用語解説
         </a>
@@ -1496,9 +1493,6 @@ body.is-solving .site-footer{display:none!important}
       </a>
       <a class="mobile-nav-item" id="mnav-review" href="/review/" onclick="event.preventDefault();gotoPage('review');closeMobileDrawer()">
         <svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h8M2 12h10"/></svg>復習
-      </a>
-      <a class="mobile-nav-item" id="mnav-articles" href="/articles/" onclick="closeMobileDrawer()">
-        <svg viewBox="0 0 16 16"><path d="M4 2.5h8a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1v-10a1 1 0 011-1z"/><path d="M6 6h4M6 9h4M6 12h2"/></svg>試験ガイド
       </a>
       <a class="mobile-nav-item" id="mnav-glossary" href="/terms/" onclick="closeMobileDrawer()">
         <svg viewBox="0 0 16 16"><rect x="2.5" y="2" width="11" height="12" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>用語解説
@@ -1871,7 +1865,7 @@ body.is-solving .site-footer{display:none!important}
       <div id="glossary-list">
 <!-- SEO: 静的用語解説（JS無効時・クローラ向け抜粋。全件は docs/glossary-terms-checklist.csv を fetch して表示） -->
 <section class="glos-static-section" aria-label="用語解説一覧（抜粋）">
-<p class="glos-static-intro"><strong><a href="/terms/">用語解説一覧（静的HTML）</a></strong>と<strong><a href="/articles/">試験・学習ガイド</a></strong>で、クローラが確実に辿れる実リンクから各記事へ誘導します。下のインタラクティブ一覧は JavaScript で <code>docs/glossary-terms-checklist.csv</code> を読み込みます（<code>file://</code> では取得できない場合があるため、簡易サーバー推奨）。以下は用語の抜粋です。</p>
+<p class="glos-static-intro"><strong><a href="/terms/">用語解説一覧（静的HTML）</a></strong>と<strong><a href="/articles/">試験ガイド</a></strong>で、クローラが確実に辿れる実リンクから各記事へ誘導します。下のインタラクティブ一覧は JavaScript で <code>docs/glossary-terms-checklist.csv</code> を読み込みます（<code>file://</code> では取得できない場合があるため、簡易サーバー推奨）。以下は用語の抜粋です。</p>
 <div class="glos-cat-section" data-cat="law">
 <h3 class="glos-cat-heading">関係法令</h3>
 <article class="glos-static-card" itemscope itemtype="https://schema.org/DefinedTerm">
@@ -1928,7 +1922,7 @@ body.is-solving .site-footer{display:none!important}
           <li>労働衛生（作業環境管理・温熱・化学物質・局所排気・測定など）</li>
           <li>労働生理（解剖生理・衛生化・衛生物理・有害因子の作用など）</li>
         </ul>
-        <p style="margin-top:24px;font-size:14px"><a href="about.html">このサイトについて</a> ・ <a href="/articles/">試験・学習ガイド</a> ・ <a href="privacy-terms.html">利用規約・プライバシー・免責</a></p>
+        <p style="margin-top:24px;font-size:14px"><a href="about.html">このサイトについて</a> ・ <a href="/articles/">試験ガイド</a> ・ <a href="privacy-terms.html">利用規約・プライバシー・免責</a></p>
       </div>
     </noscript>
 
@@ -1945,7 +1939,7 @@ body.is-solving .site-footer{display:none!important}
         <span class="site-footer-sep" aria-hidden="true"></span>
         <nav class="site-footer-legal" aria-label="サイト情報・ポリシー">
           <a href="about.html">このサイトについて</a>
-          <a href="/articles/">試験・学習ガイド</a>
+          <a href="/articles/">試験ガイド</a>
           <a href="privacy-terms.html">利用規約・プライバシー・免責</a>
           <a href="https://forms.gle/51E5d6D41BZETjhY6" target="_blank" rel="noopener noreferrer">お問い合わせ</a>
         </nav>
