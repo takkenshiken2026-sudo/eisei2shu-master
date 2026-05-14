@@ -10,6 +10,7 @@ cd "$ROOT"
 for f in \
   index.html \
   about.html \
+  related-sites.html \
   privacy-terms.html \
   site-pages.css \
   CNAME \
