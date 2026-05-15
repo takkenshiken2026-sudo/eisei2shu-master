@@ -38,7 +38,10 @@ def main() -> None:
     ]
     for f in files:
         slug = f.name
-        loc = f"{base}/terms/{slug}"
+        if slug == "index.html":
+            loc = f"{base}/terms/"
+        else:
+            loc = f"{base}/terms/{slug}"
         try:
             mtime = dt.datetime.fromtimestamp(f.stat().st_mtime, tz=dt.timezone.utc)
             lastmod = mtime.date().isoformat()
