@@ -31,6 +31,8 @@ from xml.sax.saxutils import escape as xml_escape
 _TOOLS_DIR = Path(__file__).resolve().parent
 FORM_URL_EISEI2 = "https://forms.gle/51E5d6D41BZETjhY6"
 SITE_COPYRIGHT_EISEI2 = "© 2026 二衛マスター"
+BRAND_NAME = "二衛マスター"
+EXAM_NAME_OFFICIAL = "第二種衛生管理者試験"
 SESSION_ORDER = ("cat90", "zenki", "koki", "apr", "oct")
 if str(_TOOLS_DIR) not in sys.path:
     sys.path.insert(0, str(_TOOLS_DIR))
@@ -447,13 +449,20 @@ def write_q_past_index(
     meta_robots = '<meta name="robots" content="index, follow">'
     sitemap_href = html.escape(href_repo_root(rel, "sitemap.xml"))
 
+    exam_esc = html.escape(EXAM_NAME_OFFICIAL)
+    brand_esc = html.escape(BRAND_NAME)
+    meta_desc = (
+        f"{BRAND_NAME}が収録する{EXAM_NAME_OFFICIAL}の過去問を、"
+        "開催回・科目（関係法令・労働衛生・労働生理）別の静的ページで一覧しています。"
+        f"過去問 {n_past} 問。オリジナル問題 {n_orig} 問は学習アプリから利用できます。"
+    )
     body = f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>過去問一覧｜二衛マスター（第二種衛生管理者試験）</title>
-<meta name="description" content="第二種衛生管理者試験の過去問を開催回・科目別の静的ページで一覧しています。過去問 {n_past} 問収録。オリジナル問題 {n_orig} 問は学習アプリから利用できます。">
+<title>過去問一覧（{exam_esc}・静的一覧）｜{brand_esc}</title>
+<meta name="description" content="{html.escape(meta_desc)}">
 {meta_robots}
 <link rel="canonical" href="{html.escape(canonical)}">
 <script defer src="/site-analytics.js"></script>
@@ -461,18 +470,18 @@ def write_q_past_index(
 </head>
 <body class="q-static-body">
 <header class="q-static-header">
-  <p class="q-static-brand"><a href="{html.escape(root_idx)}">二衛マスター</a>（第二種衛生管理者試験）</p>
+  <p class="q-static-brand"><a href="{html.escape(root_idx)}">{brand_esc}</a>（{exam_esc}）</p>
   <nav aria-label="パンくず">
     <ol class="q-breadcrumb">
       <li><a href="{html.escape(root_idx)}">トップ</a></li>
-      <li aria-current="page">過去問一覧</li>
+      <li aria-current="page">過去問一覧（{exam_esc}）</li>
     </ol>
   </nav>
 </header>
 <main class="q-static-main">
-  <h1 class="q-h1">過去問一覧</h1>
-  <p class="q-meta">過去問 <strong>{n_past}</strong> 問（静的）・オリジナル <strong>{n_orig}</strong> 問（アプリ）</p>
-  <p class="glos-static-intro q-index-intro">開催回・科目ごとの静的ページです。<strong><a href="{html.escape(root_idx)}#past">アプリで過去問</a></strong>では開催年・科目の絞り込みや学習記録が使えます。オリジナル問題は <strong><a href="{html.escape(root_idx)}#orig">アプリのオリジナル</a></strong>から。</p>
+  <h1 class="q-h1">{exam_esc}｜過去問一覧（静的一覧）</h1>
+  <p class="q-meta">{exam_esc}・過去問 <strong>{n_past}</strong> 問（静的）／オリジナル <strong>{n_orig}</strong> 問（アプリ）</p>
+  <p class="glos-static-intro q-index-intro">本ページは<strong>{exam_esc}</strong>の過去問を、各開催回ごとの単位で科目別にまとめた静的一覧です。<strong><a href="{html.escape(root_idx)}#past">アプリで過去問</a></strong>では開催年・科目の絞り込みや学習記録が使えます。オリジナル問題は <strong><a href="{html.escape(root_idx)}#orig">アプリのオリジナル</a></strong>から。</p>
   <p class="q-meta"><a href="{sitemap_href}">サイトマップ（全ページ）</a></p>
   {body_sections}
   <p class="q-app-link"><a href="{html.escape(root_idx)}#past">アプリで過去問を開く</a></p>
@@ -588,8 +597,15 @@ def main() -> None:
         public_url(base_url, site_prefix, ""),
         public_url(base_url, site_prefix, "about.html"),
         public_url(base_url, site_prefix, "privacy-terms.html"),
-        hub_canonical,
     ]
+    for rel_static in (
+        "related-sites.html",
+        "terms/index.html",
+        "articles/index.html",
+    ):
+        if (repo_root / rel_static).is_file():
+            static_urls.append(public_url(base_url, site_prefix, rel_static))
+    static_urls.append(hub_canonical)
     all_sitemap_urls = static_urls + urls_for_sitemap
 
     sitemap_lastmod = dt.datetime.now(dt.timezone.utc).date().isoformat()

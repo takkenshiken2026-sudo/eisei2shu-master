@@ -11,7 +11,8 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://eisei2shu-master.jp/related-sites.html</loc>
+    <loc>https://eisei2shu-master.jp/articles/index.html</loc>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
@@ -3621,6 +3622,16 @@
   </url>
   <url>
     <loc>https://eisei2shu-master.jp/q/past/r07/zenki/rights/20/</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://eisei2shu-master.jp/related-sites.html</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://eisei2shu-master.jp/terms/index.html</loc>
     <lastmod>2026-05-15</lastmod>
     <changefreq>monthly</changefreq>
   </url>
