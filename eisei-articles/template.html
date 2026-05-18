@@ -75,7 +75,7 @@
   --r: 6px;
   --r2: 10px;
   --sh: 0 1px 3px rgba(0,0,0,0.07);
-  --max-w: 720px;
+  --max-w: 840px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: #f0f0f1; color: var(--text); -webkit-font-smoothing: antialiased; }
@@ -182,7 +182,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 }
 
 /* ===== ARTICLE BODY ===== */
-.article-body { color: var(--text); }
+.article-body { color: var(--ink); }
 
 .article-body h2 {
   font-size: 19px;
@@ -202,6 +202,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 .article-body p {
   margin-bottom: 16px;
   line-height: 1.85;
+  color: var(--ink);
+  font-weight: 400;
 }
 .article-body ul, .article-body ol {
   margin: 0 0 16px 1.4em;
@@ -234,6 +236,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   border-bottom: 1px solid var(--border);
   vertical-align: top;
   line-height: 1.65;
+  color: var(--ink);
+  font-weight: 400;
 }
 .article-body tr:last-child td { border-bottom: none; }
 .article-body tr:nth-child(even) td { background: var(--bg2); }
@@ -281,20 +285,30 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 .term-fact-list div {
   display: grid;
   grid-template-columns: 120px 1fr;
-  gap: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
+  gap: 0;
+  border: 1px solid var(--border);
+  border-bottom: 0;
 }
 .term-fact-list div:last-child {
-  padding-bottom: 0;
-  border-bottom: 0;
+  border-bottom: 1px solid var(--border);
 }
 .term-fact-list dt {
   font-weight: 700;
-  color: var(--ink);
+  color: #1f2937;
+  background: #f8fafc;
+  padding: 10px 12px;
+  border-right: 1px solid var(--border);
 }
 .term-fact-list dd {
   margin: 0;
+  background: #ffffff;
+  color: var(--ink);
+  padding: 10px 12px;
+}
+.term-fact-list dd a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .term-info-box details {
   background: var(--bg);
@@ -317,7 +331,10 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 @media(max-width: 600px) {
   .term-fact-list div {
     grid-template-columns: 1fr;
-    gap: 4px;
+  }
+  .term-fact-list dt {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
   }
 }
 
@@ -334,11 +351,11 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   padding: 24px 20px;
   text-align: center;
   font-size: 12px;
-  color: var(--text3);
+  color: var(--text2);
   background: var(--bg);
   margin-top: 40px;
 }
-.site-footer a { color: var(--text3); text-decoration: none; }
+.site-footer a { color: var(--ink); text-decoration: none; font-weight: 700; }
 .site-footer a:hover { color: var(--text); }
 </style>
 </head>
@@ -369,11 +386,6 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
     <span class="breadcrumb-sep">›</span>
     <span>{{h1}}</span>
   </nav>
-
-  <div class="article-meta">
-    <span class="meta-category">{{category}}</span>
-    <span class="meta-updated">更新日：{{updated}}</span>
-  </div>
 
   <h1 class="article-title">{{title}}</h1>
 

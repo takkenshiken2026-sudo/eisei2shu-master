@@ -75,7 +75,7 @@
   --r: 6px;
   --r2: 10px;
   --sh: 0 1px 3px rgba(0,0,0,0.07);
-  --max-w: 720px;
+  --max-w: 840px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: #f0f0f1; color: var(--text); -webkit-font-smoothing: antialiased; }
@@ -182,7 +182,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 }
 
 /* ===== ARTICLE BODY ===== */
-.article-body { color: var(--text); }
+.article-body { color: var(--ink); }
 
 .article-body h2 {
   font-size: 19px;
@@ -202,6 +202,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 .article-body p {
   margin-bottom: 16px;
   line-height: 1.85;
+  color: var(--ink);
+  font-weight: 400;
 }
 .article-body ul, .article-body ol {
   margin: 0 0 16px 1.4em;
@@ -234,6 +236,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   border-bottom: 1px solid var(--border);
   vertical-align: top;
   line-height: 1.65;
+  color: var(--ink);
+  font-weight: 400;
 }
 .article-body tr:last-child td { border-bottom: none; }
 .article-body tr:nth-child(even) td { background: var(--bg2); }
@@ -281,20 +285,30 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 .term-fact-list div {
   display: grid;
   grid-template-columns: 120px 1fr;
-  gap: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
+  gap: 0;
+  border: 1px solid var(--border);
+  border-bottom: 0;
 }
 .term-fact-list div:last-child {
-  padding-bottom: 0;
-  border-bottom: 0;
+  border-bottom: 1px solid var(--border);
 }
 .term-fact-list dt {
   font-weight: 700;
-  color: var(--ink);
+  color: #1f2937;
+  background: #f8fafc;
+  padding: 10px 12px;
+  border-right: 1px solid var(--border);
 }
 .term-fact-list dd {
   margin: 0;
+  background: #ffffff;
+  color: var(--ink);
+  padding: 10px 12px;
+}
+.term-fact-list dd a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 .term-info-box details {
   background: var(--bg);
@@ -317,7 +331,10 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 @media(max-width: 600px) {
   .term-fact-list div {
     grid-template-columns: 1fr;
-    gap: 4px;
+  }
+  .term-fact-list dt {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
   }
 }
 
@@ -334,11 +351,11 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   padding: 24px 20px;
   text-align: center;
   font-size: 12px;
-  color: var(--text3);
+  color: var(--text2);
   background: var(--bg);
   margin-top: 40px;
 }
-.site-footer a { color: var(--text3); text-decoration: none; }
+.site-footer a { color: var(--ink); text-decoration: none; font-weight: 700; }
 .site-footer a:hover { color: var(--text); }
 </style>
 </head>
@@ -370,27 +387,25 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
     <span>不感蒸泄・発汗とは？熱放散の仕組みと湿度の影響を整理</span>
   </nav>
 
-  <div class="article-meta">
-    <span class="meta-category">労働生理</span>
-    <span class="meta-updated">更新日：2026-05-12</span>
-  </div>
-
   <h1 class="article-title">不感蒸泄・発汗とは？熱放散の仕組みと湿度の影響を整理【第二種衛生管理者試験】</h1>
 
   <article class="article-body">
-    <p>不感蒸泄と発汗は体温調節の主要な手段です。湿度との関係が熱中症リスクに直結するため試験頻出です。</p>
+    <p>不感蒸泄と発汗は体温調節の主要な手段です。湿度との関係が熱中症リスクに直結するため試験頻出です。この記事では、不感蒸泄・発汗の意味、試験で問われやすい観点、関連用語との違いを労働生理の復習に使える形で整理します。</p>
 
 <nav class="term-toc" aria-label="目次">
   <h2>目次</h2>
   <ol>
       <li><a href="#term-reliability">この記事の信頼性について</a></li>
-      <li><a href="#term-official-info">公式情報の確認</a></li>
-      <li><a href="#term-basic-info">記事の基本情報</a></li>
       <li><a href="#term-can-do">この記事でできること</a></li>
       <li><a href="#term-section-1">不感蒸泄と発汗の比較</a></li>
       <li><a href="#term-section-2">湿度と発汗の効率</a></li>
       <li><a href="#term-section-3">試験で狙われる頻出ポイント</a></li>
+      <li><a href="#term-section-4">試験での位置づけ</a></li>
+      <li><a href="#term-section-5">似た用語との違い</a></li>
+      <li><a href="#term-section-6">復習時の確認手順</a></li>
       <li><a href="#term-faq">よくある質問</a></li>
+      <li><a href="#term-basic-info">記事の基本情報</a></li>
+      <li><a href="#term-official-info">公式情報の確認</a></li>
       <li><a href="#term-related">関連記事</a></li>
   </ol>
 </nav>
@@ -401,38 +416,23 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
     <div><dt>執筆者</dt><dd>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</dd></div>
     <div><dt>確認者</dt><dd>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</dd></div>
     <div><dt>事実確認日</dt><dd>2026-05-12</dd></div>
+    <div><dt>主な参照元</dt><dd><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
+<a href="https://anzeninfo.mhlw.go.jp/" rel="nofollow noopener" target="_blank">厚生労働省 職場のあんぜんサイト</a>
+<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></dd></div>
+    <div><dt>独自メモ</dt><dd>不感蒸泄・発汗について、第二種衛生管理者試験の労働生理で問われやすい定義、区分、数値、ひっかけを中心に整理しています。</dd></div>
     <div><dt>更新方針</dt><dd>試験要項、公式ページ、関係法令に変更が確認されたタイミングで本文と参照元を見直します。</dd></div>
-  </dl>
-</section>
-
-<section id="term-official-info" class="term-info-box">
-  <h2>公式情報の確認</h2>
-  <p>不感蒸泄・発汗は、第二種衛生管理者試験の学習で押さえたい用語です。制度、数値、義務の有無は年度や法令改正で変わることがあるため、受験前には公式情報も確認してください。</p>
-  <ul>
-      <li><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a></li>
-      <li><a href="https://anzeninfo.mhlw.go.jp/" rel="nofollow noopener" target="_blank">厚生労働省 職場のあんぜんサイト</a></li>
-      <li><a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></li>
-  </ul>
-</section>
-
-<section id="term-basic-info" class="term-info-box">
-  <h2>記事の基本情報</h2>
-  <dl class="term-fact-list">
-    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
-    <div><dt>分野</dt><dd>労働生理</dd></div>
-    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
-    <div><dt>検索意図</dt><dd>不感蒸泄・発汗の意味、試験で問われる観点、復習時の確認ポイントを整理すること。</dd></div>
   </dl>
 </section>
 
 <section id="term-can-do" class="term-info-box">
   <h2>この記事でできること</h2>
-  <p>この記事では、不感蒸泄・発汗の基本的な意味を確認し、表や頻出ポイントを使って試験で迷いやすい部分を整理できます。読み終えたら、関連用語と過去問を合わせて確認し、知識を選択肢で使える状態に近づけてください。</p>
+  <p>不感蒸泄・発汗の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</p>
   <ul>
-    <li>不感蒸泄・発汗の定義と位置づけを確認する</li>
-    <li>表で重要な条件や数値を整理する</li>
+    <li>不感蒸泄・発汗の定義を確認する</li>
+    <li>表で区分や数値を整理する</li>
     <li>頻出の誤り選択肢を復習する</li>
-    <li>関連する用語解説や過去問へ進む</li>
+    <li>関連用語を読む</li>
+    <li>過去問で出題形式を確認する</li>
   </ul>
 </section>
 
@@ -499,6 +499,14 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <li>「安静時の放熱は発汗が主要な手段」→ <strong>誤り</strong>（安静時は輻射・対流が主で、発汗の割合が増えるのは高温環境や運動時）</li>
 <li>「不感蒸泄量は1日0に近い」→ <strong>誤り</strong>（安静時でも約700〜900mL程度ある）</li>
 </ul>
+<h2 id="term-section-4">試験での位置づけ</h2>
+<p>不感蒸泄・発汗は、第二種衛生管理者試験の労働生理で用語の意味だけでなく、制度上の位置づけや実務上の使われ方まで問われやすいテーマです。選択肢では、対象者、実施時期、義務の主体、数値条件などが少しずつ言い換えられます。本文の表や頻出ポイントを使い、まず「何を管理するための用語か」を押さえてから細部を確認すると整理しやすくなります。</p>
+<hr />
+<h2 id="term-section-5">似た用語との違い</h2>
+<p>不感蒸泄・発汗は、名称や目的が近い別の用語と混同しやすい場合があります。覚えるときは、定義を単独で暗記するだけでなく、「何を対象にするか」「誰が実施するか」「どの場面で必要になるか」を並べて確認してください。比較表がある記事では、横並びで違いを見ておくと、試験本番でひっかけ選択肢を判断しやすくなります。</p>
+<hr />
+<h2 id="term-section-6">復習時の確認手順</h2>
+<p>不感蒸泄・発汗を復習するときは、最初に定義を一文で説明できるか確認し、次に表の数値、区分、対象範囲を見直します。その後、頻出ポイントの誤り例を読んで、どの言い換えが誤答になりやすいかを確認してください。最後に関連用語や過去問へ進むと、知識を文章の暗記ではなく選択肢で使える形にできます。</p>
 <hr />
 
 <section id="term-faq" class="term-info-box">
@@ -511,6 +519,26 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
     <summary>公式情報も確認した方がよいですか？</summary>
     <p>数値、対象業務、保存期間、選任要件などが関係する用語は、公式情報の確認が特に重要です。この記事は学習用の整理として使い、受験前や実務で使う前には安全衛生技術試験協会、厚生労働省、e-Gov法令検索なども確認してください。</p>
   </details>
+</section>
+
+<section id="term-basic-info" class="term-info-box">
+  <h2>記事の基本情報</h2>
+  <dl class="term-fact-list">
+    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
+    <div><dt>分野</dt><dd>労働生理</dd></div>
+    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
+    <div><dt>検索意図</dt><dd>不感蒸泄・発汗の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</dd></div>
+  </dl>
+</section>
+
+<section id="term-official-info" class="term-info-box">
+  <h2>公式情報の確認</h2>
+  <p>不感蒸泄・発汗は、第二種衛生管理者試験の学習で押さえたい用語です。制度、数値、義務の有無は年度や法令改正で変わることがあるため、受験前には公式情報も確認してください。</p>
+  <ul>
+    <li><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a></li>
+    <li><a href="https://anzeninfo.mhlw.go.jp/" rel="nofollow noopener" target="_blank">厚生労働省 職場のあんぜんサイト</a></li>
+    <li><a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></li>
+  </ul>
 </section>
 
 <section id="term-related" class="term-info-box">

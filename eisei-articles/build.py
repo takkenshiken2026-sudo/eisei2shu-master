@@ -108,13 +108,13 @@ def add_heading_ids(html_body):
 def build_toc(existing_headings):
     items = [
         ("term-reliability", "この記事の信頼性について"),
-        ("term-official-info", "公式情報の確認"),
-        ("term-basic-info", "記事の基本情報"),
         ("term-can-do", "この記事でできること"),
     ]
     items.extend(existing_headings)
     items.extend([
         ("term-faq", "よくある質問"),
+        ("term-basic-info", "記事の基本情報"),
+        ("term-official-info", "公式情報の確認"),
         ("term-related", "関連記事"),
     ])
     links = "\n".join(
@@ -130,53 +130,95 @@ def build_toc(existing_headings):
 </nav>"""
 
 
+def parse_sources(value):
+    """frontmatterの primary_sources を表示用の [(label, url)] にする。"""
+    if not value:
+        return list(PRIMARY_SOURCES)
+    if isinstance(value, (list, tuple)):
+        rows = value
+    else:
+        rows = str(value).split(";")
+
+    sources = []
+    for row in rows:
+        if isinstance(row, dict):
+            label = row.get("label") or row.get("name")
+            url = row.get("url")
+        else:
+            label, sep, url = str(row).partition("|")
+            if not sep:
+                continue
+        label = str(label or "").strip()
+        url = str(url or "").strip()
+        if label and url and "example.com" not in url:
+            sources.append((label, url))
+    return sources or list(PRIMARY_SOURCES)
+
+
+def split_items(value, fallback):
+    if not value:
+        return fallback
+    if isinstance(value, (list, tuple)):
+        return [str(item).strip() for item in value if str(item).strip()]
+    return [item.strip() for item in str(value).split(";") if item.strip()]
+
+
 def build_top_seo_sections(meta, h1, title, existing_headings):
-    category = meta.get("category", "用語解説")
-    updated = meta.get("updated", datetime.today().strftime("%Y-%m-%d"))
     label = term_label(h1, title)
-    sources = "\n".join(
-        f'      <li><a href="{escape_text(url)}" rel="nofollow noopener" target="_blank">{escape_text(name)}</a></li>'
-        for name, url in PRIMARY_SOURCES
+    fact_checked_at = meta.get(
+        "fact_checked_at",
+        meta.get("source_checked_at", meta.get("updated", datetime.today().strftime("%Y-%m-%d"))),
     )
+    author_name = meta.get("author_name", AUTHOR_NAME)
+    author_profile = meta.get("author_profile", AUTHOR_PROFILE)
+    reviewer_name = meta.get("reviewer_name", REVIEWER_NAME)
+    reviewer_profile = meta.get("reviewer_profile", REVIEWER_PROFILE)
+    original_note = meta.get(
+        "original_note",
+        f"{label}について、第二種衛生管理者試験で問われやすい観点を優先して整理しています。",
+    )
+    update_policy = meta.get(
+        "update_policy",
+        "試験要項、公式ページ、関係法令に変更が確認されたタイミングで本文と参照元を見直します。",
+    )
+    sources = "\n".join(
+        f'<a href="{escape_text(url)}" rel="nofollow noopener" target="_blank">{escape_text(name)}</a>'
+        for name, url in parse_sources(meta.get("primary_sources"))
+    )
+    user_intent = meta.get(
+        "user_intent",
+        f"{label}の意味、試験で問われる観点、復習時の確認ポイントを整理すること。",
+    )
+    action_items = split_items(
+        meta.get("action_items"),
+        [
+            f"{label}の定義と位置づけを確認する",
+            "表で重要な条件や数値を整理する",
+            "頻出の誤り選択肢を復習する",
+            "関連する用語解説や過去問へ進む",
+        ],
+    )
+    action_list = "\n".join(f"    <li>{escape_text(item)}</li>" for item in action_items[:6])
     toc = build_toc(existing_headings)
     return f"""{toc}
 
 <section id="term-reliability" class="term-info-box">
   <h2>この記事の信頼性について</h2>
   <dl class="term-fact-list">
-    <div><dt>執筆者</dt><dd>{escape_text(AUTHOR_NAME)}。{escape_text(AUTHOR_PROFILE)}</dd></div>
-    <div><dt>確認者</dt><dd>{escape_text(REVIEWER_NAME)}。{escape_text(REVIEWER_PROFILE)}</dd></div>
-    <div><dt>事実確認日</dt><dd>{escape_text(updated)}</dd></div>
-    <div><dt>更新方針</dt><dd>試験要項、公式ページ、関係法令に変更が確認されたタイミングで本文と参照元を見直します。</dd></div>
-  </dl>
-</section>
-
-<section id="term-official-info" class="term-info-box">
-  <h2>公式情報の確認</h2>
-  <p>{escape_text(label)}は、第二種衛生管理者試験の学習で押さえたい用語です。制度、数値、義務の有無は年度や法令改正で変わることがあるため、受験前には公式情報も確認してください。</p>
-  <ul>
-{sources}
-  </ul>
-</section>
-
-<section id="term-basic-info" class="term-info-box">
-  <h2>記事の基本情報</h2>
-  <dl class="term-fact-list">
-    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
-    <div><dt>分野</dt><dd>{escape_text(category)}</dd></div>
-    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
-    <div><dt>検索意図</dt><dd>{escape_text(label)}の意味、試験で問われる観点、復習時の確認ポイントを整理すること。</dd></div>
+    <div><dt>執筆者</dt><dd>{escape_text(author_name)}。{escape_text(author_profile)}</dd></div>
+    <div><dt>確認者</dt><dd>{escape_text(reviewer_name)}。{escape_text(reviewer_profile)}</dd></div>
+    <div><dt>事実確認日</dt><dd>{escape_text(fact_checked_at)}</dd></div>
+    <div><dt>主な参照元</dt><dd>{sources}</dd></div>
+    <div><dt>独自メモ</dt><dd>{escape_text(original_note)}</dd></div>
+    <div><dt>更新方針</dt><dd>{escape_text(update_policy)}</dd></div>
   </dl>
 </section>
 
 <section id="term-can-do" class="term-info-box">
   <h2>この記事でできること</h2>
-  <p>この記事では、{escape_text(label)}の基本的な意味を確認し、表や頻出ポイントを使って試験で迷いやすい部分を整理できます。読み終えたら、関連用語と過去問を合わせて確認し、知識を選択肢で使える状態に近づけてください。</p>
+  <p>{escape_text(user_intent)}</p>
   <ul>
-    <li>{escape_text(label)}の定義と位置づけを確認する</li>
-    <li>表で重要な条件や数値を整理する</li>
-    <li>頻出の誤り選択肢を復習する</li>
-    <li>関連する用語解説や過去問へ進む</li>
+{action_list}
   </ul>
 </section>"""
 
@@ -184,6 +226,14 @@ def build_top_seo_sections(meta, h1, title, existing_headings):
 def build_bottom_seo_sections(meta, h1, title):
     category = meta.get("category", "")
     label = term_label(h1, title)
+    user_intent = meta.get(
+        "user_intent",
+        f"{label}の意味、試験で問われる観点、復習時の確認ポイントを整理すること。",
+    )
+    source_items = "\n".join(
+        f'    <li><a href="{escape_text(url)}" rel="nofollow noopener" target="_blank">{escape_text(name)}</a></li>'
+        for name, url in parse_sources(meta.get("primary_sources"))
+    )
     guide_href, guide_label = CATEGORY_GUIDES.get(
         category,
         ("/articles/shiken-kamoku.html", "試験科目と出題範囲の確認"),
@@ -198,6 +248,24 @@ def build_bottom_seo_sections(meta, h1, title):
     <summary>公式情報も確認した方がよいですか？</summary>
     <p>数値、対象業務、保存期間、選任要件などが関係する用語は、公式情報の確認が特に重要です。この記事は学習用の整理として使い、受験前や実務で使う前には安全衛生技術試験協会、厚生労働省、e-Gov法令検索なども確認してください。</p>
   </details>
+</section>
+
+<section id="term-basic-info" class="term-info-box">
+  <h2>記事の基本情報</h2>
+  <dl class="term-fact-list">
+    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
+    <div><dt>分野</dt><dd>{escape_text(category or "用語解説")}</dd></div>
+    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
+    <div><dt>検索意図</dt><dd>{escape_text(user_intent)}</dd></div>
+  </dl>
+</section>
+
+<section id="term-official-info" class="term-info-box">
+  <h2>公式情報の確認</h2>
+  <p>{escape_text(label)}は、第二種衛生管理者試験の学習で押さえたい用語です。制度、数値、義務の有無は年度や法令改正で変わることがあるため、受験前には公式情報も確認してください。</p>
+  <ul>
+{source_items}
+  </ul>
 </section>
 
 <section id="term-related" class="term-info-box">
