@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>作業主任者とは？選任が必要な作業・資格・職務を整理【第二種衛生管理者試験】</title>
-<meta name="description" content="第二種衛生管理者試験頻出の作業主任者を解説。選任が必要な危険有害作業・資格要件・職務内容を表で整理。">
+<meta name="description" content="作業主任者の選任が必要な作業、資格要件、職務、衛生管理者との違いを第二種衛生管理者試験向けに表で整理します。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://eisei2shu-master.jp/terms/sagyoshunin-sha.html">
 
@@ -12,14 +12,14 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://eisei2shu-master.jp/terms/sagyoshunin-sha.html">
 <meta property="og:title" content="作業主任者とは？選任が必要な作業・資格・職務を整理【第二種衛生管理者試験】">
-<meta property="og:description" content="第二種衛生管理者試験頻出の作業主任者を解説。選任が必要な危険有害作業・資格要件・職務内容を表で整理。">
+<meta property="og:description" content="作業主任者の選任が必要な作業、資格要件、職務、衛生管理者との違いを第二種衛生管理者試験向けに表で整理します。">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:site_name" content="二衛マスター">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="作業主任者とは？選任が必要な作業・資格・職務を整理【第二種衛生管理者試験】">
-<meta name="twitter:description" content="第二種衛生管理者試験頻出の作業主任者を解説。選任が必要な危険有害作業・資格要件・職務内容を表で整理。">
+<meta name="twitter:description" content="作業主任者の選任が必要な作業、資格要件、職務、衛生管理者との違いを第二種衛生管理者試験向けに表で整理します。">
 
 <!-- 構造化データ -->
 <script type="application/ld+json">
@@ -30,7 +30,7 @@
       "@type": "Article",
       "@id": "https://eisei2shu-master.jp/terms/sagyoshunin-sha.html#article",
       "headline": "作業主任者とは？選任が必要な作業・資格・職務を整理【第二種衛生管理者試験】",
-      "description": "第二種衛生管理者試験頻出の作業主任者を解説。選任が必要な危険有害作業・資格要件・職務内容を表で整理。",
+      "description": "作業主任者の選任が必要な作業、資格要件、職務、衛生管理者との違いを第二種衛生管理者試験向けに表で整理します。",
       "dateModified": "2026-05-12",
       "inLanguage": "ja",
       "isPartOf": {"@id": "https://eisei2shu-master.jp/#website"},
@@ -61,10 +61,11 @@
   --bg: #ffffff;
   --bg2: #f4f4f5;
   --bg3: #e4e4e7;
-  --text: #111111;
+  --text: #121212;
   --text2: #555555;
-  --text3: #888888;
+  --text3: #999999;
   --ink: #333333;
+  --table-head-bg: #2b2b2b;
   --border: rgba(0,0,0,0.10);
   --border2: rgba(0,0,0,0.18);
   --green: #1a7a40;
@@ -193,6 +194,29 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   color: var(--text);
   line-height: 1.4;
 }
+.article-body h2[id^="term-section-"] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.article-body {
+  counter-reset: term-section;
+}
+.article-body h2[id^="term-section-"]::before {
+  counter-increment: term-section;
+  content: counter(term-section);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--table-head-bg);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
 .article-body h3 {
   font-size: 16px;
   font-weight: 700;
@@ -211,6 +235,14 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 }
 .article-body li { margin-bottom: 6px; }
 .article-body strong { font-weight: 700; }
+.article-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.article-body a:hover {
+  color: var(--text);
+}
 
 /* ===== TABLE ===== */
 .article-body table {
@@ -224,7 +256,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   box-shadow: var(--sh);
 }
 .article-body th {
-  background: var(--ink);
+  background: var(--table-head-bg);
   color: #fff;
   font-weight: 600;
   padding: 10px 14px;
@@ -277,35 +309,20 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.term-fact-list {
-  display: grid;
-  gap: 10px;
+.term-fact-table {
   margin: 0;
+  box-shadow: none;
 }
-.term-fact-list div {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 0;
-  border: 1px solid var(--border);
-  border-bottom: 0;
+.term-fact-table th {
+  width: 140px;
+  background: var(--table-head-bg);
+  color: #ffffff;
 }
-.term-fact-list div:last-child {
-  border-bottom: 1px solid var(--border);
-}
-.term-fact-list dt {
-  font-weight: 700;
-  color: #1f2937;
-  background: #f8fafc;
-  padding: 10px 12px;
-  border-right: 1px solid var(--border);
-}
-.term-fact-list dd {
-  margin: 0;
+.term-fact-table td {
+  color: var(--text);
   background: #ffffff;
-  color: var(--ink);
-  padding: 10px 12px;
 }
-.term-fact-list dd a {
+.term-fact-table td a {
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -329,12 +346,10 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   margin: 10px 0 0;
 }
 @media(max-width: 600px) {
-  .term-fact-list div {
-    grid-template-columns: 1fr;
-  }
-  .term-fact-list dt {
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
+  .term-fact-table th,
+  .term-fact-table td {
+    display: block;
+    width: 100%;
   }
 }
 
@@ -390,19 +405,18 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   <h1 class="article-title">作業主任者とは？選任が必要な作業・資格・職務を整理【第二種衛生管理者試験】</h1>
 
   <article class="article-body">
-    <p>作業主任者は、特定の危険有害作業で現場を統括する役職です。選任が必要な作業の種類と資格要件が頻出です。この記事では、作業主任者の意味、試験で問われやすい観点、関連用語との違いを関係法令の復習に使える形で整理します。</p>
+    <p>作業主任者が必要な作業、資格要件、職務、衛生管理者との違いを整理します。第二種衛生管理者試験で、有害業務ごとの作業主任者を確認したい人向けの記事です。</p>
 
 <nav class="term-toc" aria-label="目次">
   <h2>目次</h2>
   <ol>
       <li><a href="#term-reliability">この記事の信頼性について</a></li>
       <li><a href="#term-can-do">この記事でできること</a></li>
-      <li><a href="#term-section-1">選任が必要な主な作業</a></li>
-      <li><a href="#term-section-2">作業主任者の職務</a></li>
-      <li><a href="#term-section-3">衛生管理者との違い</a></li>
-      <li><a href="#term-section-4">試験で狙われる頻出ポイント</a></li>
-      <li><a href="#term-section-5">試験での位置づけ</a></li>
-      <li><a href="#term-section-6">似た用語との違い</a></li>
+      <li><a href="#term-section-1">最初に選任が必要な作業を確認する</a></li>
+      <li><a href="#term-section-2">作業主任者の職務を整理する</a></li>
+      <li><a href="#term-section-3">衛生管理者との違いを見る</a></li>
+      <li><a href="#term-section-4">資格要件のひっかけを確認する</a></li>
+      <li><a href="#term-section-5">関連する有害業務とあわせて復習する</a></li>
       <li><a href="#term-faq">よくある質問</a></li>
       <li><a href="#term-basic-info">記事の基本情報</a></li>
       <li><a href="#term-official-info">公式情報の確認</a></li>
@@ -412,31 +426,33 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 
 <section id="term-reliability" class="term-info-box">
   <h2>この記事の信頼性について</h2>
-  <dl class="term-fact-list">
-    <div><dt>執筆者</dt><dd>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</dd></div>
-    <div><dt>確認者</dt><dd>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</dd></div>
-    <div><dt>事実確認日</dt><dd>2026-05-12</dd></div>
-    <div><dt>主な参照元</dt><dd><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">執筆</th><td>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</td></tr>
+      <tr><th scope="row">確認</th><td>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</td></tr>
+      <tr><th scope="row">事実確認日</th><td>2026-05-12</td></tr>
+      <tr><th scope="row">主な参照元</th><td><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
 <a href="https://anzeninfo.mhlw.go.jp/" rel="nofollow noopener" target="_blank">厚生労働省 職場のあんぜんサイト</a>
-<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></dd></div>
-    <div><dt>独自メモ</dt><dd>作業主任者について、第二種衛生管理者試験の関係法令で問われやすい定義、区分、数値、ひっかけを中心に整理しています。</dd></div>
-    <div><dt>更新方針</dt><dd>試験要項、公式ページ、関係法令に変更が確認されたタイミングで本文と参照元を見直します。</dd></div>
-  </dl>
+<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></td></tr>
+      <tr><th scope="row">独自メモ</th><td>作業主任者について、第二種衛生管理者試験で問われやすい選任対象作業、資格要件、職務、衛生管理者との違いを中心に整理しています。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-can-do" class="term-info-box">
   <h2>この記事でできること</h2>
-  <p>作業主任者の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</p>
+  <p>作業主任者が必要な作業、資格要件、職務、衛生管理者との違いを選択肢で判断できるようにすること。</p>
   <ul>
-    <li>作業主任者の定義を確認する</li>
-    <li>表で区分や数値を整理する</li>
-    <li>頻出の誤り選択肢を復習する</li>
-    <li>関連用語を読む</li>
-    <li>過去問で出題形式を確認する</li>
+    <li>作業主任者が必要な作業を確認する</li>
+    <li>作業ごとの資格要件を表で整理する</li>
+    <li>作業主任者の職務を確認する</li>
+    <li>衛生管理者との違いを復習する</li>
+    <li>有害業務関連の記事へ進む</li>
   </ul>
 </section>
 
-<h2 id="term-section-1">選任が必要な主な作業</h2>
+<h2 id="term-section-1">最初に選任が必要な作業を確認する</h2>
+<p>作業主任者は、すべての作業で選任する役職ではありません。一定の危険有害作業について、対応する資格や技能講習を修了した者から選任します。第二種衛生管理者試験では、有機溶剤、特定化学物質、鉛、酸素欠乏危険作業、石綿作業などが代表例として出やすいため、作業の種類と資格を横並びで確認します。</p>
 <table>
 <thead>
 <tr>
@@ -472,15 +488,37 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </tbody>
 </table>
 <hr />
-<h2 id="term-section-2">作業主任者の職務</h2>
-<p>作業主任者の主な職務は以下のとおりです。</p>
-<ul>
-<li>作業の方法を決定し、労働者を指揮すること</li>
-<li>保護具の使用状況を監視すること</li>
-<li>局所排気装置・プッシュプル型換気装置などの点検</li>
-</ul>
+<h2 id="term-section-2">作業主任者の職務を整理する</h2>
+<p>作業主任者は、特定作業の現場で作業方法を決め、労働者を指揮し、保護具や設備の使用状況を確認します。衛生管理者のように事業場全体を広く見る役割ではなく、特定の危険有害作業に対して現場の実施状況を管理する役割です。職務の主語が作業主任者なのか、事業者なのかも試験で確認します。</p>
+<table>
+<thead>
+<tr>
+<th>職務</th>
+<th>試験での見方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作業方法の決定</td>
+<td>作業の進め方を現場で管理する</td>
+</tr>
+<tr>
+<td>労働者の指揮</td>
+<td>特定作業に従事する労働者を指揮する</td>
+</tr>
+<tr>
+<td>保護具の使用状況の監視</td>
+<td>保護具を使わせるだけでなく使用状況を確認する</td>
+</tr>
+<tr>
+<td>換気装置などの点検</td>
+<td>有害物質対策と結びつけて確認する</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="term-section-3">衛生管理者との違い</h2>
+<h2 id="term-section-3">衛生管理者との違いを見る</h2>
+<p>作業主任者と衛生管理者は、どちらも職場の安全衛生に関わりますが、選任単位と資格が異なります。作業主任者は特定作業ごとに選任され、対応する技能講習などが必要です。衛生管理者は事業場ごとに選任され、衛生管理者免許が論点になります。どちらか一方で代替できるものではありません。</p>
 <table>
 <thead>
 <tr>
@@ -508,40 +546,65 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </tbody>
 </table>
 <hr />
-<h2 id="term-section-4">試験で狙われる頻出ポイント</h2>
-<ul>
-<li>「作業主任者は衛生管理者免許があれば全作業で選任できる」→ <strong>誤り</strong>（作業ごとに対応する技能講習の修了が必要）</li>
-<li>「作業主任者がいれば衛生管理者の選任は不要」→ <strong>誤り</strong>（別々に選任が必要）</li>
-<li>「有機溶剤作業では作業主任者を必ず1人選任すれば足りる」→ <strong>誤り</strong>（作業場所や規模に応じた対応が必要）</li>
-<li>「作業主任者の職務に保護具の使用状況の監視は含まれない」→ <strong>誤り</strong>（含まれる）</li>
-</ul>
-<h2 id="term-section-5">試験での位置づけ</h2>
-<p>作業主任者は、第二種衛生管理者試験の関係法令で用語の意味だけでなく、制度上の位置づけや実務上の使われ方まで問われやすいテーマです。選択肢では、対象者、実施時期、義務の主体、数値条件などが少しずつ言い換えられます。本文の表や頻出ポイントを使い、まず「何を管理するための用語か」を押さえてから細部を確認すると整理しやすくなります。</p>
+<h2 id="term-section-4">資格要件のひっかけを確認する</h2>
+<p>作業主任者でよく出る誤りは、「衛生管理者免許があれば全作業で作業主任者になれる」というものです。実際には、作業の種類に応じた技能講習などが必要です。また、作業主任者を選任したからといって、衛生管理者や作業環境測定など他の義務が消えるわけではありません。資格、作業、職務をセットで判断します。</p>
+<table>
+<thead>
+<tr>
+<th>選択肢の例</th>
+<th>正誤</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>作業主任者は作業ごとに対応する資格が必要</td>
+<td>正しい</td>
+<td>有機溶剤、鉛、酸欠などで区分がある</td>
+</tr>
+<tr>
+<td>衛生管理者免許があれば全作業の主任者になれる</td>
+<td>誤り</td>
+<td>作業ごとの資格要件がある</td>
+</tr>
+<tr>
+<td>作業主任者がいれば衛生管理者は不要</td>
+<td>誤り</td>
+<td>選任単位と役割が異なる</td>
+</tr>
+<tr>
+<td>保護具の使用状況の監視は職務に含まれる</td>
+<td>正しい</td>
+<td>現場管理の重要な職務</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="term-section-6">似た用語との違い</h2>
-<p>作業主任者は、名称や目的が近い別の用語と混同しやすい場合があります。覚えるときは、定義を単独で暗記するだけでなく、「何を対象にするか」「誰が実施するか」「どの場面で必要になるか」を並べて確認してください。比較表がある記事では、横並びで違いを見ておくと、試験本番でひっかけ選択肢を判断しやすくなります。</p>
-<hr />
+<h2 id="term-section-5">関連する有害業務とあわせて復習する</h2>
+<p>作業主任者は、有機溶剤、特定化学物質、鉛、酸素欠乏、石綿などの有害業務と一緒に出題されやすい用語です。単独で覚えるより、どの作業で、どの主任者が必要で、どのような職務を行うかをつなげて確認します。関連する作業環境測定、保護具、換気装置の論点も復習しておくと、選択肢の判断がしやすくなります。</p>
 
 <section id="term-faq" class="term-info-box">
   <h2>よくある質問</h2>
   <details open>
-    <summary>作業主任者は丸暗記だけで足りますか？</summary>
-    <p>用語そのものを覚えるだけでなく、試験では「どの場面で使うか」「何と混同しやすいか」まで問われます。本文の表と頻出ポイントを確認したあと、過去問で選択肢の言い換えに慣れておくと復習しやすくなります。</p>
+    <summary>作業主任者はどのような作業で必要ですか？</summary>
+    <p>作業主任者は、一定の危険有害作業を行う場合に選任します。有機溶剤、特定化学物質、鉛、酸素欠乏危険作業、石綿作業などは代表例です。作業ごとに対応する資格や技能講習が必要になる点を確認します。</p>
   </details>
   <details open>
-    <summary>公式情報も確認した方がよいですか？</summary>
-    <p>数値、対象業務、保存期間、選任要件などが関係する用語は、公式情報の確認が特に重要です。この記事は学習用の整理として使い、受験前や実務で使う前には安全衛生技術試験協会、厚生労働省、e-Gov法令検索なども確認してください。</p>
+    <summary>衛生管理者との違いは何ですか？</summary>
+    <p>作業主任者は特定作業の現場を指揮する役割で、衛生管理者は事業場全体の衛生管理を担います。作業主任者がいるからといって、衛生管理者の選任が不要になるわけではありません。</p>
   </details>
 </section>
 
 <section id="term-basic-info" class="term-info-box">
   <h2>記事の基本情報</h2>
-  <dl class="term-fact-list">
-    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
-    <div><dt>分野</dt><dd>関係法令</dd></div>
-    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
-    <div><dt>検索意図</dt><dd>作業主任者の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</dd></div>
-  </dl>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">対象試験</th><td>第二種衛生管理者試験</td></tr>
+      <tr><th scope="row">分野</th><td>関係法令</td></tr>
+      <tr><th scope="row">記事種別</th><td>用語詳細記事</td></tr>
+      <tr><th scope="row">検索意図</th><td>作業主任者が必要な作業、資格要件、職務、衛生管理者との違いを選択肢で判断できるようにすること。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-official-info" class="term-info-box">
@@ -557,9 +620,9 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <section id="term-related" class="term-info-box">
   <h2>関連記事</h2>
   <ul>
-    <li><a href="/terms/">用語解説一覧で関連用語を探す</a></li>
-    <li><a href="/articles/kankei-horei-matome.html">関係法令の頻出ポイントまとめ</a></li>
-    <li><a href="/q/">過去問一覧で出題形式を確認する</a></li>
+    <li><a href="/terms/yuki-yozai-chudoku-yobo-kisoku.html">有機溶剤中毒予防規則の整理</a></li>
+    <li><a href="/terms/tokutei-kagaku-busshitsu-shogai-yobo.html">特定化学物質障害予防規則の整理</a></li>
+    <li><a href="/terms/sanso-ketsubosho-yobo.html">酸素欠乏症等防止規則の整理</a></li>
   </ul>
 </section>
   </article>

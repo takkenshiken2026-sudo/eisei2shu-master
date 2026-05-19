@@ -61,10 +61,11 @@
   --bg: #ffffff;
   --bg2: #f4f4f5;
   --bg3: #e4e4e7;
-  --text: #111111;
+  --text: #121212;
   --text2: #555555;
-  --text3: #888888;
+  --text3: #999999;
   --ink: #333333;
+  --table-head-bg: #2b2b2b;
   --border: rgba(0,0,0,0.10);
   --border2: rgba(0,0,0,0.18);
   --green: #1a7a40;
@@ -193,6 +194,29 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   color: var(--text);
   line-height: 1.4;
 }
+.article-body h2[id^="term-section-"] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.article-body {
+  counter-reset: term-section;
+}
+.article-body h2[id^="term-section-"]::before {
+  counter-increment: term-section;
+  content: counter(term-section);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--table-head-bg);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
 .article-body h3 {
   font-size: 16px;
   font-weight: 700;
@@ -211,6 +235,14 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 }
 .article-body li { margin-bottom: 6px; }
 .article-body strong { font-weight: 700; }
+.article-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.article-body a:hover {
+  color: var(--text);
+}
 
 /* ===== TABLE ===== */
 .article-body table {
@@ -224,7 +256,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   box-shadow: var(--sh);
 }
 .article-body th {
-  background: var(--ink);
+  background: var(--table-head-bg);
   color: #fff;
   font-weight: 600;
   padding: 10px 14px;
@@ -277,35 +309,20 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.term-fact-list {
-  display: grid;
-  gap: 10px;
+.term-fact-table {
   margin: 0;
+  box-shadow: none;
 }
-.term-fact-list div {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 0;
-  border: 1px solid var(--border);
-  border-bottom: 0;
+.term-fact-table th {
+  width: 140px;
+  background: var(--table-head-bg);
+  color: #ffffff;
 }
-.term-fact-list div:last-child {
-  border-bottom: 1px solid var(--border);
-}
-.term-fact-list dt {
-  font-weight: 700;
-  color: #1f2937;
-  background: #f8fafc;
-  padding: 10px 12px;
-  border-right: 1px solid var(--border);
-}
-.term-fact-list dd {
-  margin: 0;
+.term-fact-table td {
+  color: var(--text);
   background: #ffffff;
-  color: var(--ink);
-  padding: 10px 12px;
 }
-.term-fact-list dd a {
+.term-fact-table td a {
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -329,12 +346,10 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   margin: 10px 0 0;
 }
 @media(max-width: 600px) {
-  .term-fact-list div {
-    grid-template-columns: 1fr;
-  }
-  .term-fact-list dt {
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
+  .term-fact-table th,
+  .term-fact-table td {
+    display: block;
+    width: 100%;
   }
 }
 
@@ -412,16 +427,17 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 
 <section id="term-reliability" class="term-info-box">
   <h2>この記事の信頼性について</h2>
-  <dl class="term-fact-list">
-    <div><dt>執筆者</dt><dd>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</dd></div>
-    <div><dt>確認者</dt><dd>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</dd></div>
-    <div><dt>事実確認日</dt><dd>2026-05-12</dd></div>
-    <div><dt>主な参照元</dt><dd><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">執筆</th><td>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</td></tr>
+      <tr><th scope="row">確認</th><td>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</td></tr>
+      <tr><th scope="row">事実確認日</th><td>2026-05-12</td></tr>
+      <tr><th scope="row">主な参照元</th><td><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
 <a href="https://anzeninfo.mhlw.go.jp/" rel="nofollow noopener" target="_blank">厚生労働省 職場のあんぜんサイト</a>
-<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></dd></div>
-    <div><dt>独自メモ</dt><dd>労働安全衛生法について、第二種衛生管理者試験の関係法令で問われやすい定義、区分、数値、ひっかけを中心に整理しています。</dd></div>
-    <div><dt>更新方針</dt><dd>試験要項、公式ページ、関係法令に変更が確認されたタイミングで本文と参照元を見直します。</dd></div>
-  </dl>
+<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></td></tr>
+      <tr><th scope="row">独自メモ</th><td>労働安全衛生法について、第二種衛生管理者試験の関係法令で問われやすい定義、区分、数値、ひっかけを中心に整理しています。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-can-do" class="term-info-box">
@@ -533,12 +549,14 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 
 <section id="term-basic-info" class="term-info-box">
   <h2>記事の基本情報</h2>
-  <dl class="term-fact-list">
-    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
-    <div><dt>分野</dt><dd>関係法令</dd></div>
-    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
-    <div><dt>検索意図</dt><dd>労働安全衛生法の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</dd></div>
-  </dl>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">対象試験</th><td>第二種衛生管理者試験</td></tr>
+      <tr><th scope="row">分野</th><td>関係法令</td></tr>
+      <tr><th scope="row">記事種別</th><td>用語詳細記事</td></tr>
+      <tr><th scope="row">検索意図</th><td>労働安全衛生法の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-official-info" class="term-info-box">

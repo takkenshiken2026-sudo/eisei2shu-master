@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>産業医とは？選任要件・職務・衛生管理者との違いを完全整理【第二種衛生管理者試験】</title>
-<meta name="description" content="第二種衛生管理者試験頻出の産業医を解説。選任要件・職務内容・衛生管理者との役割の違いを表で整理。">
+<title>産業医とは？選任要件・職務・衛生管理者との違い【第二種衛生管理者試験】</title>
+<meta name="description" content="産業医の選任要件、職務、作業場巡視、衛生管理者との違いを第二種衛生管理者試験向けに表で整理します。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://eisei2shu-master.jp/terms/sangyo-i.html">
 
 <!-- OGP -->
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://eisei2shu-master.jp/terms/sangyo-i.html">
-<meta property="og:title" content="産業医とは？選任要件・職務・衛生管理者との違いを完全整理【第二種衛生管理者試験】">
-<meta property="og:description" content="第二種衛生管理者試験頻出の産業医を解説。選任要件・職務内容・衛生管理者との役割の違いを表で整理。">
+<meta property="og:title" content="産業医とは？選任要件・職務・衛生管理者との違い【第二種衛生管理者試験】">
+<meta property="og:description" content="産業医の選任要件、職務、作業場巡視、衛生管理者との違いを第二種衛生管理者試験向けに表で整理します。">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:site_name" content="二衛マスター">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="産業医とは？選任要件・職務・衛生管理者との違いを完全整理【第二種衛生管理者試験】">
-<meta name="twitter:description" content="第二種衛生管理者試験頻出の産業医を解説。選任要件・職務内容・衛生管理者との役割の違いを表で整理。">
+<meta name="twitter:title" content="産業医とは？選任要件・職務・衛生管理者との違い【第二種衛生管理者試験】">
+<meta name="twitter:description" content="産業医の選任要件、職務、作業場巡視、衛生管理者との違いを第二種衛生管理者試験向けに表で整理します。">
 
 <!-- 構造化データ -->
 <script type="application/ld+json">
@@ -29,8 +29,8 @@
     {
       "@type": "Article",
       "@id": "https://eisei2shu-master.jp/terms/sangyo-i.html#article",
-      "headline": "産業医とは？選任要件・職務・衛生管理者との違いを完全整理【第二種衛生管理者試験】",
-      "description": "第二種衛生管理者試験頻出の産業医を解説。選任要件・職務内容・衛生管理者との役割の違いを表で整理。",
+      "headline": "産業医とは？選任要件・職務・衛生管理者との違い【第二種衛生管理者試験】",
+      "description": "産業医の選任要件、職務、作業場巡視、衛生管理者との違いを第二種衛生管理者試験向けに表で整理します。",
       "dateModified": "2026-05-12",
       "inLanguage": "ja",
       "isPartOf": {"@id": "https://eisei2shu-master.jp/#website"},
@@ -44,7 +44,7 @@
       "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "トップ", "item": "https://eisei2shu-master.jp/"},
         {"@type": "ListItem", "position": 2, "name": "用語解説", "item": "https://eisei2shu-master.jp/terms/"},
-        {"@type": "ListItem", "position": 3, "name": "産業医とは？選任要件・職務・衛生管理者との違いを完全整理", "item": "https://eisei2shu-master.jp/terms/sangyo-i.html"}
+        {"@type": "ListItem", "position": 3, "name": "産業医とは？選任要件・職務・衛生管理者との違い", "item": "https://eisei2shu-master.jp/terms/sangyo-i.html"}
       ]
     }
   ]
@@ -61,10 +61,11 @@
   --bg: #ffffff;
   --bg2: #f4f4f5;
   --bg3: #e4e4e7;
-  --text: #111111;
+  --text: #121212;
   --text2: #555555;
-  --text3: #888888;
+  --text3: #999999;
   --ink: #333333;
+  --table-head-bg: #2b2b2b;
   --border: rgba(0,0,0,0.10);
   --border2: rgba(0,0,0,0.18);
   --green: #1a7a40;
@@ -193,6 +194,29 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   color: var(--text);
   line-height: 1.4;
 }
+.article-body h2[id^="term-section-"] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.article-body {
+  counter-reset: term-section;
+}
+.article-body h2[id^="term-section-"]::before {
+  counter-increment: term-section;
+  content: counter(term-section);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--table-head-bg);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
 .article-body h3 {
   font-size: 16px;
   font-weight: 700;
@@ -211,6 +235,14 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 }
 .article-body li { margin-bottom: 6px; }
 .article-body strong { font-weight: 700; }
+.article-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.article-body a:hover {
+  color: var(--text);
+}
 
 /* ===== TABLE ===== */
 .article-body table {
@@ -224,7 +256,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   box-shadow: var(--sh);
 }
 .article-body th {
-  background: var(--ink);
+  background: var(--table-head-bg);
   color: #fff;
   font-weight: 600;
   padding: 10px 14px;
@@ -277,35 +309,20 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.term-fact-list {
-  display: grid;
-  gap: 10px;
+.term-fact-table {
   margin: 0;
+  box-shadow: none;
 }
-.term-fact-list div {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 0;
-  border: 1px solid var(--border);
-  border-bottom: 0;
+.term-fact-table th {
+  width: 140px;
+  background: var(--table-head-bg);
+  color: #ffffff;
 }
-.term-fact-list div:last-child {
-  border-bottom: 1px solid var(--border);
-}
-.term-fact-list dt {
-  font-weight: 700;
-  color: #1f2937;
-  background: #f8fafc;
-  padding: 10px 12px;
-  border-right: 1px solid var(--border);
-}
-.term-fact-list dd {
-  margin: 0;
+.term-fact-table td {
+  color: var(--text);
   background: #ffffff;
-  color: var(--ink);
-  padding: 10px 12px;
 }
-.term-fact-list dd a {
+.term-fact-table td a {
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -329,12 +346,10 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   margin: 10px 0 0;
 }
 @media(max-width: 600px) {
-  .term-fact-list div {
-    grid-template-columns: 1fr;
-  }
-  .term-fact-list dt {
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
+  .term-fact-table th,
+  .term-fact-table td {
+    display: block;
+    width: 100%;
   }
 }
 
@@ -384,25 +399,24 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
     <span class="breadcrumb-sep">›</span>
     <a href="/terms/">用語解説</a>
     <span class="breadcrumb-sep">›</span>
-    <span>産業医とは？選任要件・職務・衛生管理者との違いを完全整理</span>
+    <span>産業医とは？選任要件・職務・衛生管理者との違い</span>
   </nav>
 
-  <h1 class="article-title">産業医とは？選任要件・職務・衛生管理者との違いを完全整理【第二種衛生管理者試験】</h1>
+  <h1 class="article-title">産業医とは？選任要件・職務・衛生管理者との違い【第二種衛生管理者試験】</h1>
 
   <article class="article-body">
-    <p>産業医は第二種衛生管理者試験で最頻出テーマの一つです。衛生管理者との役割の混同が最大の落とし穴です。選任要件・職務・違いを数値ベースで整理します。この記事では、産業医の意味、試験で問われやすい観点、関連用語との違いを関係法令の復習に使える形で整理します。</p>
+    <p>産業医の選任要件、主な職務、衛生管理者との違いを整理します。第二種衛生管理者試験で「産業医と衛生管理者を混同しやすい」と感じる人向けの記事です。</p>
 
 <nav class="term-toc" aria-label="目次">
   <h2>目次</h2>
   <ol>
       <li><a href="#term-reliability">この記事の信頼性について</a></li>
       <li><a href="#term-can-do">この記事でできること</a></li>
-      <li><a href="#term-section-1">選任が必要な事業場</a></li>
-      <li><a href="#term-section-2">産業医の主な職務</a></li>
-      <li><a href="#term-section-3">産業医と衛生管理者の違い</a></li>
-      <li><a href="#term-section-4">試験で狙われる頻出ポイント</a></li>
-      <li><a href="#term-section-5">試験での位置づけ</a></li>
-      <li><a href="#term-section-6">似た用語との違い</a></li>
+      <li><a href="#term-section-1">最初に選任が必要な規模を確認する</a></li>
+      <li><a href="#term-section-2">産業医の主な職務を整理する</a></li>
+      <li><a href="#term-section-3">衛生管理者との違いを見る</a></li>
+      <li><a href="#term-section-4">作業場巡視の頻度を確認する</a></li>
+      <li><a href="#term-section-5">頻出の誤り選択肢で確認する</a></li>
       <li><a href="#term-faq">よくある質問</a></li>
       <li><a href="#term-basic-info">記事の基本情報</a></li>
       <li><a href="#term-official-info">公式情報の確認</a></li>
@@ -412,32 +426,33 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 
 <section id="term-reliability" class="term-info-box">
   <h2>この記事の信頼性について</h2>
-  <dl class="term-fact-list">
-    <div><dt>執筆者</dt><dd>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</dd></div>
-    <div><dt>確認者</dt><dd>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</dd></div>
-    <div><dt>事実確認日</dt><dd>2026-05-12</dd></div>
-    <div><dt>主な参照元</dt><dd><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">執筆</th><td>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</td></tr>
+      <tr><th scope="row">確認</th><td>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</td></tr>
+      <tr><th scope="row">事実確認日</th><td>2026-05-12</td></tr>
+      <tr><th scope="row">主な参照元</th><td><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
 <a href="https://anzeninfo.mhlw.go.jp/" rel="nofollow noopener" target="_blank">厚生労働省 職場のあんぜんサイト</a>
-<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></dd></div>
-    <div><dt>独自メモ</dt><dd>産業医について、第二種衛生管理者試験の関係法令で問われやすい定義、区分、数値、ひっかけを中心に整理しています。</dd></div>
-    <div><dt>更新方針</dt><dd>試験要項、公式ページ、関係法令に変更が確認されたタイミングで本文と参照元を見直します。</dd></div>
-  </dl>
+<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></td></tr>
+      <tr><th scope="row">独自メモ</th><td>産業医について、第二種衛生管理者試験で問われやすい選任要件、職務、巡視頻度、衛生管理者との違いを中心に整理しています。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-can-do" class="term-info-box">
   <h2>この記事でできること</h2>
-  <p>産業医の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</p>
+  <p>産業医の選任要件、主な職務、衛生管理者との違いを選択肢で判断できるようにすること。</p>
   <ul>
-    <li>産業医の定義を確認する</li>
-    <li>表で区分や数値を整理する</li>
-    <li>頻出の誤り選択肢を復習する</li>
-    <li>関連用語を読む</li>
-    <li>過去問で出題形式を確認する</li>
+    <li>常時50人以上の選任要件を確認する</li>
+    <li>産業医の職務を表で整理する</li>
+    <li>作業場巡視の頻度を確認する</li>
+    <li>衛生管理者との違いを復習する</li>
+    <li>管理体制の関連用語へ進む</li>
   </ul>
 </section>
 
-<h2 id="term-section-1">選任が必要な事業場</h2>
-<p><strong>常時50人以上</strong>の労働者を使用する事業場では産業医の選任が義務です。</p>
+<h2 id="term-section-1">最初に選任が必要な規模を確認する</h2>
+<p>産業医は、常時50人以上の労働者を使用する事業場で選任が必要です。衛生管理者や衛生委員会も50人以上が基準になるため、管理体制の基本数値としてまとめて覚えると整理しやすくなります。試験では「50人未満では義務がない」と「選任できない」を混同した選択肢にも注意します。</p>
 <table>
 <thead>
 <tr>
@@ -460,11 +475,27 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p><strong>重要</strong>：常時1,000人以上の事業場、または深夜業などの有害業務に常時500人以上が従事する事業場では、<strong>専属の産業医</strong>が必要です。</p>
-</blockquote>
+<table>
+<thead>
+<tr>
+<th>追加で押さえる条件</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>専属の産業医</td>
+<td>常時1,000人以上など一定の事業場で必要</td>
+</tr>
+<tr>
+<td>試験での注意</td>
+<td>産業医と衛生管理者は別々に選任する</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="term-section-2">産業医の主な職務</h2>
+<h2 id="term-section-2">産業医の主な職務を整理する</h2>
+<p>産業医は、医師として労働者の健康管理に関わります。健康診断結果への意見、長時間労働者や高ストレス者への面接指導、作業場巡視などが中心です。衛生管理者のように衛生管理の実務全般を担うというより、医学的な専門性を使って事業者へ意見を述べる役割として押さえます。</p>
 <table>
 <thead>
 <tr>
@@ -482,8 +513,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <td>長時間労働者・高ストレス者への面接</td>
 </tr>
 <tr>
-<td>作業環境の巡視</td>
-<td>月1回以上（条件を満たす場合は2ヶ月に1回）</td>
+<td>作業場の巡視</td>
+<td>原則として月1回以上（条件を満たす場合は2か月に1回以上）</td>
 </tr>
 <tr>
 <td>衛生委員会への参加</td>
@@ -496,7 +527,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </tbody>
 </table>
 <hr />
-<h2 id="term-section-3">産業医と衛生管理者の違い</h2>
+<h2 id="term-section-3">衛生管理者との違いを見る</h2>
+<p>産業医と衛生管理者は、どちらも常時50人以上の事業場で出てくるため混同しやすい用語です。ただし、産業医は医師としての医学的判断を担い、衛生管理者は衛生管理の実務を担います。どちらか一方を選任すれば他方が不要になるわけではないため、資格、役割、職務の違いを表で確認します。</p>
 <table>
 <thead>
 <tr>
@@ -522,47 +554,97 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <td>衛生管理の実務（環境・教育）</td>
 </tr>
 <tr>
-<td>専任要件</td>
-<td>1,000人以上などで専属</td>
-<td>1,000人超などで専任</td>
+<td>大規模事業場の論点</td>
+<td>専属産業医が必要になる場合がある</td>
+<td>専任の衛生管理者が必要になる場合がある</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="term-section-4">試験で狙われる頻出ポイント</h2>
-<ul>
-<li>「産業医を選任すれば衛生管理者は不要」→ <strong>誤り</strong>（別々に選任が必要）</li>
-<li>「産業医は50人未満の事業場では選任できない」→ <strong>誤り</strong>（義務はないが選任は可能）</li>
-<li>「産業医の作業環境巡視は月2回以上が義務」→ <strong>誤り</strong>（原則月1回以上）</li>
-<li>「衛生管理者は医師でなければなれない」→ <strong>誤り</strong>（衛生管理者免許があればよい）</li>
-</ul>
-<h2 id="term-section-5">試験での位置づけ</h2>
-<p>産業医は、第二種衛生管理者試験の関係法令で用語の意味だけでなく、制度上の位置づけや実務上の使われ方まで問われやすいテーマです。選択肢では、対象者、実施時期、義務の主体、数値条件などが少しずつ言い換えられます。本文の表や頻出ポイントを使い、まず「何を管理するための用語か」を押さえてから細部を確認すると整理しやすくなります。</p>
-<hr />
-<h2 id="term-section-6">似た用語との違い</h2>
-<p>産業医は、名称や目的が近い別の用語と混同しやすい場合があります。覚えるときは、定義を単独で暗記するだけでなく、「何を対象にするか」「誰が実施するか」「どの場面で必要になるか」を並べて確認してください。比較表がある記事では、横並びで違いを見ておくと、試験本番でひっかけ選択肢を判断しやすくなります。</p>
-<hr />
+<h2 id="term-section-4">作業場巡視の頻度を確認する</h2>
+<p>産業医の作業場巡視は、頻出の数値論点です。原則は月1回以上ですが、一定の情報提供など条件を満たす場合には2か月に1回以上と整理されます。試験では「月2回以上」「6か月に1回」など、頻度をずらした選択肢が出やすいため、衛生委員会の開催頻度や衛生管理者の巡視頻度と混ぜずに確認します。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>頻度・考え方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>産業医の作業場巡視</td>
+<td>原則として月1回以上</td>
+</tr>
+<tr>
+<td>条件を満たす場合</td>
+<td>2か月に1回以上と整理される場合がある</td>
+</tr>
+<tr>
+<td>衛生委員会</td>
+<td>月1回以上の開催とセットで出やすい</td>
+</tr>
+<tr>
+<td>試験での注意</td>
+<td>産業医と衛生管理者の巡視を混同しない</td>
+</tr>
+</tbody>
+</table>
+<h2 id="term-section-5">頻出の誤り選択肢で確認する</h2>
+<p>産業医の問題では、選任要件、職務、衛生管理者との違いが組み合わされます。「産業医を選任すれば衛生管理者は不要」は誤りです。「産業医は医師でなくてもよい」も誤りです。逆に、衛生管理者は医師である必要はありません。似た用語を横並びにしておくと、選択肢の主語が入れ替わっても判断しやすくなります。</p>
+<table>
+<thead>
+<tr>
+<th>選択肢の例</th>
+<th>正誤</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>常時50人以上の事業場では産業医の選任が必要</td>
+<td>正しい</td>
+<td>基本の選任要件</td>
+</tr>
+<tr>
+<td>産業医を選任すれば衛生管理者は不要</td>
+<td>誤り</td>
+<td>それぞれ別に選任が必要</td>
+</tr>
+<tr>
+<td>産業医は医師である</td>
+<td>正しい</td>
+<td>医学的専門性を担う</td>
+</tr>
+<tr>
+<td>衛生管理者は医師でなければならない</td>
+<td>誤り</td>
+<td>衛生管理者免許の論点</td>
+</tr>
+</tbody>
+</table>
 
 <section id="term-faq" class="term-info-box">
   <h2>よくある質問</h2>
   <details open>
-    <summary>産業医は丸暗記だけで足りますか？</summary>
-    <p>用語そのものを覚えるだけでなく、試験では「どの場面で使うか」「何と混同しやすいか」まで問われます。本文の表と頻出ポイントを確認したあと、過去問で選択肢の言い換えに慣れておくと復習しやすくなります。</p>
+    <summary>産業医は何人以上の事業場で必要ですか？</summary>
+    <p>常時50人以上の労働者を使用する事業場では産業医の選任が必要です。衛生管理者や衛生委員会と同じく50人以上が基準になるため、管理体制の基本数値としてまとめて確認すると覚えやすくなります。</p>
   </details>
   <details open>
-    <summary>公式情報も確認した方がよいですか？</summary>
-    <p>数値、対象業務、保存期間、選任要件などが関係する用語は、公式情報の確認が特に重要です。この記事は学習用の整理として使い、受験前や実務で使う前には安全衛生技術試験協会、厚生労働省、e-Gov法令検索なども確認してください。</p>
+    <summary>産業医の作業場巡視は何回必要ですか？</summary>
+    <p>原則として月1回以上です。ただし、一定の情報提供など条件を満たす場合は2か月に1回以上と整理されることがあります。試験では「月2回以上」などの誤り選択肢に注意します。</p>
   </details>
 </section>
 
 <section id="term-basic-info" class="term-info-box">
   <h2>記事の基本情報</h2>
-  <dl class="term-fact-list">
-    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
-    <div><dt>分野</dt><dd>関係法令</dd></div>
-    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
-    <div><dt>検索意図</dt><dd>産業医の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</dd></div>
-  </dl>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">対象試験</th><td>第二種衛生管理者試験</td></tr>
+      <tr><th scope="row">分野</th><td>関係法令</td></tr>
+      <tr><th scope="row">記事種別</th><td>用語詳細記事</td></tr>
+      <tr><th scope="row">検索意図</th><td>産業医の選任要件、主な職務、衛生管理者との違いを選択肢で判断できるようにすること。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-official-info" class="term-info-box">
@@ -578,9 +660,9 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <section id="term-related" class="term-info-box">
   <h2>関連記事</h2>
   <ul>
-    <li><a href="/terms/">用語解説一覧で関連用語を探す</a></li>
-    <li><a href="/articles/kankei-horei-matome.html">関係法令の頻出ポイントまとめ</a></li>
-    <li><a href="/q/">過去問一覧で出題形式を確認する</a></li>
+    <li><a href="/terms/eisei-kanrisha.html">衛生管理者とは？選任要件・人数の整理</a></li>
+    <li><a href="/terms/sokatsu-anzen-eisei-kanrisha.html">総括安全衛生管理者とは？業種別要件</a></li>
+    <li><a href="/terms/anzen-eisei-kanri-taisei.html">安全衛生管理体制の用語整理</a></li>
   </ul>
 </section>
   </article>

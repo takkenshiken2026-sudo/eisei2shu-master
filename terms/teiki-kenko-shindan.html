@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>定期健康診断・雇入時健康診断とは？実施時期・項目・事後措置を整理【第二種衛生管理者試験】</title>
-<meta name="description" content="第二種衛生管理者試験頻出の健康診断を解説。実施時期・検査項目・記録保存5年・事後措置の手順を表で整理。">
+<meta name="description" content="定期健康診断・雇入時健康診断の実施時期、対象者、記録保存、事後措置を第二種衛生管理者試験向けに整理します。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://eisei2shu-master.jp/terms/teiki-kenko-shindan.html">
 
@@ -12,14 +12,14 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://eisei2shu-master.jp/terms/teiki-kenko-shindan.html">
 <meta property="og:title" content="定期健康診断・雇入時健康診断とは？実施時期・項目・事後措置を整理【第二種衛生管理者試験】">
-<meta property="og:description" content="第二種衛生管理者試験頻出の健康診断を解説。実施時期・検査項目・記録保存5年・事後措置の手順を表で整理。">
+<meta property="og:description" content="定期健康診断・雇入時健康診断の実施時期、対象者、記録保存、事後措置を第二種衛生管理者試験向けに整理します。">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:site_name" content="二衛マスター">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="定期健康診断・雇入時健康診断とは？実施時期・項目・事後措置を整理【第二種衛生管理者試験】">
-<meta name="twitter:description" content="第二種衛生管理者試験頻出の健康診断を解説。実施時期・検査項目・記録保存5年・事後措置の手順を表で整理。">
+<meta name="twitter:description" content="定期健康診断・雇入時健康診断の実施時期、対象者、記録保存、事後措置を第二種衛生管理者試験向けに整理します。">
 
 <!-- 構造化データ -->
 <script type="application/ld+json">
@@ -30,7 +30,7 @@
       "@type": "Article",
       "@id": "https://eisei2shu-master.jp/terms/teiki-kenko-shindan.html#article",
       "headline": "定期健康診断・雇入時健康診断とは？実施時期・項目・事後措置を整理【第二種衛生管理者試験】",
-      "description": "第二種衛生管理者試験頻出の健康診断を解説。実施時期・検査項目・記録保存5年・事後措置の手順を表で整理。",
+      "description": "定期健康診断・雇入時健康診断の実施時期、対象者、記録保存、事後措置を第二種衛生管理者試験向けに整理します。",
       "dateModified": "2026-05-12",
       "inLanguage": "ja",
       "isPartOf": {"@id": "https://eisei2shu-master.jp/#website"},
@@ -61,10 +61,11 @@
   --bg: #ffffff;
   --bg2: #f4f4f5;
   --bg3: #e4e4e7;
-  --text: #111111;
+  --text: #121212;
   --text2: #555555;
-  --text3: #888888;
+  --text3: #999999;
   --ink: #333333;
+  --table-head-bg: #2b2b2b;
   --border: rgba(0,0,0,0.10);
   --border2: rgba(0,0,0,0.18);
   --green: #1a7a40;
@@ -193,6 +194,29 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   color: var(--text);
   line-height: 1.4;
 }
+.article-body h2[id^="term-section-"] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.article-body {
+  counter-reset: term-section;
+}
+.article-body h2[id^="term-section-"]::before {
+  counter-increment: term-section;
+  content: counter(term-section);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--table-head-bg);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
 .article-body h3 {
   font-size: 16px;
   font-weight: 700;
@@ -211,6 +235,14 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 }
 .article-body li { margin-bottom: 6px; }
 .article-body strong { font-weight: 700; }
+.article-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.article-body a:hover {
+  color: var(--text);
+}
 
 /* ===== TABLE ===== */
 .article-body table {
@@ -224,7 +256,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   box-shadow: var(--sh);
 }
 .article-body th {
-  background: var(--ink);
+  background: var(--table-head-bg);
   color: #fff;
   font-weight: 600;
   padding: 10px 14px;
@@ -277,35 +309,20 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.term-fact-list {
-  display: grid;
-  gap: 10px;
+.term-fact-table {
   margin: 0;
+  box-shadow: none;
 }
-.term-fact-list div {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 0;
-  border: 1px solid var(--border);
-  border-bottom: 0;
+.term-fact-table th {
+  width: 140px;
+  background: var(--table-head-bg);
+  color: #ffffff;
 }
-.term-fact-list div:last-child {
-  border-bottom: 1px solid var(--border);
-}
-.term-fact-list dt {
-  font-weight: 700;
-  color: #1f2937;
-  background: #f8fafc;
-  padding: 10px 12px;
-  border-right: 1px solid var(--border);
-}
-.term-fact-list dd {
-  margin: 0;
+.term-fact-table td {
+  color: var(--text);
   background: #ffffff;
-  color: var(--ink);
-  padding: 10px 12px;
 }
-.term-fact-list dd a {
+.term-fact-table td a {
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -329,12 +346,10 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   margin: 10px 0 0;
 }
 @media(max-width: 600px) {
-  .term-fact-list div {
-    grid-template-columns: 1fr;
-  }
-  .term-fact-list dt {
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
+  .term-fact-table th,
+  .term-fact-table td {
+    display: block;
+    width: 100%;
   }
 }
 
@@ -390,19 +405,19 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   <h1 class="article-title">定期健康診断・雇入時健康診断とは？実施時期・項目・事後措置を整理【第二種衛生管理者試験】</h1>
 
   <article class="article-body">
-    <p>健康診断は試験の最頻出テーマです。「いつ」「誰に」「何を」「記録はいつまで」の4点を数値で押さえます。この記事では、定期健康診断・雇入時健康診断の意味、試験で問われやすい観点、関連用語との違いを関係法令の復習に使える形で整理します。</p>
+    <p>定期健康診断・雇入時健康診断の実施時期、対象者、記録保存、事後措置を整理します。第二種衛生管理者試験で「1年以内ごと」「6か月以内ごと」「5年保存」を確認したい人向けの記事です。</p>
 
 <nav class="term-toc" aria-label="目次">
   <h2>目次</h2>
   <ol>
       <li><a href="#term-reliability">この記事の信頼性について</a></li>
       <li><a href="#term-can-do">この記事でできること</a></li>
-      <li><a href="#term-section-1">実施時期と対象</a></li>
-      <li><a href="#term-section-2">定期健康診断の主な検査項目</a></li>
-      <li><a href="#term-section-3">記録の保存</a></li>
-      <li><a href="#term-section-4">事後措置の流れ</a></li>
-      <li><a href="#term-section-5">試験で狙われる頻出ポイント</a></li>
-      <li><a href="#term-section-6">試験での位置づけ</a></li>
+      <li><a href="#term-section-1">最初に実施時期と対象を確認する</a></li>
+      <li><a href="#term-section-2">定期健康診断の主な検査項目を見る</a></li>
+      <li><a href="#term-section-3">記録の保存期間を整理する</a></li>
+      <li><a href="#term-section-4">事後措置の流れを押さえる</a></li>
+      <li><a href="#term-section-5">頻度のひっかけを確認する</a></li>
+      <li><a href="#term-section-6">関連制度とあわせて復習する</a></li>
       <li><a href="#term-faq">よくある質問</a></li>
       <li><a href="#term-basic-info">記事の基本情報</a></li>
       <li><a href="#term-official-info">公式情報の確認</a></li>
@@ -412,31 +427,33 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 
 <section id="term-reliability" class="term-info-box">
   <h2>この記事の信頼性について</h2>
-  <dl class="term-fact-list">
-    <div><dt>執筆者</dt><dd>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</dd></div>
-    <div><dt>確認者</dt><dd>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</dd></div>
-    <div><dt>事実確認日</dt><dd>2026-05-12</dd></div>
-    <div><dt>主な参照元</dt><dd><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">執筆</th><td>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</td></tr>
+      <tr><th scope="row">確認</th><td>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</td></tr>
+      <tr><th scope="row">事実確認日</th><td>2026-05-12</td></tr>
+      <tr><th scope="row">主な参照元</th><td><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
 <a href="https://anzeninfo.mhlw.go.jp/" rel="nofollow noopener" target="_blank">厚生労働省 職場のあんぜんサイト</a>
-<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></dd></div>
-    <div><dt>独自メモ</dt><dd>定期健康診断・雇入時健康診断について、第二種衛生管理者試験の関係法令で問われやすい定義、区分、数値、ひっかけを中心に整理しています。</dd></div>
-    <div><dt>更新方針</dt><dd>試験要項、公式ページ、関係法令に変更が確認されたタイミングで本文と参照元を見直します。</dd></div>
-  </dl>
+<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></td></tr>
+      <tr><th scope="row">独自メモ</th><td>定期健康診断・雇入時健康診断について、実施時期、対象者、検査項目、記録保存、事後措置を中心に整理しています。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-can-do" class="term-info-box">
   <h2>この記事でできること</h2>
-  <p>定期健康診断・雇入時健康診断の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</p>
+  <p>定期健康診断・雇入時健康診断の実施時期、対象者、記録保存、事後措置を選択肢で判断できるようにすること。</p>
   <ul>
-    <li>定期健康診断・雇入時健康診断の定義を確認する</li>
-    <li>表で区分や数値を整理する</li>
-    <li>頻出の誤り選択肢を復習する</li>
-    <li>関連用語を読む</li>
-    <li>過去問で出題形式を確認する</li>
+    <li>雇入時・定期・特定業務従事者健診の違いを確認する</li>
+    <li>実施時期と対象者を表で整理する</li>
+    <li>記録保存期間を確認する</li>
+    <li>事後措置の流れを復習する</li>
+    <li>産業医や事後措置の記事へ進む</li>
   </ul>
 </section>
 
-<h2 id="term-section-1">実施時期と対象</h2>
+<h2 id="term-section-1">最初に実施時期と対象を確認する</h2>
+<p>健康診断の問題では、種類ごとの実施時期と対象者がよく問われます。雇入時健康診断は雇入れの際、定期健康診断は1年以内ごとに1回、特定業務従事者健康診断は6か月以内ごとに1回です。まず「いつ」「誰に実施するか」を表で押さえると、頻度をずらした誤り選択肢に対応しやすくなります。</p>
 <table>
 <thead>
 <tr>
@@ -464,7 +481,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </tbody>
 </table>
 <hr />
-<h2 id="term-section-2">定期健康診断の主な検査項目</h2>
+<h2 id="term-section-2">定期健康診断の主な検査項目を見る</h2>
+<p>定期健康診断では、既往歴・業務歴、自覚症状・他覚症状、身長・体重・腹囲、視力・聴力、胸部X線、血圧、血液検査、尿検査などが問われます。試験では、個別項目そのものよりも「健康診断で何を確認するか」「省略できる場合がある項目をどう扱うか」が出ることもあります。詳細な省略要件は公式情報で確認します。</p>
 <ol>
 <li>既往歴・業務歴の調査</li>
 <li>自覚症状・他覚症状の有無</li>
@@ -475,7 +493,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <li>尿検査（尿中の糖・蛋白）</li>
 </ol>
 <hr />
-<h2 id="term-section-3">記録の保存</h2>
+<h2 id="term-section-3">記録の保存期間を整理する</h2>
+<p>健康診断の記録保存では、一般健康診断の5年間が基本です。ただし、特殊健康診断やじん肺健康診断など、保存期間が異なるものがあります。第二種衛生管理者試験では「すべて5年」とする選択肢が誤りになりやすいため、一般健診と特殊健診を分けて整理します。</p>
 <table>
 <thead>
 <tr>
@@ -503,7 +522,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </tbody>
 </table>
 <hr />
-<h2 id="term-section-4">事後措置の流れ</h2>
+<h2 id="term-section-4">事後措置の流れを押さえる</h2>
+<p>健康診断は実施して終わりではありません。異常所見がある場合は医師の意見を聴き、必要に応じて就業場所の変更、作業転換、労働時間の短縮などの措置を検討します。結果の本人通知も重要です。試験では、実施、記録、意見聴取、就業上の措置、本人通知の順番を確認します。</p>
 <ol>
 <li>健康診断の実施</li>
 <li>医師の意見聴取（異常所見がある場合）</li>
@@ -512,37 +532,64 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <li>産業医等への健康診断個人票の提供</li>
 </ol>
 <hr />
-<h2 id="term-section-5">試験で狙われる頻出ポイント</h2>
-<ul>
-<li>「定期健康診断は2年に1回でよい」→ <strong>誤り</strong>（1年以内ごとに1回）</li>
-<li>「特定業務従事者は定期健康診断だけでよい」→ <strong>誤り</strong>（6ヶ月以内ごとに1回の実施が必要）</li>
-<li>「健康診断の記録はすべて5年間保存すればよい」→ <strong>誤り</strong>（有害物の種類により30年・7年保存が必要）</li>
-<li>「健康診断の結果を本人に通知しなくてよい」→ <strong>誤り</strong>（本人への通知が義務）</li>
-</ul>
-<h2 id="term-section-6">試験での位置づけ</h2>
-<p>定期健康診断・雇入時健康診断は、第二種衛生管理者試験の関係法令で用語の意味だけでなく、制度上の位置づけや実務上の使われ方まで問われやすいテーマです。選択肢では、対象者、実施時期、義務の主体、数値条件などが少しずつ言い換えられます。本文の表や頻出ポイントを使い、まず「何を管理するための用語か」を押さえてから細部を確認すると整理しやすくなります。</p>
-<hr />
+<h2 id="term-section-5">頻度のひっかけを確認する</h2>
+<p>健康診断では、1年以内ごと、6か月以内ごと、5年保存といった数値が狙われます。「定期健康診断は2年に1回」「特定業務従事者は定期健康診断だけでよい」「本人通知は不要」といった選択肢は誤りです。頻度、保存、通知を別々に判断できるようにしておきます。</p>
+<table>
+<thead>
+<tr>
+<th>選択肢の例</th>
+<th>正誤</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>定期健康診断は1年以内ごとに1回行う</td>
+<td>正しい</td>
+<td>基本の実施頻度</td>
+</tr>
+<tr>
+<td>特定業務従事者健康診断は6か月以内ごとに1回</td>
+<td>正しい</td>
+<td>定期健診より頻度が高い</td>
+</tr>
+<tr>
+<td>健康診断の結果を本人へ通知しなくてよい</td>
+<td>誤り</td>
+<td>本人通知が必要</td>
+</tr>
+<tr>
+<td>健康診断記録はすべて5年保存で足りる</td>
+<td>誤り</td>
+<td>種類により保存期間が異なる</td>
+</tr>
+</tbody>
+</table>
+<h2 id="term-section-6">関連制度とあわせて復習する</h2>
+<p>健康診断は、産業医、衛生管理者、事後措置、長時間労働者の面接指導などとつながります。健康診断結果に異常所見がある場合は、医師の意見聴取や就業上の措置が論点になります。単に検査項目を覚えるだけでなく、実施後に何をするかまで確認すると、関係法令の問題を横断して復習できます。</p>
 
 <section id="term-faq" class="term-info-box">
   <h2>よくある質問</h2>
   <details open>
-    <summary>定期健康診断・雇入時健康診断は丸暗記だけで足りますか？</summary>
-    <p>用語そのものを覚えるだけでなく、試験では「どの場面で使うか」「何と混同しやすいか」まで問われます。本文の表と頻出ポイントを確認したあと、過去問で選択肢の言い換えに慣れておくと復習しやすくなります。</p>
+    <summary>定期健康診断は何年ごとに必要ですか？</summary>
+    <p>定期健康診断は1年以内ごとに1回、常時使用する労働者に対して実施します。特定業務従事者健康診断は6か月以内ごとに1回なので、頻度の違いを表で分けて覚えます。</p>
   </details>
   <details open>
-    <summary>公式情報も確認した方がよいですか？</summary>
-    <p>数値、対象業務、保存期間、選任要件などが関係する用語は、公式情報の確認が特に重要です。この記事は学習用の整理として使い、受験前や実務で使う前には安全衛生技術試験協会、厚生労働省、e-Gov法令検索なども確認してください。</p>
+    <summary>健康診断の記録保存はすべて5年ですか？</summary>
+    <p>一般健康診断の個人票は5年間保存します。ただし、特殊健康診断やじん肺健康診断などでは保存期間が異なるものがあります。「健康診断はすべて5年」と断定しないことが大切です。</p>
   </details>
 </section>
 
 <section id="term-basic-info" class="term-info-box">
   <h2>記事の基本情報</h2>
-  <dl class="term-fact-list">
-    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
-    <div><dt>分野</dt><dd>関係法令</dd></div>
-    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
-    <div><dt>検索意図</dt><dd>定期健康診断・雇入時健康診断の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</dd></div>
-  </dl>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">対象試験</th><td>第二種衛生管理者試験</td></tr>
+      <tr><th scope="row">分野</th><td>関係法令</td></tr>
+      <tr><th scope="row">記事種別</th><td>用語詳細記事</td></tr>
+      <tr><th scope="row">検索意図</th><td>定期健康診断・雇入時健康診断の実施時期、対象者、記録保存、事後措置を選択肢で判断できるようにすること。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-official-info" class="term-info-box">
@@ -558,9 +605,9 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <section id="term-related" class="term-info-box">
   <h2>関連記事</h2>
   <ul>
-    <li><a href="/terms/">用語解説一覧で関連用語を探す</a></li>
-    <li><a href="/articles/kankei-horei-matome.html">関係法令の頻出ポイントまとめ</a></li>
-    <li><a href="/q/">過去問一覧で出題形式を確認する</a></li>
+    <li><a href="/terms/kenko-shindan-jigo-sochi.html">健康診断の事後措置の整理</a></li>
+    <li><a href="/terms/tokutei-gyo-mu-kenko-shindan.html">特定業務従事者健康診断の整理</a></li>
+    <li><a href="/terms/sangyo-i.html">産業医とは？選任要件と職務</a></li>
   </ul>
 </section>
   </article>

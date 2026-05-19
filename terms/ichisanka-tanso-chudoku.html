@@ -61,10 +61,11 @@
   --bg: #ffffff;
   --bg2: #f4f4f5;
   --bg3: #e4e4e7;
-  --text: #111111;
+  --text: #121212;
   --text2: #555555;
-  --text3: #888888;
+  --text3: #999999;
   --ink: #333333;
+  --table-head-bg: #2b2b2b;
   --border: rgba(0,0,0,0.10);
   --border2: rgba(0,0,0,0.18);
   --green: #1a7a40;
@@ -193,6 +194,29 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   color: var(--text);
   line-height: 1.4;
 }
+.article-body h2[id^="term-section-"] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.article-body {
+  counter-reset: term-section;
+}
+.article-body h2[id^="term-section-"]::before {
+  counter-increment: term-section;
+  content: counter(term-section);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--table-head-bg);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
 .article-body h3 {
   font-size: 16px;
   font-weight: 700;
@@ -211,6 +235,14 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 }
 .article-body li { margin-bottom: 6px; }
 .article-body strong { font-weight: 700; }
+.article-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.article-body a:hover {
+  color: var(--text);
+}
 
 /* ===== TABLE ===== */
 .article-body table {
@@ -224,7 +256,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   box-shadow: var(--sh);
 }
 .article-body th {
-  background: var(--ink);
+  background: var(--table-head-bg);
   color: #fff;
   font-weight: 600;
   padding: 10px 14px;
@@ -277,35 +309,20 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.term-fact-list {
-  display: grid;
-  gap: 10px;
+.term-fact-table {
   margin: 0;
+  box-shadow: none;
 }
-.term-fact-list div {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 0;
-  border: 1px solid var(--border);
-  border-bottom: 0;
+.term-fact-table th {
+  width: 140px;
+  background: var(--table-head-bg);
+  color: #ffffff;
 }
-.term-fact-list div:last-child {
-  border-bottom: 1px solid var(--border);
-}
-.term-fact-list dt {
-  font-weight: 700;
-  color: #1f2937;
-  background: #f8fafc;
-  padding: 10px 12px;
-  border-right: 1px solid var(--border);
-}
-.term-fact-list dd {
-  margin: 0;
+.term-fact-table td {
+  color: var(--text);
   background: #ffffff;
-  color: var(--ink);
-  padding: 10px 12px;
 }
-.term-fact-list dd a {
+.term-fact-table td a {
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -329,12 +346,10 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   margin: 10px 0 0;
 }
 @media(max-width: 600px) {
-  .term-fact-list div {
-    grid-template-columns: 1fr;
-  }
-  .term-fact-list dt {
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
+  .term-fact-table th,
+  .term-fact-table td {
+    display: block;
+    width: 100%;
   }
 }
 
@@ -401,8 +416,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
       <li><a href="#term-section-2">COHb濃度と症状</a></li>
       <li><a href="#term-section-3">主な発生源</a></li>
       <li><a href="#term-section-4">試験で狙われる頻出ポイント</a></li>
-      <li><a href="#term-section-5">試験での位置づけ</a></li>
-      <li><a href="#term-section-6">似た用語との違い</a></li>
+      <li><a href="#term-section-5">試験での見方を整理する</a></li>
+      <li><a href="#term-section-6">次に確認すること</a></li>
       <li><a href="#term-faq">よくある質問</a></li>
       <li><a href="#term-basic-info">記事の基本情報</a></li>
       <li><a href="#term-official-info">公式情報の確認</a></li>
@@ -412,27 +427,28 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 
 <section id="term-reliability" class="term-info-box">
   <h2>この記事の信頼性について</h2>
-  <dl class="term-fact-list">
-    <div><dt>執筆者</dt><dd>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</dd></div>
-    <div><dt>確認者</dt><dd>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</dd></div>
-    <div><dt>事実確認日</dt><dd>2026-05-12</dd></div>
-    <div><dt>主な参照元</dt><dd><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">執筆</th><td>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</td></tr>
+      <tr><th scope="row">確認</th><td>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</td></tr>
+      <tr><th scope="row">事実確認日</th><td>2026-05-12</td></tr>
+      <tr><th scope="row">主な参照元</th><td><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
 <a href="https://anzeninfo.mhlw.go.jp/" rel="nofollow noopener" target="_blank">厚生労働省 職場のあんぜんサイト</a>
-<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></dd></div>
-    <div><dt>独自メモ</dt><dd>一酸化炭素中毒について、第二種衛生管理者試験の労働生理で問われやすい定義、区分、数値、ひっかけを中心に整理しています。</dd></div>
-    <div><dt>更新方針</dt><dd>試験要項、公式ページ、関係法令に変更が確認されたタイミングで本文と参照元を見直します。</dd></div>
-  </dl>
+<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></td></tr>
+      <tr><th scope="row">独自メモ</th><td>一酸化炭素中毒について、第二種衛生管理者試験の労働生理で問われやすい定義、区分、数値、ひっかけを中心に整理しています。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-can-do" class="term-info-box">
   <h2>この記事でできること</h2>
-  <p>一酸化炭素中毒の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</p>
+  <p>一酸化炭素中毒の定義、試験で問われやすい数値や対象範囲、関連制度との違いを選択肢で判断できるようにすること。</p>
   <ul>
-    <li>一酸化炭素中毒の定義を確認する</li>
+    <li>一酸化炭素中毒の定義と位置づけを確認する</li>
     <li>表で区分や数値を整理する</li>
     <li>頻出の誤り選択肢を復習する</li>
-    <li>関連用語を読む</li>
-    <li>過去問で出題形式を確認する</li>
+    <li>関連制度や似た用語を確認する</li>
+    <li>公式情報で最新条件を確認する</li>
   </ul>
 </section>
 
@@ -482,33 +498,57 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <li>「酸素とヘモグロビンの親和性は一酸化炭素より高い」→ <strong>誤り</strong>（COの方が200〜250倍高い）</li>
 <li>「一酸化炭素中毒は完全燃焼でも発生する」→ <strong>誤り</strong>（不完全燃焼で発生する）</li>
 </ul>
-<h2 id="term-section-5">試験での位置づけ</h2>
-<p>一酸化炭素中毒は、第二種衛生管理者試験の労働生理で用語の意味だけでなく、制度上の位置づけや実務上の使われ方まで問われやすいテーマです。選択肢では、対象者、実施時期、義務の主体、数値条件などが少しずつ言い換えられます。本文の表や頻出ポイントを使い、まず「何を管理するための用語か」を押さえてから細部を確認すると整理しやすくなります。</p>
 <hr />
-<h2 id="term-section-6">似た用語との違い</h2>
-<p>一酸化炭素中毒は、名称や目的が近い別の用語と混同しやすい場合があります。覚えるときは、定義を単独で暗記するだけでなく、「何を対象にするか」「誰が実施するか」「どの場面で必要になるか」を並べて確認してください。比較表がある記事では、横並びで違いを見ておくと、試験本番でひっかけ選択肢を判断しやすくなります。</p>
+<h2 id="term-section-5">試験での見方を整理する</h2>
+<p>一酸化炭素中毒は、第二種衛生管理者試験の労働生理で、用語の意味だけでなく条件の言い換えまで問われやすいテーマです。まず定義を押さえ、次に本文中の表で対象、頻度、保存期間、義務の主体などを確認します。最後に頻出ポイントを使い、誤り選択肢でどこが入れ替えられているかを判断できるようにします。</p>
+<table>
+<thead>
+<tr>
+<th>確認すること</th>
+<th>見方</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中毒のメカニズム</td>
+<td>表や本文で条件を確認し、数値や対象の言い換えに注意する</td>
+</tr>
+<tr>
+<td>COHb濃度と症状</td>
+<td>表や本文で条件を確認し、数値や対象の言い換えに注意する</td>
+</tr>
+<tr>
+<td>主な発生源</td>
+<td>表や本文で条件を確認し、数値や対象の言い換えに注意する</td>
+</tr>
+</tbody>
+</table>
 <hr />
+<h2 id="term-section-6">次に確認すること</h2>
+<p>一酸化炭素中毒を確認したら、同じ分野の関連用語も続けて復習します。似た制度は、対象者、実施時期、義務の主体、保存期間などを横に並べると違いが見えやすくなります。実務や受験直前の確認では、本文の整理だけで判断せず、公式情報や最新の試験案内もあわせて確認してください。</p>
 
 <section id="term-faq" class="term-info-box">
   <h2>よくある質問</h2>
   <details open>
-    <summary>一酸化炭素中毒は丸暗記だけで足りますか？</summary>
-    <p>用語そのものを覚えるだけでなく、試験では「どの場面で使うか」「何と混同しやすいか」まで問われます。本文の表と頻出ポイントを確認したあと、過去問で選択肢の言い換えに慣れておくと復習しやすくなります。</p>
+    <summary>一酸化炭素中毒は試験でどこを見ればよいですか？</summary>
+    <p>一酸化炭素中毒は、定義だけでなく対象、実施時期、数値条件、他の制度との違いが問われやすいテーマです。本文の表で全体像を確認し、頻出の誤り選択肢で言い換えに慣れておくと判断しやすくなります。</p>
   </details>
   <details open>
     <summary>公式情報も確認した方がよいですか？</summary>
-    <p>数値、対象業務、保存期間、選任要件などが関係する用語は、公式情報の確認が特に重要です。この記事は学習用の整理として使い、受験前や実務で使う前には安全衛生技術試験協会、厚生労働省、e-Gov法令検索なども確認してください。</p>
+    <p>はい。一酸化炭素中毒に関する数値、対象範囲、保存期間、選任要件などは、法令改正や公式資料の更新で扱いが変わることがあります。この記事は試験学習用の整理として使い、受験前には公式情報も確認してください。</p>
   </details>
 </section>
 
 <section id="term-basic-info" class="term-info-box">
   <h2>記事の基本情報</h2>
-  <dl class="term-fact-list">
-    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
-    <div><dt>分野</dt><dd>労働生理</dd></div>
-    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
-    <div><dt>検索意図</dt><dd>一酸化炭素中毒の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</dd></div>
-  </dl>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">対象試験</th><td>第二種衛生管理者試験</td></tr>
+      <tr><th scope="row">分野</th><td>労働生理</td></tr>
+      <tr><th scope="row">記事種別</th><td>用語詳細記事</td></tr>
+      <tr><th scope="row">検索意図</th><td>一酸化炭素中毒の定義、試験で問われやすい数値や対象範囲、関連制度との違いを選択肢で判断できるようにすること。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-official-info" class="term-info-box">
@@ -524,9 +564,9 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <section id="term-related" class="term-info-box">
   <h2>関連記事</h2>
   <ul>
-    <li><a href="/terms/">用語解説一覧で関連用語を探す</a></li>
-    <li><a href="/articles/rodo-seiri-matome.html">労働生理の頻出ポイントまとめ</a></li>
-    <li><a href="/q/">過去問一覧で出題形式を確認する</a></li>
+    <li><a href="/terms/taion-chosetsu.html">体温調節とは？仕組みの整理</a></li>
+    <li><a href="/terms/junka.html">循環とは？血液循環の整理</a></li>
+    <li><a href="/terms/jinpai.html">じん肺とは？原因と予防の整理</a></li>
   </ul>
 </section>
   </article>

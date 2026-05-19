@@ -163,6 +163,32 @@ def split_items(value, fallback):
     return [item.strip() for item in str(value).split(";") if item.strip()]
 
 
+def parse_related_links(value, category):
+    """frontmatterの related_links を表示用の [(href, label)] にする。"""
+    guide_href, guide_label = CATEGORY_GUIDES.get(
+        category,
+        ("/articles/shiken-kamoku.html", "試験科目と出題範囲の確認"),
+    )
+    fallback = [
+        ("/terms/", "用語解説一覧で関連用語を探す"),
+        (guide_href, guide_label),
+        ("/q/", "過去問一覧で出題形式を確認する"),
+    ]
+    if not value:
+        return fallback
+    rows = value if isinstance(value, (list, tuple)) else str(value).split(";")
+    links = []
+    for row in rows:
+        slug, sep, label = str(row).partition(":")
+        slug = slug.strip()
+        label = label.strip()
+        if not sep or not slug or not label:
+            continue
+        href = slug if slug.startswith("/") else f"/terms/{slug}.html"
+        links.append((href, label))
+    return links or fallback
+
+
 def build_top_seo_sections(meta, h1, title, existing_headings):
     label = term_label(h1, title)
     fact_checked_at = meta.get(
@@ -176,10 +202,6 @@ def build_top_seo_sections(meta, h1, title, existing_headings):
     original_note = meta.get(
         "original_note",
         f"{label}について、第二種衛生管理者試験で問われやすい観点を優先して整理しています。",
-    )
-    update_policy = meta.get(
-        "update_policy",
-        "試験要項、公式ページ、関係法令に変更が確認されたタイミングで本文と参照元を見直します。",
     )
     sources = "\n".join(
         f'<a href="{escape_text(url)}" rel="nofollow noopener" target="_blank">{escape_text(name)}</a>'
@@ -204,14 +226,15 @@ def build_top_seo_sections(meta, h1, title, existing_headings):
 
 <section id="term-reliability" class="term-info-box">
   <h2>この記事の信頼性について</h2>
-  <dl class="term-fact-list">
-    <div><dt>執筆者</dt><dd>{escape_text(author_name)}。{escape_text(author_profile)}</dd></div>
-    <div><dt>確認者</dt><dd>{escape_text(reviewer_name)}。{escape_text(reviewer_profile)}</dd></div>
-    <div><dt>事実確認日</dt><dd>{escape_text(fact_checked_at)}</dd></div>
-    <div><dt>主な参照元</dt><dd>{sources}</dd></div>
-    <div><dt>独自メモ</dt><dd>{escape_text(original_note)}</dd></div>
-    <div><dt>更新方針</dt><dd>{escape_text(update_policy)}</dd></div>
-  </dl>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">執筆</th><td>{escape_text(author_name)}。{escape_text(author_profile)}</td></tr>
+      <tr><th scope="row">確認</th><td>{escape_text(reviewer_name)}。{escape_text(reviewer_profile)}</td></tr>
+      <tr><th scope="row">事実確認日</th><td>{escape_text(fact_checked_at)}</td></tr>
+      <tr><th scope="row">主な参照元</th><td>{sources}</td></tr>
+      <tr><th scope="row">独自メモ</th><td>{escape_text(original_note)}</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-can-do" class="term-info-box">
@@ -230,34 +253,46 @@ def build_bottom_seo_sections(meta, h1, title):
         "user_intent",
         f"{label}の意味、試験で問われる観点、復習時の確認ポイントを整理すること。",
     )
+    faq_1_question = meta.get("faq_1_question", f"{label}は丸暗記だけで足りますか？")
+    faq_1_answer = meta.get(
+        "faq_1_answer",
+        "用語そのものを覚えるだけでなく、試験では「どの場面で使うか」「何と混同しやすいか」まで問われます。本文の表と頻出ポイントを確認したあと、過去問で選択肢の言い換えに慣れておくと復習しやすくなります。",
+    )
+    faq_2_question = meta.get("faq_2_question", "公式情報も確認した方がよいですか？")
+    faq_2_answer = meta.get(
+        "faq_2_answer",
+        "数値、対象業務、保存期間、選任要件などが関係する用語は、公式情報の確認が特に重要です。この記事は学習用の整理として使い、受験前や実務で使う前には安全衛生技術試験協会、厚生労働省、e-Gov法令検索なども確認してください。",
+    )
     source_items = "\n".join(
         f'    <li><a href="{escape_text(url)}" rel="nofollow noopener" target="_blank">{escape_text(name)}</a></li>'
         for name, url in parse_sources(meta.get("primary_sources"))
     )
-    guide_href, guide_label = CATEGORY_GUIDES.get(
-        category,
-        ("/articles/shiken-kamoku.html", "試験科目と出題範囲の確認"),
+    related_items = "\n".join(
+        f'    <li><a href="{escape_text(href)}">{escape_text(link_label)}</a></li>'
+        for href, link_label in parse_related_links(meta.get("related_links"), category)
     )
     return f"""<section id="term-faq" class="term-info-box">
   <h2>よくある質問</h2>
   <details open>
-    <summary>{escape_text(label)}は丸暗記だけで足りますか？</summary>
-    <p>用語そのものを覚えるだけでなく、試験では「どの場面で使うか」「何と混同しやすいか」まで問われます。本文の表と頻出ポイントを確認したあと、過去問で選択肢の言い換えに慣れておくと復習しやすくなります。</p>
+    <summary>{escape_text(faq_1_question)}</summary>
+    <p>{escape_text(faq_1_answer)}</p>
   </details>
   <details open>
-    <summary>公式情報も確認した方がよいですか？</summary>
-    <p>数値、対象業務、保存期間、選任要件などが関係する用語は、公式情報の確認が特に重要です。この記事は学習用の整理として使い、受験前や実務で使う前には安全衛生技術試験協会、厚生労働省、e-Gov法令検索なども確認してください。</p>
+    <summary>{escape_text(faq_2_question)}</summary>
+    <p>{escape_text(faq_2_answer)}</p>
   </details>
 </section>
 
 <section id="term-basic-info" class="term-info-box">
   <h2>記事の基本情報</h2>
-  <dl class="term-fact-list">
-    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
-    <div><dt>分野</dt><dd>{escape_text(category or "用語解説")}</dd></div>
-    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
-    <div><dt>検索意図</dt><dd>{escape_text(user_intent)}</dd></div>
-  </dl>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">対象試験</th><td>第二種衛生管理者試験</td></tr>
+      <tr><th scope="row">分野</th><td>{escape_text(category or "用語解説")}</td></tr>
+      <tr><th scope="row">記事種別</th><td>用語詳細記事</td></tr>
+      <tr><th scope="row">検索意図</th><td>{escape_text(user_intent)}</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-official-info" class="term-info-box">
@@ -271,9 +306,7 @@ def build_bottom_seo_sections(meta, h1, title):
 <section id="term-related" class="term-info-box">
   <h2>関連記事</h2>
   <ul>
-    <li><a href="/terms/">用語解説一覧で関連用語を探す</a></li>
-    <li><a href="{escape_text(guide_href)}">{escape_text(guide_label)}</a></li>
-    <li><a href="/q/">過去問一覧で出題形式を確認する</a></li>
+{related_items}
   </ul>
 </section>"""
 

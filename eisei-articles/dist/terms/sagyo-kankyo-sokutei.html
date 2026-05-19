@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>作業環境測定とは？測定の区分・頻度・記録・評価の流れを整理【第二種衛生管理者試験】</title>
-<meta name="description" content="第二種衛生管理者試験頻出の作業環境測定を解説。A測定・B測定の違い・測定頻度・管理区分・記録保存を表で整理。">
+<meta name="description" content="作業環境測定の対象、測定頻度、A測定・B測定、管理区分、記録保存を第二種衛生管理者試験向けに整理します。">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://eisei2shu-master.jp/terms/sagyo-kankyo-sokutei.html">
 
@@ -12,14 +12,14 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://eisei2shu-master.jp/terms/sagyo-kankyo-sokutei.html">
 <meta property="og:title" content="作業環境測定とは？測定の区分・頻度・記録・評価の流れを整理【第二種衛生管理者試験】">
-<meta property="og:description" content="第二種衛生管理者試験頻出の作業環境測定を解説。A測定・B測定の違い・測定頻度・管理区分・記録保存を表で整理。">
+<meta property="og:description" content="作業環境測定の対象、測定頻度、A測定・B測定、管理区分、記録保存を第二種衛生管理者試験向けに整理します。">
 <meta property="og:locale" content="ja_JP">
 <meta property="og:site_name" content="二衛マスター">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="作業環境測定とは？測定の区分・頻度・記録・評価の流れを整理【第二種衛生管理者試験】">
-<meta name="twitter:description" content="第二種衛生管理者試験頻出の作業環境測定を解説。A測定・B測定の違い・測定頻度・管理区分・記録保存を表で整理。">
+<meta name="twitter:description" content="作業環境測定の対象、測定頻度、A測定・B測定、管理区分、記録保存を第二種衛生管理者試験向けに整理します。">
 
 <!-- 構造化データ -->
 <script type="application/ld+json">
@@ -30,7 +30,7 @@
       "@type": "Article",
       "@id": "https://eisei2shu-master.jp/terms/sagyo-kankyo-sokutei.html#article",
       "headline": "作業環境測定とは？測定の区分・頻度・記録・評価の流れを整理【第二種衛生管理者試験】",
-      "description": "第二種衛生管理者試験頻出の作業環境測定を解説。A測定・B測定の違い・測定頻度・管理区分・記録保存を表で整理。",
+      "description": "作業環境測定の対象、測定頻度、A測定・B測定、管理区分、記録保存を第二種衛生管理者試験向けに整理します。",
       "dateModified": "2026-05-12",
       "inLanguage": "ja",
       "isPartOf": {"@id": "https://eisei2shu-master.jp/#website"},
@@ -61,10 +61,11 @@
   --bg: #ffffff;
   --bg2: #f4f4f5;
   --bg3: #e4e4e7;
-  --text: #111111;
+  --text: #121212;
   --text2: #555555;
-  --text3: #888888;
+  --text3: #999999;
   --ink: #333333;
+  --table-head-bg: #2b2b2b;
   --border: rgba(0,0,0,0.10);
   --border2: rgba(0,0,0,0.18);
   --green: #1a7a40;
@@ -193,6 +194,29 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   color: var(--text);
   line-height: 1.4;
 }
+.article-body h2[id^="term-section-"] {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.article-body {
+  counter-reset: term-section;
+}
+.article-body h2[id^="term-section-"]::before {
+  counter-increment: term-section;
+  content: counter(term-section);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--table-head-bg);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1;
+}
 .article-body h3 {
   font-size: 16px;
   font-weight: 700;
@@ -211,6 +235,14 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 }
 .article-body li { margin-bottom: 6px; }
 .article-body strong { font-weight: 700; }
+.article-body a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.article-body a:hover {
+  color: var(--text);
+}
 
 /* ===== TABLE ===== */
 .article-body table {
@@ -224,7 +256,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   box-shadow: var(--sh);
 }
 .article-body th {
-  background: var(--ink);
+  background: var(--table-head-bg);
   color: #fff;
   font-weight: 600;
   padding: 10px 14px;
@@ -277,35 +309,20 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.term-fact-list {
-  display: grid;
-  gap: 10px;
+.term-fact-table {
   margin: 0;
+  box-shadow: none;
 }
-.term-fact-list div {
-  display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 0;
-  border: 1px solid var(--border);
-  border-bottom: 0;
+.term-fact-table th {
+  width: 140px;
+  background: var(--table-head-bg);
+  color: #ffffff;
 }
-.term-fact-list div:last-child {
-  border-bottom: 1px solid var(--border);
-}
-.term-fact-list dt {
-  font-weight: 700;
-  color: #1f2937;
-  background: #f8fafc;
-  padding: 10px 12px;
-  border-right: 1px solid var(--border);
-}
-.term-fact-list dd {
-  margin: 0;
+.term-fact-table td {
+  color: var(--text);
   background: #ffffff;
-  color: var(--ink);
-  padding: 10px 12px;
 }
-.term-fact-list dd a {
+.term-fact-table td a {
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -329,12 +346,10 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   margin: 10px 0 0;
 }
 @media(max-width: 600px) {
-  .term-fact-list div {
-    grid-template-columns: 1fr;
-  }
-  .term-fact-list dt {
-    border-right: 0;
-    border-bottom: 1px solid var(--border);
+  .term-fact-table th,
+  .term-fact-table td {
+    display: block;
+    width: 100%;
   }
 }
 
@@ -390,19 +405,19 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   <h1 class="article-title">作業環境測定とは？測定の区分・頻度・記録・評価の流れを整理【第二種衛生管理者試験】</h1>
 
   <article class="article-body">
-    <p>作業環境測定は有害物質や騒音などの作業環境を数値化し、改善につなげる制度です。測定の区分・頻度・評価→改善の流れが頻出です。この記事では、作業環境測定の意味、試験で問われやすい観点、関連用語との違いを関係法令の復習に使える形で整理します。</p>
+    <p>作業環境測定の対象、測定頻度、A測定・B測定、管理区分、記録保存を整理します。第二種衛生管理者試験で、測定から改善までの流れを確認したい人向けの記事です。</p>
 
 <nav class="term-toc" aria-label="目次">
   <h2>目次</h2>
   <ol>
       <li><a href="#term-reliability">この記事の信頼性について</a></li>
       <li><a href="#term-can-do">この記事でできること</a></li>
-      <li><a href="#term-section-1">測定が必要な作業場と頻度</a></li>
-      <li><a href="#term-section-2">測定の区分（A測定・B測定）</a></li>
-      <li><a href="#term-section-3">評価→管理区分→措置の流れ</a></li>
-      <li><a href="#term-section-4">記録の保存期間</a></li>
-      <li><a href="#term-section-5">試験で狙われる頻出ポイント</a></li>
-      <li><a href="#term-section-6">試験での位置づけ</a></li>
+      <li><a href="#term-section-1">最初に測定が必要な作業場と頻度を確認する</a></li>
+      <li><a href="#term-section-2">A測定とB測定の違いを見る</a></li>
+      <li><a href="#term-section-3">評価から管理区分、措置までの流れを押さえる</a></li>
+      <li><a href="#term-section-4">記録の保存期間を整理する</a></li>
+      <li><a href="#term-section-5">頻出の誤り選択肢で確認する</a></li>
+      <li><a href="#term-section-6">関連用語とあわせて復習する</a></li>
       <li><a href="#term-faq">よくある質問</a></li>
       <li><a href="#term-basic-info">記事の基本情報</a></li>
       <li><a href="#term-official-info">公式情報の確認</a></li>
@@ -412,31 +427,33 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 
 <section id="term-reliability" class="term-info-box">
   <h2>この記事の信頼性について</h2>
-  <dl class="term-fact-list">
-    <div><dt>執筆者</dt><dd>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</dd></div>
-    <div><dt>確認者</dt><dd>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</dd></div>
-    <div><dt>事実確認日</dt><dd>2026-05-12</dd></div>
-    <div><dt>主な参照元</dt><dd><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">執筆</th><td>二衛マスター編集部。第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。</td></tr>
+      <tr><th scope="row">確認</th><td>二衛マスター編集部。公開前に公式情報、法令情報、サイト内の関連ページとの整合性を確認しています。</td></tr>
+      <tr><th scope="row">事実確認日</th><td>2026-05-12</td></tr>
+      <tr><th scope="row">主な参照元</th><td><a href="https://www.exam.or.jp/" rel="nofollow noopener" target="_blank">安全衛生技術試験協会</a>
 <a href="https://anzeninfo.mhlw.go.jp/" rel="nofollow noopener" target="_blank">厚生労働省 職場のあんぜんサイト</a>
-<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></dd></div>
-    <div><dt>独自メモ</dt><dd>作業環境測定について、第二種衛生管理者試験の関係法令で問われやすい定義、区分、数値、ひっかけを中心に整理しています。</dd></div>
-    <div><dt>更新方針</dt><dd>試験要項、公式ページ、関係法令に変更が確認されたタイミングで本文と参照元を見直します。</dd></div>
-  </dl>
+<a href="https://elaws.e-gov.go.jp/" rel="nofollow noopener" target="_blank">e-Gov法令検索</a></td></tr>
+      <tr><th scope="row">独自メモ</th><td>作業環境測定について、第二種衛生管理者試験で問われやすい測定頻度、A測定・B測定、管理区分、記録保存を中心に整理しています。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-can-do" class="term-info-box">
   <h2>この記事でできること</h2>
-  <p>作業環境測定の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</p>
+  <p>作業環境測定の測定頻度、A測定・B測定、管理区分、記録保存を選択肢で判断できるようにすること。</p>
   <ul>
-    <li>作業環境測定の定義を確認する</li>
-    <li>表で区分や数値を整理する</li>
-    <li>頻出の誤り選択肢を復習する</li>
-    <li>関連用語を読む</li>
-    <li>過去問で出題形式を確認する</li>
+    <li>測定が必要な作業場と頻度を確認する</li>
+    <li>A測定とB測定の違いを表で整理する</li>
+    <li>管理区分と措置の流れを確認する</li>
+    <li>記録保存期間を復習する</li>
+    <li>関連する管理区分や許容濃度の記事へ進む</li>
   </ul>
 </section>
 
-<h2 id="term-section-1">測定が必要な作業場と頻度</h2>
+<h2 id="term-section-1">最初に測定が必要な作業場と頻度を確認する</h2>
+<p>作業環境測定は、有害物質や騒音などの作業環境を数値で把握し、必要な改善につなげる制度です。第二種衛生管理者試験では、有機溶剤、特定化学物質、粉じん、騒音などの測定頻度がよく問われます。多くは6か月以内ごとに1回で整理しますが、鉛など頻度が異なるものもあるため対象別に確認します。</p>
 <table>
 <thead>
 <tr>
@@ -468,7 +485,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </tbody>
 </table>
 <hr />
-<h2 id="term-section-2">測定の区分（A測定・B測定）</h2>
+<h2 id="term-section-2">A測定とB測定の違いを見る</h2>
+<p>A測定は作業場全体の平均的な有害物濃度を把握する測定です。B測定は、発散源に近い場所など、最も高濃度になりやすい地点を把握する測定です。試験では「A測定だけで足りる」「B測定は作業場全体の平均を見る」といった入れ替えが出やすいため、目的と測定場所を分けて覚えます。</p>
 <table>
 <thead>
 <tr>
@@ -494,7 +512,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <p><strong>重要</strong>：A測定だけでなくB測定が必要な場合があります。管理区分の判定はA・B両方の結果を使います。</p>
 </blockquote>
 <hr />
-<h2 id="term-section-3">評価→管理区分→措置の流れ</h2>
+<h2 id="term-section-3">評価から管理区分、措置までの流れを押さえる</h2>
+<p>作業環境測定は、測定値を出して終わりではありません。測定結果を評価し、第1管理区分から第3管理区分までに分け、必要な措置につなげます。第1管理区分は良好、第2管理区分は改善が望ましい状態、第3管理区分は直ちに改善が必要な状態として整理します。</p>
 <table>
 <thead>
 <tr>
@@ -522,7 +541,8 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </tbody>
 </table>
 <hr />
-<h2 id="term-section-4">記録の保存期間</h2>
+<h2 id="term-section-4">記録の保存期間を整理する</h2>
+<p>作業環境測定の記録は、一般には3年間保存します。ただし、特定化学物質の一部など、長期間の保存が必要なものがあります。試験では「すべて3年間保存」とする選択肢が誤りになることがあるため、一般的な保存期間と例外を分けて確認します。</p>
 <table>
 <thead>
 <tr>
@@ -546,37 +566,64 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </tbody>
 </table>
 <hr />
-<h2 id="term-section-5">試験で狙われる頻出ポイント</h2>
-<ul>
-<li>「有機溶剤作業場の測定は1年に1回でよい」→ <strong>誤り</strong>（6ヶ月以内ごとに1回）</li>
-<li>「A測定だけで管理区分を決定できる」→ <strong>誤り</strong>（B測定が必要な場合はA・B両方で判定）</li>
-<li>「測定記録はすべて3年間保存すればよい」→ <strong>誤り</strong>（特定化学物質の一部は30年）</li>
-<li>「第3管理区分でも改善は努力目標にとどまる」→ <strong>誤り</strong>（直ちに改善が義務）</li>
-</ul>
-<h2 id="term-section-6">試験での位置づけ</h2>
-<p>作業環境測定は、第二種衛生管理者試験の関係法令で用語の意味だけでなく、制度上の位置づけや実務上の使われ方まで問われやすいテーマです。選択肢では、対象者、実施時期、義務の主体、数値条件などが少しずつ言い換えられます。本文の表や頻出ポイントを使い、まず「何を管理するための用語か」を押さえてから細部を確認すると整理しやすくなります。</p>
-<hr />
+<h2 id="term-section-5">頻出の誤り選択肢で確認する</h2>
+<p>作業環境測定では、測定頻度、A測定・B測定、管理区分、保存期間の入れ替えがよく出ます。「有機溶剤作業場の測定は1年に1回でよい」「第3管理区分でも改善は努力目標でよい」は誤りです。測定、評価、措置の順に考えると選択肢を判断しやすくなります。</p>
+<table>
+<thead>
+<tr>
+<th>選択肢の例</th>
+<th>正誤</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>有機溶剤作業場は6か月以内ごとに1回測定する</td>
+<td>正しい</td>
+<td>頻出の測定頻度</td>
+</tr>
+<tr>
+<td>A測定は作業場全体の平均的状態を把握する</td>
+<td>正しい</td>
+<td>A測定の目的</td>
+</tr>
+<tr>
+<td>第3管理区分でも改善は努力目標でよい</td>
+<td>誤り</td>
+<td>直ちに改善が必要</td>
+</tr>
+<tr>
+<td>測定記録はすべて3年間保存で足りる</td>
+<td>誤り</td>
+<td>長期保存が必要なものがある</td>
+</tr>
+</tbody>
+</table>
+<h2 id="term-section-6">関連用語とあわせて復習する</h2>
+<p>作業環境測定は、作業環境管理区分、許容濃度、局所排気装置、作業主任者などと一緒に出題されます。測定結果が悪い場合は、換気設備の改善、作業方法の見直し、保護具の使用などにつながります。測定だけを単独で覚えず、改善措置まで含めて復習します。</p>
 
 <section id="term-faq" class="term-info-box">
   <h2>よくある質問</h2>
   <details open>
-    <summary>作業環境測定は丸暗記だけで足りますか？</summary>
-    <p>用語そのものを覚えるだけでなく、試験では「どの場面で使うか」「何と混同しやすいか」まで問われます。本文の表と頻出ポイントを確認したあと、過去問で選択肢の言い換えに慣れておくと復習しやすくなります。</p>
+    <summary>作業環境測定はどのくらいの頻度で行いますか？</summary>
+    <p>有機溶剤、特定化学物質、粉じん、騒音などの作業場では、原則として6か月以内ごとに1回など定期的な測定が必要です。鉛など頻度が異なるものもあるため、対象ごとに表で確認します。</p>
   </details>
   <details open>
-    <summary>公式情報も確認した方がよいですか？</summary>
-    <p>数値、対象業務、保存期間、選任要件などが関係する用語は、公式情報の確認が特に重要です。この記事は学習用の整理として使い、受験前や実務で使う前には安全衛生技術試験協会、厚生労働省、e-Gov法令検索なども確認してください。</p>
+    <summary>A測定とB測定の違いは何ですか？</summary>
+    <p>A測定は作業場全体の平均的な状態を把握する測定、B測定は発散源に近い高濃度になりやすい場所を把握する測定です。管理区分の判定では、必要に応じて両方の結果を使います。</p>
   </details>
 </section>
 
 <section id="term-basic-info" class="term-info-box">
   <h2>記事の基本情報</h2>
-  <dl class="term-fact-list">
-    <div><dt>対象試験</dt><dd>第二種衛生管理者試験</dd></div>
-    <div><dt>分野</dt><dd>関係法令</dd></div>
-    <div><dt>記事種別</dt><dd>用語詳細記事</dd></div>
-    <div><dt>検索意図</dt><dd>作業環境測定の意味と試験で問われる観点を確認し、関連制度や似た用語との違いを選択肢で判断できるようにすること。</dd></div>
-  </dl>
+  <table class="term-fact-table">
+    <tbody>
+      <tr><th scope="row">対象試験</th><td>第二種衛生管理者試験</td></tr>
+      <tr><th scope="row">分野</th><td>関係法令</td></tr>
+      <tr><th scope="row">記事種別</th><td>用語詳細記事</td></tr>
+      <tr><th scope="row">検索意図</th><td>作業環境測定の測定頻度、A測定・B測定、管理区分、記録保存を選択肢で判断できるようにすること。</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <section id="term-official-info" class="term-info-box">
@@ -592,9 +639,9 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <section id="term-related" class="term-info-box">
   <h2>関連記事</h2>
   <ul>
-    <li><a href="/terms/">用語解説一覧で関連用語を探す</a></li>
-    <li><a href="/articles/kankei-horei-matome.html">関係法令の頻出ポイントまとめ</a></li>
-    <li><a href="/q/">過去問一覧で出題形式を確認する</a></li>
+    <li><a href="/terms/a-b-c-sokutei.html">A測定・B測定・C測定の違い</a></li>
+    <li><a href="/terms/sagyo-kankyo-kanri-kubun.html">作業環境管理区分の整理</a></li>
+    <li><a href="/terms/kyoyo-nodo.html">許容濃度の用語整理</a></li>
   </ul>
 </section>
   </article>
