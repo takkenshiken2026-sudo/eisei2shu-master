@@ -37,6 +37,7 @@ SESSION_ORDER = ("cat90", "zenki", "koki", "apr", "oct")
 if str(_TOOLS_DIR) not in sys.path:
     sys.path.insert(0, str(_TOOLS_DIR))
 
+from learning_links_lib import glossary_match_entries, matome_for_field
 from question_slug_lib import (
     FIELD_MAP,
     era_slug_past,
@@ -47,6 +48,7 @@ from question_slug_lib import (
     relative_url_path_past,
     session_or_pool_slug,
 )
+from render_learning_hub import render_question_learning_hub, render_session_hub_page_body
 
 FIELD_LABEL_JA = {"law": "関係法令", "rights": "労働衛生", "limit": "労働生理"}
 
@@ -164,6 +166,22 @@ def href_q_index(rel_file: Path) -> str:
     return "/".join([".."] * (parts_n - 1)) + "/index.html"
 
 
+def href_session_hub(rel_file: Path) -> str | None:
+    """開催回ハブ q/past/{era}/{session}/index.html への相対パス。"""
+    parts = rel_file.parent.parts
+    if len(parts) < 5 or parts[0] != "q" or parts[1] != "past":
+        return None
+    up = len(parts) - 4
+    if up <= 0:
+        return None
+    return "/".join([".."] * up) + "/index.html"
+
+
+def session_hub_canonical(base_url: str, site_prefix: str, era_slug: str, session: str) -> str:
+    web_dir = f"q/past/{era_slug}/{session}/"
+    return public_url(base_url, site_prefix, web_dir)
+
+
 def render_static_q_footer(rel_file: Path, *, current_q_index: bool = False) -> str:
     cur = ' aria-current="page"' if current_q_index else ""
 
@@ -233,6 +251,7 @@ def build_past_list_sections(parsed_rows: list[dict]) -> str:
         sample = rows[0]
         heading = breadcrumb_label_past(sample["era_raw"], sample["month_raw"])
         sid = f"{html.escape(era_slug)}-{html.escape(session)}"
+        hub_href = html.escape(f"past/{era_slug}/{session}/index.html")
         subblocks: list[str] = []
         for fk in field_order:
             sub = [r for r in rows if r["field"] == fk]
@@ -252,7 +271,8 @@ def build_past_list_sections(parsed_rows: list[dict]) -> str:
         inner = "".join(subblocks)
         sections.append(
             f'<section class="glos-cat-section q-year-section" aria-labelledby="sess-{sid}">'
-            f'<h2 id="sess-{sid}" class="glos-cat-heading glos-cat-heading--ja">{html.escape(heading)}</h2>'
+            f'<h2 id="sess-{sid}" class="glos-cat-heading glos-cat-heading--ja">'
+            f'<a href="{hub_href}">{html.escape(heading)}</a>（開催回まとめ）</h2>'
             f"{inner}</section>"
         )
     return "\n".join(sections) if sections else "<p>過去問の静的ページがありません。</p>"
@@ -320,7 +340,54 @@ def build_question_html(page: dict, rel_path: Path) -> str:
             return f"{base_url}/{site_prefix}/{path_after_root}"
         return f"{base_url}/{path_after_root}"
 
-    if is_orig:
+    session_hub_href = None
+    session_hub_label = None
+    learning_hub_html = ""
+    if not is_orig:
+        crumbs_nav = [
+            ("トップ", root_idx),
+            ("過去問一覧", q_hub_idx),
+        ]
+        session_hub_href = href_session_hub(rel_path)
+        if session_hub_href:
+            session_hub_label = breadcrumb_label_past(page["era_raw"], page["month_raw"])
+            crumbs_nav.append((session_hub_label, session_hub_href))
+        hub_item_url = public_url(base_url, site_prefix, "q/index.html")
+        ld_items = [
+            {"@type": "ListItem", "position": 1, "name": "トップ", "item": full_site_url("index.html")},
+            {"@type": "ListItem", "position": 2, "name": "過去問一覧", "item": hub_item_url},
+        ]
+        pos = 3
+        if session_hub_label and session_hub_href:
+            session_canonical = session_hub_canonical(
+                base_url, site_prefix, page["era_slug"], page["session_or_pool"]
+            )
+            ld_items.append(
+                {
+                    "@type": "ListItem",
+                    "position": pos,
+                    "name": session_hub_label,
+                    "item": session_canonical,
+                }
+            )
+            pos += 1
+        ld_items.append(
+            {
+                "@type": "ListItem",
+                "position": pos,
+                "name": title_mid,
+                "item": canonical,
+            }
+        )
+        blob = f"{page['text']}\n{page['exp']}\n" + "\n".join(page["opts"])
+        term_entries = glossary_match_entries(blob, max_terms=5)
+        learning_hub_html = render_question_learning_hub(
+            field,
+            term_entries,
+            session_hub_href=session_hub_href,
+            session_hub_label=session_hub_label,
+        )
+    else:
         crumbs_nav = [("トップ", root_idx)]
         ld_items = [
             {"@type": "ListItem", "position": 1, "name": "トップ", "item": full_site_url("index.html")},
@@ -331,22 +398,9 @@ def build_question_html(page: dict, rel_path: Path) -> str:
                 "item": canonical,
             },
         ]
-    else:
-        crumbs_nav = [
-            ("トップ", root_idx),
-            ("過去問一覧", q_hub_idx),
-        ]
-        hub_item_url = public_url(base_url, site_prefix, "q/index.html")
-        ld_items = [
-            {"@type": "ListItem", "position": 1, "name": "トップ", "item": full_site_url("index.html")},
-            {"@type": "ListItem", "position": 2, "name": "過去問一覧", "item": hub_item_url},
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": title_mid,
-                "item": canonical,
-            },
-        ]
+        blob = f"{page['text']}\n{page['exp']}\n" + "\n".join(page["opts"])
+        term_entries = glossary_match_entries(blob, max_terms=5)
+        learning_hub_html = render_question_learning_hub(field, term_entries)
 
     nav_items = []
     for name, href in crumbs_nav:
@@ -425,12 +479,151 @@ def build_question_html(page: dict, rel_path: Path) -> str:
     <h2 id="q-exp-h" class="q-h2">解説</h2>
     <div class="q-exp">{exp_html}</div>
   </section>
+  {learning_hub_html}
   <p class="q-app-link"><a href="{html.escape(root_idx)}{app_hash}">{html.escape(app_label)}</a></p>
 </main>
 {render_static_q_footer(rel_path)}
 </body>
 </html>
 """
+
+
+def write_session_hubs(
+    out_root: Path,
+    parsed_rows: list[dict],
+    base_url: str,
+    site_prefix: str,
+    urls_for_sitemap: list[str],
+) -> None:
+    """開催回ハブ q/past/{era}/{session}/index.html を生成する。"""
+    past = [r for r in parsed_rows if not r["is_orig"]]
+    groups: dict[tuple[str, str], list[dict]] = defaultdict(list)
+    for r in past:
+        groups[(r["era_slug"], r["session_or_pool"])].append(r)
+
+    field_order = ("law", "rights", "limit")
+    for (era_slug, session), rows in sorted(
+        groups.items(),
+        key=lambda kv: (era_sort_tuple(kv[0][0]), session_sort_tuple(kv[0][1])),
+    ):
+        sample = rows[0]
+        heading = breadcrumb_label_past(sample["era_raw"], sample["month_raw"])
+        rel = Path("q") / "past" / era_slug / session / "index.html"
+        canonical = session_hub_canonical(base_url, site_prefix, era_slug, session)
+        root_idx = href_repo_root(rel, "index.html")
+        q_hub_idx = href_q_index(rel)
+        css_href = rel_to_site_css(rel)
+        meta_desc = (
+            f"{EXAM_NAME_OFFICIAL}・{heading}の過去問30問を科目別に一覧。"
+            "関係法令・労働衛生・労働生理ごとに解説付きで確認できます。"
+        )
+        title = f"{heading} 過去問一覧｜{BRAND_NAME}（{EXAM_NAME_OFFICIAL}）"
+
+        subblocks: list[str] = []
+        for fk in field_order:
+            sub = sorted([r for r in rows if r["field"] == fk], key=lambda x: x["num"])
+            if not sub:
+                continue
+            matome_href, matome_label = matome_for_field(fk)
+            label_ja = FIELD_LABEL_JA[fk]
+            lis = "".join(
+                f'<li><a href="{html.escape(href_past_question_from_hub(era_slug, session, r))}">'
+                f'第{r["num"]}問</a></li>'
+                for r in sub
+            )
+            subblocks.append(
+                f'<section class="q-session-field" aria-labelledby="hub-{era_slug}-{session}-{fk}">'
+                f'<h3 id="hub-{era_slug}-{session}-{fk}" class="q-field-subhead">{html.escape(label_ja)}</h3>'
+                f'<p class="q-meta"><a href="{html.escape(href_repo_root(rel, matome_href.lstrip("/")))}">'
+                f"{html.escape(matome_label)}</a></p>"
+                f'<ol class="q-year-list">{lis}</ol></section>'
+            )
+
+        body_main = render_session_hub_page_body(heading, "".join(subblocks))
+        hub_item_url = public_url(base_url, site_prefix, "q/index.html")
+        json_ld = {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "CollectionPage",
+                    "@id": canonical + "#webpage",
+                    "url": canonical,
+                    "name": title,
+                    "description": meta_desc,
+                    "inLanguage": "ja-JP",
+                },
+                {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {
+                            "@type": "ListItem",
+                            "position": 1,
+                            "name": "トップ",
+                            "item": public_url(base_url, site_prefix, "index.html"),
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 2,
+                            "name": "過去問一覧",
+                            "item": hub_item_url,
+                        },
+                        {
+                            "@type": "ListItem",
+                            "position": 3,
+                            "name": heading,
+                            "item": canonical,
+                        },
+                    ],
+                },
+            ],
+        }
+        page_html = f"""<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{html.escape(title)}</title>
+<meta name="description" content="{html.escape(meta_desc)}">
+<link rel="canonical" href="{html.escape(canonical)}">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{html.escape(title)}">
+<meta property="og:description" content="{html.escape(meta_desc)}">
+<meta property="og:url" content="{html.escape(canonical)}">
+<script defer src="/site-analytics.js"></script>
+<link rel="stylesheet" href="{html.escape(css_href)}">
+<script type="application/ld+json">
+{json.dumps(json_ld, ensure_ascii=False, indent=2)}
+</script>
+</head>
+<body class="q-static-body">
+<header class="q-static-header">
+  <p class="q-static-brand"><a href="{html.escape(root_idx)}">{html.escape(BRAND_NAME)}</a>（{html.escape(EXAM_NAME_OFFICIAL)}）</p>
+  <nav aria-label="パンくず">
+    <ol class="q-breadcrumb">
+      <li><a href="{html.escape(root_idx)}">トップ</a></li>
+      <li><a href="{html.escape(q_hub_idx)}">過去問一覧</a></li>
+      <li aria-current="page">{html.escape(heading)}</li>
+    </ol>
+  </nav>
+</header>
+<main class="q-static-main">
+  <h1 class="q-h1">{html.escape(heading)}｜過去問一覧</h1>
+  {body_main}
+  <p class="q-app-link"><a href="{html.escape(root_idx)}#past">アプリで過去問を開く</a></p>
+</main>
+{render_static_q_footer(rel)}
+</body>
+</html>
+"""
+        full_path = out_root / "past" / era_slug / session / "index.html"
+        full_path.parent.mkdir(parents=True, exist_ok=True)
+        full_path.write_text(page_html, encoding="utf-8")
+        urls_for_sitemap.append(canonical)
+
+
+def href_past_question_from_hub(era_slug: str, session: str, r: dict) -> str:
+    return f"{r['field']}/{r['qwidth']}/index.html"
 
 
 def write_q_past_index(
@@ -629,6 +822,7 @@ def main() -> None:
     )
     (repo_root / "robots.txt").write_text(robots_body, encoding="utf-8")
 
+    write_session_hubs(out_root, parsed, base_url, site_prefix, urls_for_sitemap)
     write_q_past_index(out_root, parsed, n_past, n_orig, base_url, site_prefix)
 
     print(

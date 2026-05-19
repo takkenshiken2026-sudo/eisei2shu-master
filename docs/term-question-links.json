@@ -1,0 +1,568 @@
+{
+  "sokatsu-anzen-eisei-kanrisha": [
+    {
+      "id": "past.r07.zenki.law.04",
+      "label": "令和7年・前期・関係法令 第4問"
+    },
+    {
+      "id": "past.r07.zenki.law.03",
+      "label": "令和7年・前期・関係法令 第3問"
+    },
+    {
+      "id": "past.r07.koki.law.01",
+      "label": "令和7年・後期・関係法令 第1問"
+    },
+    {
+      "id": "past.r07.apr.law.04",
+      "label": "令和7年・4月・関係法令 第4問"
+    },
+    {
+      "id": "past.r07.apr.law.02",
+      "label": "令和7年・4月・関係法令 第2問"
+    }
+  ],
+  "dai2shu-eisei-kanrisha": [
+    {
+      "id": "past.r07.zenki.law.01",
+      "label": "令和7年・前期・関係法令 第1問"
+    },
+    {
+      "id": "past.r07.koki.law.01",
+      "label": "令和7年・後期・関係法令 第1問"
+    },
+    {
+      "id": "past.r07.apr.law.01",
+      "label": "令和7年・4月・関係法令 第1問"
+    },
+    {
+      "id": "past.r06.oct.law.01",
+      "label": "令和6年・10月・関係法令 第1問"
+    },
+    {
+      "id": "past.r06.apr.law.01",
+      "label": "令和6年・4月・関係法令 第1問"
+    }
+  ],
+  "sennin-eisei-kanrisha": [
+    {
+      "id": "past.r07.zenki.law.01",
+      "label": "令和7年・前期・関係法令 第1問"
+    },
+    {
+      "id": "past.r07.koki.law.01",
+      "label": "令和7年・後期・関係法令 第1問"
+    },
+    {
+      "id": "past.r06.oct.law.01",
+      "label": "令和6年・10月・関係法令 第1問"
+    },
+    {
+      "id": "past.r05.apr.law.01",
+      "label": "令和5年・4月・関係法令 第1問"
+    },
+    {
+      "id": "past.r03.apr.law.01",
+      "label": "令和3年・4月・関係法令 第1問"
+    }
+  ],
+  "eisei-kanrisha": [
+    {
+      "id": "past.r07.zenki.rights.15",
+      "label": "令和7年・前期・労働衛生 第15問"
+    },
+    {
+      "id": "past.r07.zenki.law.04",
+      "label": "令和7年・前期・関係法令 第4問"
+    },
+    {
+      "id": "past.r07.zenki.law.03",
+      "label": "令和7年・前期・関係法令 第3問"
+    },
+    {
+      "id": "past.r07.zenki.law.02",
+      "label": "令和7年・前期・関係法令 第2問"
+    },
+    {
+      "id": "past.r07.zenki.law.01",
+      "label": "令和7年・前期・関係法令 第1問"
+    }
+  ],
+  "yugai-gyomu": [
+    {
+      "id": "past.r07.zenki.law.01",
+      "label": "令和7年・前期・関係法令 第1問"
+    },
+    {
+      "id": "past.r07.koki.law.07",
+      "label": "令和7年・後期・関係法令 第7問"
+    },
+    {
+      "id": "past.r07.koki.law.01",
+      "label": "令和7年・後期・関係法令 第1問"
+    },
+    {
+      "id": "past.r07.apr.law.06",
+      "label": "令和7年・4月・関係法令 第6問"
+    },
+    {
+      "id": "past.r05.oct.law.05",
+      "label": "令和5年・10月・関係法令 第5問"
+    }
+  ],
+  "sangyo-i": [
+    {
+      "id": "past.r07.zenki.rights.15",
+      "label": "令和7年・前期・労働衛生 第15問"
+    },
+    {
+      "id": "past.r07.zenki.law.01",
+      "label": "令和7年・前期・関係法令 第1問"
+    },
+    {
+      "id": "past.r07.koki.law.06",
+      "label": "令和7年・後期・関係法令 第6問"
+    },
+    {
+      "id": "past.r07.koki.law.02",
+      "label": "令和7年・後期・関係法令 第2問"
+    },
+    {
+      "id": "past.r07.koki.law.01",
+      "label": "令和7年・後期・関係法令 第1問"
+    }
+  ],
+  "shinya-gyou": [
+    {
+      "id": "past.r07.zenki.law.01",
+      "label": "令和7年・前期・関係法令 第1問"
+    },
+    {
+      "id": "past.r07.koki.law.01",
+      "label": "令和7年・後期・関係法令 第1問"
+    },
+    {
+      "id": "past.r05.oct.law.09",
+      "label": "令和5年・10月・関係法令 第9問"
+    },
+    {
+      "id": "past.r05.oct.law.04",
+      "label": "令和5年・10月・関係法令 第4問"
+    },
+    {
+      "id": "past.r05.apr.law.04",
+      "label": "令和5年・4月・関係法令 第4問"
+    }
+  ],
+  "eisei-iinkai": [
+    {
+      "id": "past.r07.zenki.rights.15",
+      "label": "令和7年・前期・労働衛生 第15問"
+    },
+    {
+      "id": "past.r07.zenki.rights.14",
+      "label": "令和7年・前期・労働衛生 第14問"
+    },
+    {
+      "id": "past.r07.zenki.law.03",
+      "label": "令和7年・前期・関係法令 第3問"
+    },
+    {
+      "id": "past.r07.koki.rights.15",
+      "label": "令和7年・後期・労働衛生 第15問"
+    },
+    {
+      "id": "past.r07.koki.law.06",
+      "label": "令和7年・後期・関係法令 第6問"
+    }
+  ],
+  "joji-shiyo-roudousha": [
+    {
+      "id": "past.r07.zenki.law.04",
+      "label": "令和7年・前期・関係法令 第4問"
+    },
+    {
+      "id": "past.r07.koki.law.02",
+      "label": "令和7年・後期・関係法令 第2問"
+    },
+    {
+      "id": "past.r07.apr.law.09",
+      "label": "令和7年・4月・関係法令 第9問"
+    },
+    {
+      "id": "past.r07.apr.law.02",
+      "label": "令和7年・4月・関係法令 第2問"
+    },
+    {
+      "id": "past.r06.oct.law.06",
+      "label": "令和6年・10月・関係法令 第6問"
+    }
+  ],
+  "teiki-kenko-shindan": [
+    {
+      "id": "past.r07.zenki.rights.15",
+      "label": "令和7年・前期・労働衛生 第15問"
+    },
+    {
+      "id": "past.r07.zenki.law.06",
+      "label": "令和7年・前期・関係法令 第6問"
+    },
+    {
+      "id": "past.r07.koki.rights.15",
+      "label": "令和7年・後期・労働衛生 第15問"
+    },
+    {
+      "id": "past.r07.koki.law.04",
+      "label": "令和7年・後期・関係法令 第4問"
+    },
+    {
+      "id": "past.r07.apr.rights.14",
+      "label": "令和7年・4月・労働衛生 第14問"
+    }
+  ],
+  "sagyo-kankyo-sokutei-shi": [
+    {
+      "id": "past.r07.zenki.law.03",
+      "label": "令和7年・前期・関係法令 第3問"
+    },
+    {
+      "id": "past.r07.koki.law.06",
+      "label": "令和7年・後期・関係法令 第6問"
+    },
+    {
+      "id": "past.r07.apr.law.04",
+      "label": "令和7年・4月・関係法令 第4問"
+    },
+    {
+      "id": "past.r06.oct.law.02",
+      "label": "令和6年・10月・関係法令 第2問"
+    },
+    {
+      "id": "past.r05.oct.law.03",
+      "label": "令和5年・10月・関係法令 第3問"
+    }
+  ],
+  "sagyo-kankyo-sokutei": [
+    {
+      "id": "past.r07.zenki.law.03",
+      "label": "令和7年・前期・関係法令 第3問"
+    },
+    {
+      "id": "past.r07.koki.law.06",
+      "label": "令和7年・後期・関係法令 第6問"
+    },
+    {
+      "id": "past.r07.apr.law.04",
+      "label": "令和7年・4月・関係法令 第4問"
+    },
+    {
+      "id": "past.r06.oct.law.02",
+      "label": "令和6年・10月・関係法令 第2問"
+    },
+    {
+      "id": "past.r05.oct.law.03",
+      "label": "令和5年・10月・関係法令 第3問"
+    }
+  ],
+  "rodo-anzen-eisei-kisoku": [
+    {
+      "id": "past.r07.zenki.law.07",
+      "label": "令和7年・前期・関係法令 第7問"
+    },
+    {
+      "id": "past.r07.zenki.law.06",
+      "label": "令和7年・前期・関係法令 第6問"
+    },
+    {
+      "id": "past.r07.koki.law.07",
+      "label": "令和7年・後期・関係法令 第7問"
+    },
+    {
+      "id": "past.r07.apr.law.07",
+      "label": "令和7年・4月・関係法令 第7問"
+    },
+    {
+      "id": "past.r07.apr.law.06",
+      "label": "令和7年・4月・関係法令 第6問"
+    }
+  ],
+  "necchuysho": [
+    {
+      "id": "past.r07.koki.rights.14",
+      "label": "令和7年・後期・労働衛生 第14問"
+    },
+    {
+      "id": "past.r07.koki.limit.30",
+      "label": "令和7年・後期・労働生理 第30問"
+    },
+    {
+      "id": "past.r06.apr.rights.12",
+      "label": "令和6年・4月・労働衛生 第12問"
+    },
+    {
+      "id": "past.r05.apr.rights.12",
+      "label": "令和5年・4月・労働衛生 第12問"
+    },
+    {
+      "id": "past.r04.oct.rights.13",
+      "label": "令和4年・10月・労働衛生 第13問"
+    }
+  ],
+  "wbgt": [
+    {
+      "id": "past.r07.zenki.rights.11",
+      "label": "令和7年・前期・労働衛生 第11問"
+    },
+    {
+      "id": "past.r07.koki.rights.14",
+      "label": "令和7年・後期・労働衛生 第14問"
+    },
+    {
+      "id": "past.r07.apr.rights.12",
+      "label": "令和7年・4月・労働衛生 第12問"
+    },
+    {
+      "id": "past.r06.oct.rights.12",
+      "label": "令和6年・10月・労働衛生 第12問"
+    },
+    {
+      "id": "past.r06.apr.rights.12",
+      "label": "令和6年・4月・労働衛生 第12問"
+    }
+  ],
+  "fushindo-hakkan": [
+    {
+      "id": "past.r07.koki.limit.28",
+      "label": "令和7年・後期・労働生理 第28問"
+    },
+    {
+      "id": "past.r07.apr.limit.25",
+      "label": "令和7年・4月・労働生理 第25問"
+    },
+    {
+      "id": "past.r06.apr.limit.30",
+      "label": "令和6年・4月・労働生理 第30問"
+    },
+    {
+      "id": "past.r04.oct.limit.23",
+      "label": "令和4年・10月・労働生理 第23問"
+    },
+    {
+      "id": "past.r04.apr.limit.23",
+      "label": "令和4年・4月・労働生理 第23問"
+    }
+  ],
+  "taion-chosetsu": [
+    {
+      "id": "past.r07.zenki.limit.29",
+      "label": "令和7年・前期・労働生理 第29問"
+    },
+    {
+      "id": "past.r07.koki.limit.30",
+      "label": "令和7年・後期・労働生理 第30問"
+    },
+    {
+      "id": "past.r07.koki.limit.28",
+      "label": "令和7年・後期・労働生理 第28問"
+    },
+    {
+      "id": "past.r07.apr.limit.25",
+      "label": "令和7年・4月・労働生理 第25問"
+    },
+    {
+      "id": "past.r06.oct.limit.25",
+      "label": "令和6年・10月・労働生理 第25問"
+    }
+  ],
+  "rodo-anzen-eisei-ho": [
+    {
+      "id": "past.r07.zenki.law.05",
+      "label": "令和7年・前期・関係法令 第5問"
+    },
+    {
+      "id": "past.r07.apr.law.05",
+      "label": "令和7年・4月・関係法令 第5問"
+    },
+    {
+      "id": "past.r06.oct.law.05",
+      "label": "令和6年・10月・関係法令 第5問"
+    },
+    {
+      "id": "past.r06.apr.law.04",
+      "label": "令和6年・4月・関係法令 第4問"
+    },
+    {
+      "id": "past.r05.oct.law.07",
+      "label": "令和5年・10月・関係法令 第7問"
+    }
+  ],
+  "koyounyu-kenko-shindan": [
+    {
+      "id": "past.r07.zenki.law.06",
+      "label": "令和7年・前期・関係法令 第6問"
+    },
+    {
+      "id": "past.r04.apr.law.04",
+      "label": "令和4年・4月・関係法令 第4問"
+    },
+    {
+      "id": "past.r03.oct.law.04",
+      "label": "令和3年・10月・関係法令 第4問"
+    }
+  ],
+  "stress-check": [
+    {
+      "id": "past.r07.zenki.rights.14",
+      "label": "令和7年・前期・労働衛生 第14問"
+    },
+    {
+      "id": "past.r06.apr.rights.14",
+      "label": "令和6年・4月・労働衛生 第14問"
+    }
+  ],
+  "stressor-onnetsu": [
+    {
+      "id": "past.r07.zenki.limit.30",
+      "label": "令和7年・前期・労働生理 第30問"
+    },
+    {
+      "id": "past.r07.apr.limit.29",
+      "label": "令和7年・4月・労働生理 第29問"
+    },
+    {
+      "id": "past.r06.apr.limit.29",
+      "label": "令和6年・4月・労働生理 第29問"
+    },
+    {
+      "id": "past.r05.oct.limit.29",
+      "label": "令和5年・10月・労働生理 第29問"
+    },
+    {
+      "id": "past.h30.oct.limit.30",
+      "label": "平成30年・10月・労働生理 第30問"
+    }
+  ],
+  "kenchi-kan": [
+    {
+      "id": "past.r07.apr.law.08",
+      "label": "令和7年・4月・関係法令 第8問"
+    }
+  ],
+  "junka": [
+    {
+      "id": "past.r07.apr.rights.12",
+      "label": "令和7年・4月・労働衛生 第12問"
+    },
+    {
+      "id": "past.r06.oct.rights.12",
+      "label": "令和6年・10月・労働衛生 第12問"
+    },
+    {
+      "id": "past.r05.apr.rights.12",
+      "label": "令和5年・4月・労働衛生 第12問"
+    },
+    {
+      "id": "past.r04.oct.rights.13",
+      "label": "令和4年・10月・労働衛生 第13問"
+    }
+  ],
+  "judo-kitsuen-boshi": [
+    {
+      "id": "past.r07.apr.rights.18",
+      "label": "令和7年・4月・労働衛生 第18問"
+    },
+    {
+      "id": "past.r05.oct.rights.15",
+      "label": "令和5年・10月・労働衛生 第15問"
+    },
+    {
+      "id": "past.r05.apr.rights.15",
+      "label": "令和5年・4月・労働衛生 第15問"
+    },
+    {
+      "id": "past.r04.oct.rights.14",
+      "label": "令和4年・10月・労働衛生 第14問"
+    },
+    {
+      "id": "past.r04.apr.rights.14",
+      "label": "令和4年・4月・労働衛生 第14問"
+    }
+  ],
+  "dai1shu-eisei-kanrisha": [
+    {
+      "id": "past.r06.oct.law.01",
+      "label": "令和6年・10月・関係法令 第1問"
+    },
+    {
+      "id": "past.r06.apr.law.01",
+      "label": "令和6年・4月・関係法令 第1問"
+    },
+    {
+      "id": "past.r05.oct.law.01",
+      "label": "令和5年・10月・関係法令 第1問"
+    },
+    {
+      "id": "past.r05.apr.law.01",
+      "label": "令和5年・4月・関係法令 第1問"
+    },
+    {
+      "id": "past.h30.oct.law.01",
+      "label": "平成30年・10月・関係法令 第1問"
+    }
+  ],
+  "anzen-eisei-kyoiku": [
+    {
+      "id": "past.r06.oct.rights.16",
+      "label": "令和6年・10月・労働衛生 第16問"
+    },
+    {
+      "id": "past.r04.apr.law.06",
+      "label": "令和4年・4月・関係法令 第6問"
+    },
+    {
+      "id": "past.r03.oct.law.06",
+      "label": "令和3年・10月・関係法令 第6問"
+    },
+    {
+      "id": "past.r03.apr.law.06",
+      "label": "令和3年・4月・関係法令 第6問"
+    },
+    {
+      "id": "past.r02.oct.law.06",
+      "label": "令和2年・10月・関係法令 第6問"
+    }
+  ],
+  "soonnsei-nacho": [
+    {
+      "id": "past.r05.oct.limit.28",
+      "label": "令和5年・10月・労働生理 第28問"
+    }
+  ],
+  "tokushu-kenko-shindan": [
+    {
+      "id": "past.r05.apr.law.04",
+      "label": "令和5年・4月・関係法令 第4問"
+    }
+  ],
+  "shugyo-jo-sochi": [
+    {
+      "id": "past.r05.apr.law.04",
+      "label": "令和5年・4月・関係法令 第4問"
+    }
+  ],
+  "hyoshiki-keiji": [
+    {
+      "id": "past.r05.apr.rights.15",
+      "label": "令和5年・4月・労働衛生 第15問"
+    }
+  ],
+  "kyouryokusha": [
+    {
+      "id": "past.h31.apr.rights.16",
+      "label": "平成31年・4月・労働衛生 第16問"
+    },
+    {
+      "id": "past.h30.oct.rights.17",
+      "label": "平成30年・10月・労働衛生 第17問"
+    }
+  ]
+}

@@ -46,7 +46,29 @@
         {"@type": "ListItem", "position": 2, "name": "用語解説", "item": "https://eisei2shu-master.jp/terms/"},
         {"@type": "ListItem", "position": 3, "name": "特別教育とは？対象作業・実施時期・記録保存を完全整理", "item": "https://eisei2shu-master.jp/terms/tokubetsu-kyoiku.html"}
       ]
-    }
+    },
+    {
+    "@type": "FAQPage",
+    "@id": "https://eisei2shu-master.jp/terms/tokubetsu-kyoiku.html#faq",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "特別教育は試験でどこを見ればよいですか？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "特別教育は、定義だけでなく対象、実施時期、数値条件、他の制度との違いが問われやすいテーマです。本文の表で全体像を確認し、頻出の誤り選択肢で言い換えに慣れておくと判断しやすくなります。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "公式情報も確認した方がよいですか？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "はい。特別教育に関する数値、対象範囲、保存期間、選任要件などは、法令改正や公式資料の更新で扱いが変わることがあります。この記事は試験学習用の整理として使い、受験前には公式情報も確認してください。"
+            }
+        }
+    ]
+}
   ]
 }
 </script>
@@ -345,6 +367,25 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 .term-info-box details p {
   margin: 10px 0 0;
 }
+.term-learning-hub .term-learning-intro {
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: var(--text2);
+}
+.term-learning-hub .term-learning-subhead {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 18px 0 8px;
+  color: var(--ink);
+}
+.term-learning-hub ul {
+  margin-bottom: 0;
+}
+.term-learning-empty {
+  font-size: 14px;
+  color: var(--text2);
+  margin: 0;
+}
 @media(max-width: 600px) {
   .term-fact-table th,
   .term-fact-table td {
@@ -418,6 +459,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
       <li><a href="#term-section-4">試験で狙われる頻出ポイント</a></li>
       <li><a href="#term-section-5">試験での見方を整理する</a></li>
       <li><a href="#term-section-6">次に確認すること</a></li>
+      <li><a href="#term-learning-path">学習のつながり</a></li>
       <li><a href="#term-faq">よくある質問</a></li>
       <li><a href="#term-basic-info">記事の基本情報</a></li>
       <li><a href="#term-official-info">公式情報の確認</a></li>
@@ -579,6 +621,24 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <hr />
 <h2 id="term-section-6">次に確認すること</h2>
 <p>特別教育を確認したら、同じ分野の関連用語も続けて復習します。似た制度は、対象者、実施時期、義務の主体、保存期間などを横に並べると違いが見えやすくなります。実務や受験直前の確認では、本文の整理だけで判断せず、公式情報や最新の試験案内もあわせて確認してください。</p>
+
+<section id="term-learning-path" class="term-info-box term-learning-hub">
+  <h2>学習のつながり</h2>
+  <p class="term-learning-intro">用語の理解 → 科目まとめ → 過去問演習の順で復習すると記憶が定着しやすくなります。</p>
+  <h3 class="term-learning-subhead">科目まとめ</h3>
+  <ul>
+    <li><a href="/articles/kankei-horei-matome.html">関係法令まとめ（数値・頻度・保存期間）</a></li>
+    <li><a href="/articles/index.html">試験・学習ガイド一覧</a></li>
+  </ul>
+  <h3 class="term-learning-subhead">関連する過去問</h3>
+  <p class="term-learning-empty"><a href="/q/index.html">過去問一覧</a>から該当テーマの問題を探せます。</p>
+  <h3 class="term-learning-subhead">検索意図ガイド</h3>
+  <ul>
+    <li><a href="/articles/dokugaku-guide.html">独学合格ガイド</a></li>
+    <li><a href="/articles/nankaisei.html">合格ライン（何問正解）</a></li>
+    <li><a href="/articles/shiken-nittei.html">試験日程・申込</a></li>
+  </ul>
+</section>
 
 <section id="term-faq" class="term-info-box">
   <h2>よくある質問</h2>

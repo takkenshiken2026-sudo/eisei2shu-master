@@ -46,7 +46,8 @@
         {"@type": "ListItem", "position": 2, "name": "用語解説", "item": "{{site_url}}/terms/"},
         {"@type": "ListItem", "position": 3, "name": "{{h1}}", "item": "{{canonical}}"}
       ]
-    }
+    },
+    {{faq_schema_entry}}
   ]
 }
 </script>
@@ -344,6 +345,25 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 }
 .term-info-box details p {
   margin: 10px 0 0;
+}
+.term-learning-hub .term-learning-intro {
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: var(--text2);
+}
+.term-learning-hub .term-learning-subhead {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 18px 0 8px;
+  color: var(--ink);
+}
+.term-learning-hub ul {
+  margin-bottom: 0;
+}
+.term-learning-empty {
+  font-size: 14px;
+  color: var(--text2);
+  margin: 0;
 }
 @media(max-width: 600px) {
   .term-fact-table th,

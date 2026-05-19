@@ -46,7 +46,29 @@
         {"@type": "ListItem", "position": 2, "name": "用語解説", "item": "https://eisei2shu-master.jp/terms/"},
         {"@type": "ListItem", "position": 3, "name": "作業主任者とは？選任が必要な作業・資格・職務を整理", "item": "https://eisei2shu-master.jp/terms/sagyoshunin-sha.html"}
       ]
-    }
+    },
+    {
+    "@type": "FAQPage",
+    "@id": "https://eisei2shu-master.jp/terms/sagyoshunin-sha.html#faq",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "作業主任者はどのような作業で必要ですか？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "作業主任者は、一定の危険有害作業を行う場合に選任します。有機溶剤、特定化学物質、鉛、酸素欠乏危険作業、石綿作業などは代表例です。作業ごとに対応する資格や技能講習が必要になる点を確認します。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "衛生管理者との違いは何ですか？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "作業主任者は特定作業の現場を指揮する役割で、衛生管理者は事業場全体の衛生管理を担います。作業主任者がいるからといって、衛生管理者の選任が不要になるわけではありません。"
+            }
+        }
+    ]
+}
   ]
 }
 </script>
@@ -345,6 +367,25 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 .term-info-box details p {
   margin: 10px 0 0;
 }
+.term-learning-hub .term-learning-intro {
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: var(--text2);
+}
+.term-learning-hub .term-learning-subhead {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 18px 0 8px;
+  color: var(--ink);
+}
+.term-learning-hub ul {
+  margin-bottom: 0;
+}
+.term-learning-empty {
+  font-size: 14px;
+  color: var(--text2);
+  margin: 0;
+}
 @media(max-width: 600px) {
   .term-fact-table th,
   .term-fact-table td {
@@ -417,6 +458,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
       <li><a href="#term-section-3">衛生管理者との違いを見る</a></li>
       <li><a href="#term-section-4">資格要件のひっかけを確認する</a></li>
       <li><a href="#term-section-5">関連する有害業務とあわせて復習する</a></li>
+      <li><a href="#term-learning-path">学習のつながり</a></li>
       <li><a href="#term-faq">よくある質問</a></li>
       <li><a href="#term-basic-info">記事の基本情報</a></li>
       <li><a href="#term-official-info">公式情報の確認</a></li>
@@ -582,6 +624,24 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 <hr />
 <h2 id="term-section-5">関連する有害業務とあわせて復習する</h2>
 <p>作業主任者は、有機溶剤、特定化学物質、鉛、酸素欠乏、石綿などの有害業務と一緒に出題されやすい用語です。単独で覚えるより、どの作業で、どの主任者が必要で、どのような職務を行うかをつなげて確認します。関連する作業環境測定、保護具、換気装置の論点も復習しておくと、選択肢の判断がしやすくなります。</p>
+
+<section id="term-learning-path" class="term-info-box term-learning-hub">
+  <h2>学習のつながり</h2>
+  <p class="term-learning-intro">用語の理解 → 科目まとめ → 過去問演習の順で復習すると記憶が定着しやすくなります。</p>
+  <h3 class="term-learning-subhead">科目まとめ</h3>
+  <ul>
+    <li><a href="/articles/kankei-horei-matome.html">関係法令まとめ（数値・頻度・保存期間）</a></li>
+    <li><a href="/articles/index.html">試験・学習ガイド一覧</a></li>
+  </ul>
+  <h3 class="term-learning-subhead">関連する過去問</h3>
+  <p class="term-learning-empty"><a href="/q/index.html">過去問一覧</a>から該当テーマの問題を探せます。</p>
+  <h3 class="term-learning-subhead">検索意図ガイド</h3>
+  <ul>
+    <li><a href="/articles/dokugaku-guide.html">独学合格ガイド</a></li>
+    <li><a href="/articles/nankaisei.html">合格ライン（何問正解）</a></li>
+    <li><a href="/articles/shiken-nittei.html">試験日程・申込</a></li>
+  </ul>
+</section>
 
 <section id="term-faq" class="term-info-box">
   <h2>よくある質問</h2>

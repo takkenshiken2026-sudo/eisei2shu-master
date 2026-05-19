@@ -429,3 +429,32 @@ a:hover {
   color: var(--ink);
   margin: 0 0 8px;
 }
+
+/* 学習導線（用語・過去問・まとめ・ガイド） */
+.q-static-main .term-learning-hub,
+.matome-learning-hub {
+  border: 1px solid var(--border);
+  border-radius: var(--r2);
+  background: #fafafa;
+  padding: 18px 20px;
+  margin: 24px 0;
+}
+.term-learning-hub .term-learning-intro {
+  font-size: 14px;
+  color: var(--text2);
+  margin-bottom: 12px;
+}
+.term-learning-hub .term-learning-subhead {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 16px 0 8px;
+  color: var(--ink);
+}
+.term-learning-hub ul {
+  margin: 0 0 8px 1.2em;
+  padding: 0;
+}
+.term-learning-empty {
+  font-size: 14px;
+  color: var(--text2);
+}

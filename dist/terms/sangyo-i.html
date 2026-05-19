@@ -46,7 +46,29 @@
         {"@type": "ListItem", "position": 2, "name": "用語解説", "item": "https://eisei2shu-master.jp/terms/"},
         {"@type": "ListItem", "position": 3, "name": "産業医とは？選任要件・職務・衛生管理者との違い", "item": "https://eisei2shu-master.jp/terms/sangyo-i.html"}
       ]
-    }
+    },
+    {
+    "@type": "FAQPage",
+    "@id": "https://eisei2shu-master.jp/terms/sangyo-i.html#faq",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "産業医は何人以上の事業場で必要ですか？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "常時50人以上の労働者を使用する事業場では産業医の選任が必要です。衛生管理者や衛生委員会と同じく50人以上が基準になるため、管理体制の基本数値としてまとめて確認すると覚えやすくなります。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "産業医の作業場巡視は何回必要ですか？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "原則として月1回以上です。ただし、一定の情報提供など条件を満たす場合は2か月に1回以上と整理されることがあります。試験では「月2回以上」などの誤り選択肢に注意します。"
+            }
+        }
+    ]
+}
   ]
 }
 </script>
@@ -345,6 +367,25 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 .term-info-box details p {
   margin: 10px 0 0;
 }
+.term-learning-hub .term-learning-intro {
+  margin-bottom: 14px;
+  font-size: 14px;
+  color: var(--text2);
+}
+.term-learning-hub .term-learning-subhead {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 18px 0 8px;
+  color: var(--ink);
+}
+.term-learning-hub ul {
+  margin-bottom: 0;
+}
+.term-learning-empty {
+  font-size: 14px;
+  color: var(--text2);
+  margin: 0;
+}
 @media(max-width: 600px) {
   .term-fact-table th,
   .term-fact-table td {
@@ -417,6 +458,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
       <li><a href="#term-section-3">衛生管理者との違いを見る</a></li>
       <li><a href="#term-section-4">作業場巡視の頻度を確認する</a></li>
       <li><a href="#term-section-5">頻出の誤り選択肢で確認する</a></li>
+      <li><a href="#term-learning-path">学習のつながり</a></li>
       <li><a href="#term-faq">よくある質問</a></li>
       <li><a href="#term-basic-info">記事の基本情報</a></li>
       <li><a href="#term-official-info">公式情報の確認</a></li>
@@ -622,6 +664,30 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 </tr>
 </tbody>
 </table>
+
+<section id="term-learning-path" class="term-info-box term-learning-hub">
+  <h2>学習のつながり</h2>
+  <p class="term-learning-intro">用語の理解 → 科目まとめ → 過去問演習の順で復習すると記憶が定着しやすくなります。</p>
+  <h3 class="term-learning-subhead">科目まとめ</h3>
+  <ul>
+    <li><a href="/articles/kankei-horei-matome.html">関係法令まとめ（数値・頻度・保存期間）</a></li>
+    <li><a href="/articles/index.html">試験・学習ガイド一覧</a></li>
+  </ul>
+  <h3 class="term-learning-subhead">関連する過去問</h3>
+  <ul>
+    <li><a href="/q/past/r07/zenki/rights/15/">令和7年・前期・労働衛生 第15問</a></li>
+    <li><a href="/q/past/r07/zenki/law/01/">令和7年・前期・関係法令 第1問</a></li>
+    <li><a href="/q/past/r07/koki/law/06/">令和7年・後期・関係法令 第6問</a></li>
+    <li><a href="/q/past/r07/koki/law/02/">令和7年・後期・関係法令 第2問</a></li>
+    <li><a href="/q/past/r07/koki/law/01/">令和7年・後期・関係法令 第1問</a></li>
+  </ul>
+  <h3 class="term-learning-subhead">検索意図ガイド</h3>
+  <ul>
+    <li><a href="/articles/dokugaku-guide.html">独学合格ガイド</a></li>
+    <li><a href="/articles/nankaisei.html">合格ライン（何問正解）</a></li>
+    <li><a href="/articles/shiken-nittei.html">試験日程・申込</a></li>
+  </ul>
+</section>
 
 <section id="term-faq" class="term-info-box">
   <h2>よくある質問</h2>

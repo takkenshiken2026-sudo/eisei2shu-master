@@ -272,14 +272,100 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 .site-footer a:hover { color: var(--text); }
 
 .idx-intro { font-size: 14px; line-height: 1.85; color: var(--text2); margin-bottom: 20px; }
-.idx-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.idx-list a {
-  display: block; padding: 12px 14px; background: var(--bg2); border-radius: var(--r);
-  border: 1px solid var(--border); text-decoration: none; color: var(--text); font-size: 14px;
-  transition: background .15s, border-color .15s;
+.idx-count { font-size: 12px; color: var(--text3); margin-bottom: 12px; }
+
+/* カテゴリフィルタ */
+.idx-filters {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
 }
-.idx-list a:hover { background: var(--bg3); border-color: var(--border2); }
-.idx-count { font-size: 12px; color: var(--text3); margin-bottom: 16px; }
+.idx-filter-btn {
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  padding: 8px 14px; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid var(--border2); background: var(--bg2); color: var(--text2);
+  transition: background .15s, border-color .15s, color .15s;
+}
+.idx-filter-btn:hover { border-color: var(--text3); color: var(--text); }
+.idx-filter-btn.is-active {
+  background: var(--ink); border-color: var(--ink); color: #fff;
+}
+
+/* カテゴリ別セクション */
+.idx-sections { display: flex; flex-direction: column; gap: 32px; }
+.idx-cat-section { scroll-margin-top: 72px; }
+.idx-cat-head {
+  display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px;
+  padding-bottom: 10px; border-bottom: 2px solid var(--border);
+}
+.idx-cat-section--hub .idx-cat-head { border-bottom-color: #4b5563; }
+.idx-cat-section--exam .idx-cat-head { border-bottom-color: #2563eb; }
+.idx-cat-section--study .idx-cat-head { border-bottom-color: #1a7a40; }
+.idx-cat-section--law .idx-cat-head { border-bottom-color: #6d28d9; }
+.idx-cat-section--rights .idx-cat-head { border-bottom-color: #c2410c; }
+.idx-cat-section--limit .idx-cat-head { border-bottom-color: #0d9488; }
+.idx-cat-section--venue .idx-cat-head { border-bottom-color: #64748b; }
+.idx-cat-section--other .idx-cat-head { border-bottom-color: #9ca3af; }
+.idx-cat-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0; }
+.idx-cat-count { font-size: 12px; font-weight: 600; color: var(--text3); }
+
+/* カードグリッド */
+.idx-card-grid {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px;
+}
+.idx-card-wrap { margin: 0; }
+.idx-card-wrap.is-hidden { display: none; }
+.idx-cat-section.is-hidden { display: none; }
+
+.idx-card {
+  display: flex; flex-direction: column; gap: 8px; height: 100%;
+  padding: 14px 16px; border-radius: var(--r2); text-decoration: none;
+  border: 1px solid var(--border); border-left-width: 4px;
+  background: #fff; box-shadow: var(--sh);
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+}
+.idx-card:hover {
+  transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  border-color: var(--border2);
+}
+.idx-card-badge {
+  align-self: flex-start; font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  padding: 3px 9px; border-radius: 999px; line-height: 1.3;
+}
+.idx-card-title {
+  font-size: 15px; font-weight: 700; line-height: 1.45; color: var(--text);
+}
+.idx-card-full {
+  font-size: 12px; line-height: 1.55; color: var(--text3);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+.idx-card--hub { border-left-color: #4b5563; background: #f9fafb; }
+.idx-card--hub .idx-card-badge { background: #e5e7eb; color: #374151; }
+.idx-card--exam { border-left-color: #2563eb; background: #f8faff; }
+.idx-card--exam .idx-card-badge { background: #dbeafe; color: #1e40af; }
+.idx-card--study { border-left-color: #1a7a40; background: #f6fdf9; }
+.idx-card--study .idx-card-badge { background: #d1fae5; color: #166534; }
+.idx-card--law { border-left-color: #7c3aed; background: #faf8ff; }
+.idx-card--law .idx-card-badge { background: #ede9fe; color: #5b21b6; }
+.idx-card--rights { border-left-color: #ea580c; background: #fffaf5; }
+.idx-card--rights .idx-card-badge { background: #ffedd5; color: #9a3412; }
+.idx-card--limit { border-left-color: #0d9488; background: #f4fdfa; }
+.idx-card--limit .idx-card-badge { background: #ccfbf1; color: #115e59; }
+.idx-card--venue { border-left-color: #64748b; background: #f8fafc; }
+.idx-card--venue .idx-card-badge { background: #e2e8f0; color: #334155; }
+.idx-card--other { border-left-color: #9ca3af; background: #fafafa; }
+.idx-card--other .idx-card-badge { background: #f3f4f6; color: #4b5563; }
+
+.term-learning-hub { border: 1px solid var(--border); border-radius: var(--r2); background: #fafafa; padding: 18px 20px; margin: 24px 0; }
+.term-learning-hub .term-learning-intro { font-size: 14px; color: var(--text2); margin-bottom: 12px; }
+.term-learning-hub .term-learning-subhead { font-size: 14px; font-weight: 700; margin: 16px 0 8px; }
+.term-learning-hub ul { margin: 0 0 8px 1.2em; }
+
+@media (max-width: 640px) {
+  .idx-card-grid { grid-template-columns: 1fr; }
+  .idx-filters { gap: 6px; }
+  .idx-filter-btn { font-size: 12px; padding: 6px 11px; }
+}
 </style>
 </head>
 <body>
@@ -305,103 +391,817 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   <h1 class="article-title">試験・学習ガイド一覧</h1>
 
   <p class="idx-intro">受験資格・試験日程・合格基準・勉強の進め方・科目別のまとめ、地域別試験会場など、第二種衛生管理者試験の<strong>横断的な解説記事</strong>をまとめています。用語ごとの詳細は<a href="/terms/">用語解説一覧</a>からどうぞ。</p>
-  <p class="idx-count">全 88 本（静的HTML）</p>
 
-  <ul class="idx-list" id="article-index-list">
-    <li><a href="/articles/1shu-2shu-chigai.html">第一種・第二種衛生管理者の違い【業種・科目数・合格率を比較】どっちを受けるべきか</a></li>
-    <li><a href="/articles/about.html">二衛マスターについて｜第二種衛生管理者試験の無料学習サイト</a></li>
-    <li><a href="/articles/benkyou-jikan.html">第二種衛生管理者の勉強時間は約60時間【1ヶ月・2ヶ月・3ヶ月の学習スケジュール】</a></li>
-    <li><a href="/articles/category-kankeihOrei.html">関係法令の用語解説一覧【第二種衛生管理者試験】頻出テーマ完全網羅</a></li>
-    <li><a href="/articles/category-rodoEisei.html">労働衛生の用語解説一覧【第二種衛生管理者試験】頻出テーマ完全網羅</a></li>
-    <li><a href="/articles/category-rodoSeiri.html">労働生理の用語解説一覧【第二種衛生管理者試験】頻出テーマ完全網羅</a></li>
-    <li><a href="/articles/choujikan-mensetu-80h.html">長時間労働者面接指導（月80時間超）の要件・産業医・記録を整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/choujikan-rodo-mensetu.html">長時間労働者面接指導【月80時間超・産業医・5年保存】完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/chubu-center.html">中部安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</a></li>
-    <li><a href="/articles/chushikoku-center.html">中国四国安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</a></li>
-    <li><a href="/articles/dai2shu-gyoshu-ichiran.html">第二種衛生管理者が選任できる業種の完全一覧【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/dai2shu-taishogyo-shu.html">第二種衛生管理者で選任できる業種の完全一覧【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/denri-hoshasen-senyodo.html">電離放射線の線量限度・管理区域【5年100mSv・3ヶ月1.3mSv】完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/dokugaku-guide.html">第二種衛生管理者の独学合格ガイド【テキスト選び→過去問→直前対策の完全ロードマップ】</a></li>
-    <li><a href="/articles/dokugaku-roadmap.html">第二種衛生管理者の独学合格ロードマップ【テキスト選び→過去問→直前対策】</a></li>
-    <li><a href="/articles/eisei-iinkai-kosei.html">衛生委員会の設置要件・構成員・月1回開催を完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/goukaku-happyo-kakunin.html">第二種衛生管理者の合格発表はいつ？確認方法・免許申請の流れまで解説</a></li>
-    <li><a href="/articles/goukaku-kijun.html">第二種衛生管理者の合格点・合格基準【30問中何問で合格？科目別の足切りを解説】</a></li>
-    <li><a href="/articles/goukakuritsu.html">第二種衛生管理者の合格率・難易度【2024年度49.8%】年度別推移と合格のリアルを解説</a></li>
-    <li><a href="/articles/hogo-gu-mask-sentei.html">呼吸用保護具の選定・防じんvs防毒マスクの使い分けを整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/hokkaido-center.html">北海道安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</a></li>
-    <li><a href="/articles/hoshano-kakutei-kakuritsu.html">確定的影響・確率的影響の違い・放射線の種類と透過力を整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/hoshasen-alara-3gensoku.html">放射線防護の三原則（時間・距離・遮蔽）とALARA【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/hoshu-bunseki-ryuryo.html">捕集分析法の手順・流量校正・ミゼットインピンジャーを整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/hoshu-bunseki-vs-chokusetsu.html">捕集分析法と直接読み取り式の違い・使い分け【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/ichisanka-tanso-coh.html">一酸化炭素中毒・カルボキシヘモグロビンのメカニズムを完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/ikkagetsu-goukaku.html">第二種衛生管理者を1ヶ月で合格する勉強計画【1日2時間・週別スケジュール】</a></li>
-    <li><a href="/articles/jinpai-kanri-kenko.html">じん肺の種類・管理区分・健診保存期間【7年・不可逆性】完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/jinpai-tokuchou.html">じん肺の種類・不可逆性・管理区分・珪肺の原因を完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/jisshi-moshikomi-tejun.html">第二種衛生管理者の申込手順【写真付き解説・申込書の書き方・必要書類】</a></li>
-    <li><a href="/articles/juken-ryo-hiyo.html">第二種衛生管理者の受験料・費用【8,800円＋テキスト代・交通費の総額を解説】</a></li>
-    <li><a href="/articles/juken-ryo-sougohiyo.html">第二種衛生管理者の受験料・総費用【8,800円＋テキスト＋交通費の合計】</a></li>
-    <li><a href="/articles/juken-shikaku.html">第二種衛生管理者の受験資格【学歴別・実務経験年数一覧】自分が受験できるか即確認</a></li>
-    <li><a href="/articles/kagaku-busshitsu-dokusho-hikaku.html">化学物質の急性毒性・慢性毒性・ばく露経路まとめ【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/kakomon-nannennbun.html">第二種衛生管理者の過去問は何年分やればいい？効果的な使い方と入手方法</a></li>
-    <li><a href="/articles/kamoku-menjo-jouken.html">第二種衛生管理者の科目免除条件と対象者【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/kamoku-menjo.html">第二種衛生管理者の科目免除【対象者・免除される科目・申請方法】</a></li>
-    <li><a href="/articles/kankei-horei-matome.html">関係法令まとめ【第二種衛生管理者】数値・頻度・保存期間を一覧表で整理</a></li>
-    <li><a href="/articles/kanri-taisei-zentaizo.html">労働安全衛生法の管理体制【全体図・役職と選任要件の早見表】第二種衛生管理者試験</a></li>
-    <li><a href="/articles/kanto-center.html">関東安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</a></li>
-    <li><a href="/articles/karotein-sds-ghs.html">SDS・GHS・リスクアセスメントの関係を整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/kenko-shindan-hindo.html">健康診断の種類・実施頻度・保存期間を数値で整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/kenko-shindan-jigo-tejun.html">健康診断の事後措置・医師意見聴取・就業制限の手順【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/kinki-center.html">近畿安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</a></li>
-    <li><a href="/articles/kiroku-hozon-kikan.html">記録保存期間の一覧【3年・5年・7年・30年・40年の完全整理】</a></li>
-    <li><a href="/articles/kokyuyo-hogo-gu-erabikata.html">呼吸用保護具の種類と選び方【防じん・防毒・送気マスクの使い分け】第二種衛生管理者試験</a></li>
-    <li><a href="/articles/kyokuho-haikisochi-kosei.html">局所排気装置の構成・フード種類・設置優先度を完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/kyushu-center.html">九州安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</a></li>
-    <li><a href="/articles/menkyo-shinsei.html">第二種衛生管理者の免許申請方法【合格後の手続き・必要書類・収入印紙1,500円】</a></li>
-    <li><a href="/articles/nankaimo-ochiru.html">第二種衛生管理者に何回も落ちる人の3つの原因と対策</a></li>
-    <li><a href="/articles/nankaisei.html">第二種衛生管理者は何問正解で合格？科目別の合格ラインを問題数で計算</a></li>
-    <li><a href="/articles/necchuysho-shoudo.html">熱中症の重症度Ⅰ〜Ⅲ・症状・応急処置・体温調節の仕組みを整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/nenshosha-ninsanpu-seigen.html">年少者・妊産婦の就業制限まとめ【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/osusume-app.html">第二種衛生管理者のおすすめアプリ3選【2026年・無料・スマホで過去問】</a></li>
-    <li><a href="/articles/risk-assessment-tejun.html">リスクアセスメントの手順・優先順位・記録義務【化学物質管理】完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/risk-assessment-yusendo.html">リスクアセスメントの手順・優先順位・記録義務を完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/rodo-eisei-matome.html">労働衛生まとめ【第二種衛生管理者】WBGT・局所排気・騒音・保護具を一覧整理</a></li>
-    <li><a href="/articles/rodo-seiri-matome.html">労働生理まとめ【第二種衛生管理者】熱中症・一酸化炭素・じん肺・騒音性難聴を整理</a></li>
-    <li><a href="/articles/sagyo-kankyo-kanri-flow.html">作業環境管理区分の判定から措置・再評価の流れ【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/sagyo-kankyo-sokutei-hindo.html">作業環境測定の頻度一覧【有機溶剤6ヶ月・鉛1年・保存期間まで整理】</a></li>
-    <li><a href="/articles/sagyo-kankyohyoka-kanri.html">作業環境管理区分（第1〜3）の判定・措置・掲示義務を整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/sangyo-i-shokumu-junshi.html">産業医の職務・選任要件・月1回巡視を完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/sanso-ketsubosho-18.html">酸素欠乏症の18%基準・硫化水素10ppm・予防手順を整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/sanso-ketsubosho-kijun.html">酸素欠乏症等防止規則の数値基準【18%・10ppm・作業前測定・監視人】完全整理</a></li>
-    <li><a href="/articles/sekimen-40nen-jizen-chosa.html">石綿障害予防規則【事前調査義務・40年保存・6ヶ月健診】完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/sennin-people.html">衛生管理者の選任人数・専任要件を表で完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/shikaku-merit-shokuba.html">第二種衛生管理者を取得するメリット【職場での役割・転職・給与への影響】</a></li>
-    <li><a href="/articles/shikaku-merit.html">第二種衛生管理者を取るメリット【職場での役割・転職・キャリアアップへの活用】</a></li>
-    <li><a href="/articles/shiken-kaijo.html">第二種衛生管理者の試験会場【全国9センター一覧・アクセス・注意点】</a></li>
-    <li><a href="/articles/shiken-kamoku.html">第二種衛生管理者の試験科目・出題範囲【3科目30問・配点・頻出テーマ一覧】</a></li>
-    <li><a href="/articles/shiken-nittei.html">第二種衛生管理者の試験日程・申込方法【2026年】センター別・受験料・合格発表まで</a></li>
-    <li><a href="/articles/shiken-tojitsu-mochimono.html">第二種衛生管理者 試験当日の持ち物・注意事項・会場での過ごし方</a></li>
-    <li><a href="/articles/shindo-hakuro-reynaud.html">振動白ろう（レイノー現象）の症状・寒冷悪化・チェーンソー作業を整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/shutsudai-keiko.html">第二種衛生管理者の出題傾向【2024年版・よく出るテーマと対策ポイント】</a></li>
-    <li><a href="/articles/soonnsei-nacho-4000hz.html">騒音性難聴の特徴・4000Hz・感音性難聴・TTS・PTSを整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/soonssei-nacho-4000hz.html">騒音性難聴の特徴【4000Hz・感音性・TTS・PTS】試験に出る仕組みを整理</a></li>
-    <li><a href="/articles/stress-check-gimu.html">ストレスチェック制度【50人以上・年1回・本人同意・5年保存】完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/stress-check-yosei.html">ストレスチェック制度の実施義務・高ストレス者対応・5年保存を整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/suuchi-anki-list.html">第二種衛生管理者試験の頻出数値 完全暗記リスト【保存期間・頻度・人数・濃度】</a></li>
-    <li><a href="/articles/textbook-erabikata.html">第二種衛生管理者 テキスト・参考書の選び方【初心者向け・経験者向け】</a></li>
-    <li><a href="/articles/textbook-osusume.html">第二種衛生管理者のテキスト・参考書の選び方【失敗しない3つの基準】</a></li>
-    <li><a href="/articles/tohoku-center.html">東北安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</a></li>
-    <li><a href="/articles/tokubetsu-kyoiku-chigai.html">特別教育・職長教育・雇入れ時教育の違いを完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/tokubetsu-kyoiku-jugyomae.html">特別教育・職長教育・雇入れ時教育の違いを完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/tsugi-toru-shikaku.html">第二種衛生管理者に合格したら次に取るべき資格【相性・難易度・活用場面】</a></li>
-    <li><a href="/articles/tsushin-kouza-vs-dokugaku.html">第二種衛生管理者 通信講座vs独学どちらがいい？費用・合格率・向き不向きを比較</a></li>
-    <li><a href="/articles/wbgt-keisan.html">WBGTの計算式・係数・熱中症管理への活用を完全整理【第二種衛生管理者試験】</a></li>
-    <li><a href="/articles/yuki-yozai-kubun-gimu.html">有機溶剤の区分（特別・第1種・第2種）と義務一覧【第二種衛生管理者試験】</a></li>
-  </ul>
-</div>
+  <section class="term-learning-hub matome-learning-hub" id="article-learning-paths" aria-labelledby="idx-learn-h">
+    <h2 id="idx-learn-h">学習のつながり（科目別）</h2>
+    <p class="term-learning-intro">検索意図ガイド → 科目まとめ → 用語解説 → 過去問演習の順で学ぶと、試験範囲を網羅しやすくなります。</p>
+    <h3 class="term-learning-subhead">関係法令</h3>
+    <ul>
+      <li><a href="/articles/kankei-horei-matome.html">関係法令まとめ</a></li>
+      <li><a href="/articles/category-kankeihOrei.html">関係法令の用語一覧</a></li>
+      <li><a href="/q/index.html">過去問一覧</a></li>
+    </ul>
+    <h3 class="term-learning-subhead">労働衛生</h3>
+    <ul>
+      <li><a href="/articles/rodo-eisei-matome.html">労働衛生まとめ</a></li>
+      <li><a href="/articles/category-rodoEisei.html">労働衛生の用語一覧</a></li>
+      <li><a href="/q/index.html">過去問一覧</a></li>
+    </ul>
+    <h3 class="term-learning-subhead">労働生理</h3>
+    <ul>
+      <li><a href="/articles/rodo-seiri-matome.html">労働生理まとめ</a></li>
+      <li><a href="/articles/category-rodoSeiri.html">労働生理の用語一覧</a></li>
+      <li><a href="/q/index.html">過去問一覧</a></li>
+    </ul>
+    <h3 class="term-learning-subhead">受験・勉強法（検索意図ガイド）</h3>
+    <ul>
+      <li><a href="/articles/dokugaku-guide.html">独学合格ガイド</a></li>
+      <li><a href="/articles/nankaisei.html">合格ライン（何問正解）</a></li>
+      <li><a href="/articles/shiken-nittei.html">試験日程・申込</a></li>
+      <li><a href="/articles/kakomon-nannennbun.html">過去問は何年分やるか</a></li>
+    </ul>
+  </section>
+
+  <p class="idx-count">全 98 本（静的HTML）</p>
+
+  <nav class="idx-filters" aria-label="カテゴリで絞り込み">
+    <button type="button" class="idx-filter-btn is-active" data-filter="all">すべて</button>
+    <button type="button" class="idx-filter-btn" data-filter="hub">まとめ・索引</button>
+    <button type="button" class="idx-filter-btn" data-filter="exam">受験・合格</button>
+    <button type="button" class="idx-filter-btn" data-filter="study">勉強法・教材</button>
+    <button type="button" class="idx-filter-btn" data-filter="law">関係法令</button>
+    <button type="button" class="idx-filter-btn" data-filter="rights">労働衛生</button>
+    <button type="button" class="idx-filter-btn" data-filter="limit">労働生理</button>
+    <button type="button" class="idx-filter-btn" data-filter="venue">試験会場・地域</button>
+  </nav>
+
+  <div id="article-index-sections" class="idx-sections">
+  <section class="idx-cat-section idx-cat-section--hub" data-cat="hub" aria-labelledby="idx-cat-hub">
+    <div class="idx-cat-head">
+      <h2 id="idx-cat-hub" class="idx-cat-title">まとめ・索引</h2>
+      <span class="idx-cat-count">7本</span>
+    </div>
+    <ul class="idx-card-grid">
+    <li class="idx-card-wrap" data-cat="hub">
+      <a href="/articles/about.html" class="idx-card idx-card--hub">
+        <span class="idx-card-badge">まとめ・索引</span>
+        <span class="idx-card-title">二衛マスターについて</span>
+        <span class="idx-card-full">二衛マスターについて｜第二種衛生管理者試験の無料学習サイト</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="hub">
+      <a href="/articles/category-rodoSeiri.html" class="idx-card idx-card--hub">
+        <span class="idx-card-badge">まとめ・索引</span>
+        <span class="idx-card-title">労働生理の用語解説一覧</span>
+        <span class="idx-card-full">労働生理の用語解説一覧【第二種衛生管理者試験】頻出テーマ完全網羅</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="hub">
+      <a href="/articles/rodo-seiri-matome.html" class="idx-card idx-card--hub">
+        <span class="idx-card-badge">まとめ・索引</span>
+        <span class="idx-card-title">労働生理まとめ</span>
+        <span class="idx-card-full">労働生理まとめ【第二種衛生管理者】熱中症・一酸化炭素・じん肺・騒音性難聴を整理</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="hub">
+      <a href="/articles/category-rodoEisei.html" class="idx-card idx-card--hub">
+        <span class="idx-card-badge">まとめ・索引</span>
+        <span class="idx-card-title">労働衛生の用語解説一覧</span>
+        <span class="idx-card-full">労働衛生の用語解説一覧【第二種衛生管理者試験】頻出テーマ完全網羅</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="hub">
+      <a href="/articles/rodo-eisei-matome.html" class="idx-card idx-card--hub">
+        <span class="idx-card-badge">まとめ・索引</span>
+        <span class="idx-card-title">労働衛生まとめ</span>
+        <span class="idx-card-full">労働衛生まとめ【第二種衛生管理者】WBGT・局所排気・騒音・保護具を一覧整理</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="hub">
+      <a href="/articles/category-kankeihOrei.html" class="idx-card idx-card--hub">
+        <span class="idx-card-badge">まとめ・索引</span>
+        <span class="idx-card-title">関係法令の用語解説一覧</span>
+        <span class="idx-card-full">関係法令の用語解説一覧【第二種衛生管理者試験】頻出テーマ完全網羅</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="hub">
+      <a href="/articles/kankei-horei-matome.html" class="idx-card idx-card--hub">
+        <span class="idx-card-badge">まとめ・索引</span>
+        <span class="idx-card-title">関係法令まとめ</span>
+        <span class="idx-card-full">関係法令まとめ【第二種衛生管理者】数値・頻度・保存期間を一覧表で整理</span>
+      </a>
+    </li>
+    </ul>
+  </section>
+  <section class="idx-cat-section idx-cat-section--exam" data-cat="exam" aria-labelledby="idx-cat-exam">
+    <div class="idx-cat-head">
+      <h2 id="idx-cat-exam" class="idx-cat-title">受験・合格</h2>
+      <span class="idx-cat-count">22本</span>
+    </div>
+    <ul class="idx-card-grid">
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/shiken-tojitsu-mochimono.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者 試験当日の持ち物・注意事項・会場での過ごし方</span>
+        <span class="idx-card-full">第二種衛生管理者 試験当日の持ち物・注意事項・会場での過ごし方</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/nankaimo-ochiru.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者に何回も落ちる人の3つの原因と対策</span>
+        <span class="idx-card-full">第二種衛生管理者に何回も落ちる人の3つの原因と対策</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/tsugi-toru-shikaku.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者に合格したら次に取るべき資格</span>
+        <span class="idx-card-full">第二種衛生管理者に合格したら次に取るべき資格【相性・難易度・活用場面】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/menkyo-shinsei.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の免許申請方法</span>
+        <span class="idx-card-full">第二種衛生管理者の免許申請方法【合格後の手続き・必要書類・収入印紙1,500円】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/shutsudai-keiko.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の出題傾向</span>
+        <span class="idx-card-full">第二種衛生管理者の出題傾向【2024年版・よく出るテーマと対策ポイント】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/juken-ryo-sougohiyo.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の受験料・総費用</span>
+        <span class="idx-card-full">第二種衛生管理者の受験料・総費用【8,800円＋テキスト＋交通費の合計】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/juken-ryo-hiyo.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の受験料・費用</span>
+        <span class="idx-card-full">第二種衛生管理者の受験料・費用【8,800円＋テキスト代・交通費の総額を解説】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/goukakuritsu.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の合格率・難易度</span>
+        <span class="idx-card-full">第二種衛生管理者の合格率・難易度【2024年度49.8%】年度別推移と合格のリアルを解説</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/goukaku-happyo-kakunin.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の合格発表はいつ？確認方法・免許申請の流れまで解説</span>
+        <span class="idx-card-full">第二種衛生管理者の合格発表はいつ？確認方法・免許申請の流れまで解説</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/jisshi-moshikomi-tejun.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の申込手順</span>
+        <span class="idx-card-full">第二種衛生管理者の申込手順【写真付き解説・申込書の書き方・必要書類】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/kamoku-menjo.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の科目免除</span>
+        <span class="idx-card-full">第二種衛生管理者の科目免除【対象者・免除される科目・申請方法】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/kamoku-menjo-jouken.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の科目免除条件と対象者</span>
+        <span class="idx-card-full">第二種衛生管理者の科目免除条件と対象者【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/shiken-kaijo.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の試験会場</span>
+        <span class="idx-card-full">第二種衛生管理者の試験会場【全国9センター一覧・アクセス・注意点】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/shiken-kamoku.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者の試験科目・出題範囲</span>
+        <span class="idx-card-full">第二種衛生管理者の試験科目・出題範囲【3科目30問・配点・頻出テーマ一覧】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/nankaisei.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者は何問正解で合格？科目別の合格ラインを問題数で計算</span>
+        <span class="idx-card-full">第二種衛生管理者は何問正解で合格？科目別の合格ラインを問題数で計算</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/ikkagetsu-goukaku.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者を1ヶ月で合格する勉強計画</span>
+        <span class="idx-card-full">第二種衛生管理者を1ヶ月で合格する勉強計画【1日2時間・週別スケジュール】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/shikaku-merit.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者を取るメリット</span>
+        <span class="idx-card-full">第二種衛生管理者を取るメリット【職場での役割・転職・キャリアアップへの活用】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/shikaku-merit-shokuba.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者を取得するメリット</span>
+        <span class="idx-card-full">第二種衛生管理者を取得するメリット【職場での役割・転職・給与への影響】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/juken-shikaku.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者試験の受験資格と実務経験の確認方法</span>
+        <span class="idx-card-full">第二種衛生管理者試験の受験資格と実務経験の確認方法</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/goukaku-kijun.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者試験の合格基準と足切りライン</span>
+        <span class="idx-card-full">第二種衛生管理者試験の合格基準と足切りライン</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/shiken-nittei.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者試験の日程と申込方法の確認手順</span>
+        <span class="idx-card-full">第二種衛生管理者試験の日程と申込方法の確認手順</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="exam">
+      <a href="/articles/shiken-tojitsu-nagare.html" class="idx-card idx-card--exam">
+        <span class="idx-card-badge">受験・合格</span>
+        <span class="idx-card-title">第二種衛生管理者試験当日の流れ</span>
+        <span class="idx-card-full">第二種衛生管理者試験当日の流れ【受付から退場まで】</span>
+      </a>
+    </li>
+    </ul>
+  </section>
+  <section class="idx-cat-section idx-cat-section--study" data-cat="study" aria-labelledby="idx-cat-study">
+    <div class="idx-cat-head">
+      <h2 id="idx-cat-study" class="idx-cat-title">勉強法・教材</h2>
+      <span class="idx-cat-count">14本</span>
+    </div>
+    <ul class="idx-card-grid">
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/textbook-erabikata.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者 テキスト・参考書の選び方</span>
+        <span class="idx-card-full">第二種衛生管理者 テキスト・参考書の選び方【初心者向け・経験者向け】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/tsushin-kouza-vs-dokugaku.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者 通信講座vs独学どちらがいい？費用・合格率・向き不向きを比較</span>
+        <span class="idx-card-full">第二種衛生管理者 通信講座vs独学どちらがいい？費用・合格率・向き不向きを比較</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/ichimon-ittou.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者の1問1答演習のやり方</span>
+        <span class="idx-card-full">第二種衛生管理者の1問1答演習のやり方【暗記定着】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/3kagetsu-goukaku.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者の3ヶ月勉強計画</span>
+        <span class="idx-card-full">第二種衛生管理者の3ヶ月勉強計画【週別ロードマップ】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/6kagetsu-keikaku.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者の6ヶ月勉強計画</span>
+        <span class="idx-card-full">第二種衛生管理者の6ヶ月勉強計画【働きながら受験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/osusume-app.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者のおすすめアプリ3選</span>
+        <span class="idx-card-full">第二種衛生管理者のおすすめアプリ3選【2026年・無料・スマホで過去問】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/textbook-osusume.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者のテキスト・参考書の選び方</span>
+        <span class="idx-card-full">第二種衛生管理者のテキスト・参考書の選び方【失敗しない3つの基準】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/saijuken-taisaku.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者の再受験対策</span>
+        <span class="idx-card-full">第二種衛生管理者の再受験対策【不合格からの立て直し】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/benkyou-jikan.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者の勉強時間は約60時間</span>
+        <span class="idx-card-full">第二種衛生管理者の勉強時間は約60時間【1ヶ月・2ヶ月・3ヶ月の学習スケジュール】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/dokugaku-guide.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者の独学合格ガイド</span>
+        <span class="idx-card-full">第二種衛生管理者の独学合格ガイド【テキスト選び→過去問→直前対策の完全ロードマップ】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/dokugaku-roadmap.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者の独学合格ロードマップ</span>
+        <span class="idx-card-full">第二種衛生管理者の独学合格ロードマップ【テキスト選び→過去問→直前対策】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/kakomon-nannennbun.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者の過去問は何年分やればいい？効果的な使い方と入手方法</span>
+        <span class="idx-card-full">第二種衛生管理者の過去問は何年分やればいい？効果的な使い方と入手方法</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/suuchi-anki-list.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">第二種衛生管理者試験の頻出数値 完全暗記リスト</span>
+        <span class="idx-card-full">第二種衛生管理者試験の頻出数値 完全暗記リスト【保存期間・頻度・人数・濃度】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="study">
+      <a href="/articles/bookmark-fukushu.html" class="idx-card idx-card--study">
+        <span class="idx-card-badge">勉強法・教材</span>
+        <span class="idx-card-title">間違え問題の復習サイクル</span>
+        <span class="idx-card-full">間違え問題の復習サイクル【過去問・一問一答の定着法】</span>
+      </a>
+    </li>
+    </ul>
+  </section>
+  <section class="idx-cat-section idx-cat-section--law" data-cat="law" aria-labelledby="idx-cat-law">
+    <div class="idx-cat-head">
+      <h2 id="idx-cat-law" class="idx-cat-title">関係法令</h2>
+      <span class="idx-cat-count">26本</span>
+    </div>
+    <ul class="idx-card-grid">
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/jinpai-tokuchou.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">じん肺の種類・不可逆性・管理区分・珪肺の原因を完全整理</span>
+        <span class="idx-card-full">じん肺の種類・不可逆性・管理区分・珪肺の原因を完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/jinpai-kanri-kenko.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">じん肺の種類・管理区分・健診保存期間</span>
+        <span class="idx-card-full">じん肺の種類・管理区分・健診保存期間【7年・不可逆性】完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/stress-check-gimu.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">ストレスチェック制度</span>
+        <span class="idx-card-full">ストレスチェック制度【50人以上・年1回・本人同意・5年保存】完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/stress-check-yosei.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">ストレスチェック制度の実施義務・高ストレス者対応・5年保存を整理</span>
+        <span class="idx-card-full">ストレスチェック制度の実施義務・高ストレス者対応・5年保存を整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/niji-kenko-shindan-guide.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">二次健康診断の流れと就業上の措置</span>
+        <span class="idx-card-full">二次健康診断の流れと就業上の措置【事業者の対応】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/sagyo-shunin-ichiran.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">作業主任者の種類と資格一覧</span>
+        <span class="idx-card-full">作業主任者の種類と資格一覧【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/kenko-shindan-jigo-tejun.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">健康診断の事後措置・医師意見聴取・就業制限の手順</span>
+        <span class="idx-card-full">健康診断の事後措置・医師意見聴取・就業制限の手順【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/kenko-shindan-hindo.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">健康診断の種類・実施頻度・保存期間を数値で整理</span>
+        <span class="idx-card-full">健康診断の種類・実施頻度・保存期間を数値で整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/kanri-taisei-zentaizo.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">労働安全衛生法の管理体制</span>
+        <span class="idx-card-full">労働安全衛生法の管理体制【全体図・役職と選任要件の早見表】第二種衛生管理者試験</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/nenshosha-ninsanpu-seigen.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">年少者・妊産婦の就業制限まとめ</span>
+        <span class="idx-card-full">年少者・妊産婦の就業制限まとめ【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/yuki-yozai-kubun-gimu.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">有機溶剤の区分（特別・第1種・第2種）と義務一覧</span>
+        <span class="idx-card-full">有機溶剤の区分（特別・第1種・第2種）と義務一覧【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/tokubetsu-kyoiku-chigai.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">特別教育・職長教育・雇入れ時教育の違いを完全整理</span>
+        <span class="idx-card-full">特別教育・職長教育・雇入れ時教育の違いを完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/tokubetsu-kyoiku-jugyomae.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">特別教育・職長教育・雇入れ時教育の違いを完全整理</span>
+        <span class="idx-card-full">特別教育・職長教育・雇入れ時教育の違いを完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/sangyo-i-shokumu-junshi.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">産業医の職務・選任要件・月1回巡視を完全整理</span>
+        <span class="idx-card-full">産業医の職務・選任要件・月1回巡視を完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/hoshano-kakutei-kakuritsu.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">確定的影響・確率的影響の違い・放射線の種類と透過力を整理</span>
+        <span class="idx-card-full">確定的影響・確率的影響の違い・放射線の種類と透過力を整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/1shu-2shu-chigai.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">第一種・第二種衛生管理者の違い</span>
+        <span class="idx-card-full">第一種・第二種衛生管理者の違い【業種・科目数・合格率を比較】どっちを受けるべきか</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/dai2shu-gyoshu-ichiran.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">第二種衛生管理者が選任できる業種の完全一覧</span>
+        <span class="idx-card-full">第二種衛生管理者が選任できる業種の完全一覧【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/dai2shu-taishogyo-shu.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">第二種衛生管理者で選任できる業種の完全一覧</span>
+        <span class="idx-card-full">第二種衛生管理者で選任できる業種の完全一覧【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/jikan-haibun.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">第二種衛生管理者試験の時間配分</span>
+        <span class="idx-card-full">第二種衛生管理者試験の時間配分【30問・3時間の進め方】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/eisei-iinkai-kosei.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">衛生委員会の設置要件・構成員・月1回開催を完全整理</span>
+        <span class="idx-card-full">衛生委員会の設置要件・構成員・月1回開催を完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/sennin-people.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">衛生管理者の選任人数・専任要件を表で完全整理</span>
+        <span class="idx-card-full">衛生管理者の選任人数・専任要件を表で完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/kiroku-hozon-kikan.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">記録保存期間の一覧</span>
+        <span class="idx-card-full">記録保存期間の一覧【3年・5年・7年・30年・40年の完全整理】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/sanso-ketsubosho-18.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">酸素欠乏症の18%基準・硫化水素10ppm・予防手順を整理</span>
+        <span class="idx-card-full">酸素欠乏症の18%基準・硫化水素10ppm・予防手順を整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/sanso-ketsubosho-kijun.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">酸素欠乏症等防止規則の数値基準</span>
+        <span class="idx-card-full">酸素欠乏症等防止規則の数値基準【18%・10ppm・作業前測定・監視人】完全整理</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/choujikan-rodo-mensetu.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">長時間労働者面接指導</span>
+        <span class="idx-card-full">長時間労働者面接指導【月80時間超・産業医・5年保存】完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="law">
+      <a href="/articles/choujikan-mensetu-80h.html" class="idx-card idx-card--law">
+        <span class="idx-card-badge">関係法令</span>
+        <span class="idx-card-title">長時間労働者面接指導（月80時間超）の要件・産業医・記録を整理</span>
+        <span class="idx-card-full">長時間労働者面接指導（月80時間超）の要件・産業医・記録を整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    </ul>
+  </section>
+  <section class="idx-cat-section idx-cat-section--rights" data-cat="rights" aria-labelledby="idx-cat-rights">
+    <div class="idx-cat-head">
+      <h2 id="idx-cat-rights" class="idx-cat-title">労働衛生</h2>
+      <span class="idx-cat-count">17本</span>
+    </div>
+    <ul class="idx-card-grid">
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/karotein-sds-ghs.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">SDS・GHS・リスクアセスメントの関係を整理</span>
+        <span class="idx-card-full">SDS・GHS・リスクアセスメントの関係を整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/wbgt-keisan.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">WBGTの計算式・係数・熱中症管理への活用を完全整理</span>
+        <span class="idx-card-full">WBGTの計算式・係数・熱中症管理への活用を完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/risk-assessment-tejun.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">リスクアセスメントの手順・優先順位・記録義務</span>
+        <span class="idx-card-full">リスクアセスメントの手順・優先順位・記録義務【化学物質管理】完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/risk-assessment-yusendo.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">リスクアセスメントの手順・優先順位・記録義務を完全整理</span>
+        <span class="idx-card-full">リスクアセスメントの手順・優先順位・記録義務を完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/sagyo-kankyo-sokutei-hindo.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">作業環境測定の頻度一覧</span>
+        <span class="idx-card-full">作業環境測定の頻度一覧【有機溶剤6ヶ月・鉛1年・保存期間まで整理】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/sagyo-kankyo-kanri-flow.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">作業環境管理区分の判定から措置・再評価の流れ</span>
+        <span class="idx-card-full">作業環境管理区分の判定から措置・再評価の流れ【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/kanri-kubun-oboekata.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">作業環境管理区分の覚え方</span>
+        <span class="idx-card-full">作業環境管理区分の覚え方【第1〜第3管理・措置A/B】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/sagyo-kankyohyoka-kanri.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">作業環境管理区分（第1〜3）の判定・措置・掲示義務を整理</span>
+        <span class="idx-card-full">作業環境管理区分（第1〜3）の判定・措置・掲示義務を整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/kagaku-busshitsu-dokusho-hikaku.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">化学物質の急性毒性・慢性毒性・ばく露経路まとめ</span>
+        <span class="idx-card-full">化学物質の急性毒性・慢性毒性・ばく露経路まとめ【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/kokyuyo-hogo-gu-erabikata.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">呼吸用保護具の種類と選び方</span>
+        <span class="idx-card-full">呼吸用保護具の種類と選び方【防じん・防毒・送気マスクの使い分け】第二種衛生管理者試験</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/hogo-gu-mask-sentei.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">呼吸用保護具の選定・防じんvs防毒マスクの使い分けを整理</span>
+        <span class="idx-card-full">呼吸用保護具の選定・防じんvs防毒マスクの使い分けを整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/kyokuho-haikisochi-kosei.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">局所排気装置の構成・フード種類・設置優先度を完全整理</span>
+        <span class="idx-card-full">局所排気装置の構成・フード種類・設置優先度を完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/hoshu-bunseki-vs-chokusetsu.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">捕集分析法と直接読み取り式の違い・使い分け</span>
+        <span class="idx-card-full">捕集分析法と直接読み取り式の違い・使い分け【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/hoshu-bunseki-ryuryo.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">捕集分析法の手順・流量校正・ミゼットインピンジャーを整理</span>
+        <span class="idx-card-full">捕集分析法の手順・流量校正・ミゼットインピンジャーを整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/hoshasen-alara-3gensoku.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">放射線防護の三原則（時間・距離・遮蔽）とALARA</span>
+        <span class="idx-card-full">放射線防護の三原則（時間・距離・遮蔽）とALARA【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/sekimen-40nen-jizen-chosa.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">石綿障害予防規則</span>
+        <span class="idx-card-full">石綿障害予防規則【事前調査義務・40年保存・6ヶ月健診】完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="rights">
+      <a href="/articles/denri-hoshasen-senyodo.html" class="idx-card idx-card--rights">
+        <span class="idx-card-badge">労働衛生</span>
+        <span class="idx-card-title">電離放射線の線量限度・管理区域</span>
+        <span class="idx-card-full">電離放射線の線量限度・管理区域【5年100mSv・3ヶ月1.3mSv】完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    </ul>
+  </section>
+  <section class="idx-cat-section idx-cat-section--limit" data-cat="limit" aria-labelledby="idx-cat-limit">
+    <div class="idx-cat-head">
+      <h2 id="idx-cat-limit" class="idx-cat-title">労働生理</h2>
+      <span class="idx-cat-count">5本</span>
+    </div>
+    <ul class="idx-card-grid">
+    <li class="idx-card-wrap" data-cat="limit">
+      <a href="/articles/ichisanka-tanso-coh.html" class="idx-card idx-card--limit">
+        <span class="idx-card-badge">労働生理</span>
+        <span class="idx-card-title">一酸化炭素中毒・カルボキシヘモグロビンのメカニズムを完全整理</span>
+        <span class="idx-card-full">一酸化炭素中毒・カルボキシヘモグロビンのメカニズムを完全整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="limit">
+      <a href="/articles/shindo-hakuro-reynaud.html" class="idx-card idx-card--limit">
+        <span class="idx-card-badge">労働生理</span>
+        <span class="idx-card-title">振動白ろう（レイノー現象）の症状・寒冷悪化・チェーンソー作業を整理</span>
+        <span class="idx-card-full">振動白ろう（レイノー現象）の症状・寒冷悪化・チェーンソー作業を整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="limit">
+      <a href="/articles/necchuysho-shoudo.html" class="idx-card idx-card--limit">
+        <span class="idx-card-badge">労働生理</span>
+        <span class="idx-card-title">熱中症の重症度Ⅰ〜Ⅲ・症状・応急処置・体温調節の仕組みを整理</span>
+        <span class="idx-card-full">熱中症の重症度Ⅰ〜Ⅲ・症状・応急処置・体温調節の仕組みを整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="limit">
+      <a href="/articles/soonssei-nacho-4000hz.html" class="idx-card idx-card--limit">
+        <span class="idx-card-badge">労働生理</span>
+        <span class="idx-card-title">騒音性難聴の特徴</span>
+        <span class="idx-card-full">騒音性難聴の特徴【4000Hz・感音性・TTS・PTS】試験に出る仕組みを整理</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="limit">
+      <a href="/articles/soonnsei-nacho-4000hz.html" class="idx-card idx-card--limit">
+        <span class="idx-card-badge">労働生理</span>
+        <span class="idx-card-title">騒音性難聴の特徴・4000Hz・感音性難聴・TTS・PTSを整理</span>
+        <span class="idx-card-full">騒音性難聴の特徴・4000Hz・感音性難聴・TTS・PTSを整理【第二種衛生管理者試験】</span>
+      </a>
+    </li>
+    </ul>
+  </section>
+  <section class="idx-cat-section idx-cat-section--venue" data-cat="venue" aria-labelledby="idx-cat-venue">
+    <div class="idx-cat-head">
+      <h2 id="idx-cat-venue" class="idx-cat-title">試験会場・地域</h2>
+      <span class="idx-cat-count">7本</span>
+    </div>
+    <ul class="idx-card-grid">
+    <li class="idx-card-wrap" data-cat="venue">
+      <a href="/articles/chushikoku-center.html" class="idx-card idx-card--venue">
+        <span class="idx-card-badge">試験会場・地域</span>
+        <span class="idx-card-title">中国四国安全衛生技術センター</span>
+        <span class="idx-card-full">中国四国安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="venue">
+      <a href="/articles/chubu-center.html" class="idx-card idx-card--venue">
+        <span class="idx-card-badge">試験会場・地域</span>
+        <span class="idx-card-title">中部安全衛生技術センター</span>
+        <span class="idx-card-full">中部安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="venue">
+      <a href="/articles/kyushu-center.html" class="idx-card idx-card--venue">
+        <span class="idx-card-badge">試験会場・地域</span>
+        <span class="idx-card-title">九州安全衛生技術センター</span>
+        <span class="idx-card-full">九州安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="venue">
+      <a href="/articles/hokkaido-center.html" class="idx-card idx-card--venue">
+        <span class="idx-card-badge">試験会場・地域</span>
+        <span class="idx-card-title">北海道安全衛生技術センター</span>
+        <span class="idx-card-full">北海道安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="venue">
+      <a href="/articles/tohoku-center.html" class="idx-card idx-card--venue">
+        <span class="idx-card-badge">試験会場・地域</span>
+        <span class="idx-card-title">東北安全衛生技術センター</span>
+        <span class="idx-card-full">東北安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="venue">
+      <a href="/articles/kinki-center.html" class="idx-card idx-card--venue">
+        <span class="idx-card-badge">試験会場・地域</span>
+        <span class="idx-card-title">近畿安全衛生技術センター</span>
+        <span class="idx-card-full">近畿安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</span>
+      </a>
+    </li>
+    <li class="idx-card-wrap" data-cat="venue">
+      <a href="/articles/kanto-center.html" class="idx-card idx-card--venue">
+        <span class="idx-card-badge">試験会場・地域</span>
+        <span class="idx-card-title">関東安全衛生技術センター</span>
+        <span class="idx-card-full">関東安全衛生技術センター【アクセス・試験日程・第二種衛生管理者の受験情報】</span>
+      </a>
+    </li>
+    </ul>
+  </section>
+  </div>
 
 <footer class="site-footer">
   <a href="/">二衛マスター</a> ｜ 第二種衛生管理者試験 無料学習プラットフォーム
 </footer>
+
+<script>
+(function () {
+  var buttons = document.querySelectorAll('.idx-filter-btn');
+  var sections = document.querySelectorAll('.idx-cat-section');
+  if (!buttons.length) return;
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var filter = btn.getAttribute('data-filter') || 'all';
+      buttons.forEach(function (b) { b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      sections.forEach(function (sec) {
+        var cat = sec.getAttribute('data-cat');
+        sec.classList.toggle('is-hidden', filter !== 'all' && cat !== filter);
+      });
+    });
+  });
+})();
+</script>
 
 </body>
 </html>

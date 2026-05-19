@@ -8,9 +8,17 @@ import os
 import re
 import glob
 import html
+import json
+import sys
 import frontmatter
 import markdown
 from datetime import datetime
+
+_TOOLS_DIR = os.path.join(os.path.dirname(__file__), "..", "tools")
+if _TOOLS_DIR not in sys.path:
+    sys.path.insert(0, _TOOLS_DIR)
+
+from render_learning_hub import render_term_learning_hub  # noqa: E402
 
 # ===== 設定 =====
 SITE_URL = "https://eisei2shu-master.jp"
@@ -112,6 +120,7 @@ def build_toc(existing_headings):
     ]
     items.extend(existing_headings)
     items.extend([
+        ("term-learning-path", "学習のつながり"),
         ("term-faq", "よくある質問"),
         ("term-basic-info", "記事の基本情報"),
         ("term-official-info", "公式情報の確認"),
@@ -246,7 +255,38 @@ def build_top_seo_sections(meta, h1, title, existing_headings):
 </section>"""
 
 
-def build_bottom_seo_sections(meta, h1, title):
+def build_faq_schema_entry(meta, h1, title):
+    label = term_label(h1, title)
+    faq_1_question = meta.get("faq_1_question", f"{label}は丸暗記だけで足りますか？")
+    faq_1_answer = meta.get(
+        "faq_1_answer",
+        "用語そのものを覚えるだけでなく、試験では「どの場面で使うか」「何と混同しやすいか」まで問われます。",
+    )
+    faq_2_question = meta.get("faq_2_question", "公式情報も確認した方がよいですか？")
+    faq_2_answer = meta.get(
+        "faq_2_answer",
+        "数値、対象業務、保存期間、選任要件などが関係する用語は、公式情報の確認が特に重要です。",
+    )
+    entry = {
+        "@type": "FAQPage",
+        "@id": "{{canonical}}#faq",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": faq_1_question,
+                "acceptedAnswer": {"@type": "Answer", "text": faq_1_answer},
+            },
+            {
+                "@type": "Question",
+                "name": faq_2_question,
+                "acceptedAnswer": {"@type": "Answer", "text": faq_2_answer},
+            },
+        ],
+    }
+    return json.dumps(entry, ensure_ascii=False, indent=4)
+
+
+def build_bottom_seo_sections(meta, h1, title, slug):
     category = meta.get("category", "")
     label = term_label(h1, title)
     user_intent = meta.get(
@@ -271,7 +311,12 @@ def build_bottom_seo_sections(meta, h1, title):
         f'    <li><a href="{escape_text(href)}">{escape_text(link_label)}</a></li>'
         for href, link_label in parse_related_links(meta.get("related_links"), category)
     )
-    return f"""<section id="term-faq" class="term-info-box">
+    learning_hub = render_term_learning_hub(
+        slug, category, meta.get("related_questions")
+    )
+    return f"""{learning_hub}
+
+<section id="term-faq" class="term-info-box">
   <h2>よくある質問</h2>
   <details open>
     <summary>{escape_text(faq_1_question)}</summary>
@@ -344,12 +389,14 @@ def build_page(md_path, template):
     body_html, related_box = extract_related_links(body_html)
     body_html, headings = add_heading_ids(body_html)
     top_sections = build_top_seo_sections(meta, h1, title, headings)
-    bottom_sections = build_bottom_seo_sections(meta, h1, title)
+    bottom_sections = build_bottom_seo_sections(meta, h1, title, slug)
+    faq_schema = build_faq_schema_entry(meta, h1, title)
     body_html = insert_after_lead(body_html, top_sections)
     body_html = f"{body_html}\n\n{bottom_sections}"
 
     # テンプレートに埋め込み
     html = template
+    html = html.replace("{{faq_schema_entry}}", faq_schema)
     html = html.replace("{{title}}", title)
     html = html.replace("{{description}}", description)
     html = html.replace("{{canonical}}", canonical)
