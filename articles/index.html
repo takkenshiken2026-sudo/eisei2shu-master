@@ -296,14 +296,7 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
   display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px;
   padding-bottom: 10px; border-bottom: 2px solid var(--border);
 }
-.idx-cat-section--hub .idx-cat-head { border-bottom-color: #4b5563; }
-.idx-cat-section--exam .idx-cat-head { border-bottom-color: #2563eb; }
-.idx-cat-section--study .idx-cat-head { border-bottom-color: #1a7a40; }
-.idx-cat-section--law .idx-cat-head { border-bottom-color: #6d28d9; }
-.idx-cat-section--rights .idx-cat-head { border-bottom-color: #c2410c; }
-.idx-cat-section--limit .idx-cat-head { border-bottom-color: #0d9488; }
-.idx-cat-section--venue .idx-cat-head { border-bottom-color: #64748b; }
-.idx-cat-section--other .idx-cat-head { border-bottom-color: #9ca3af; }
+.idx-cat-section .idx-cat-head { border-bottom-color: var(--ink); }
 .idx-cat-title { font-size: 17px; font-weight: 700; color: var(--text); margin: 0; }
 .idx-cat-count { font-size: 12px; font-weight: 600; color: var(--text3); }
 
@@ -318,43 +311,52 @@ body { font-family: var(--font); font-size: 16px; line-height: 1.8; background: 
 
 .idx-card {
   display: flex; flex-direction: column; gap: 8px; height: 100%;
-  padding: 14px 16px; border-radius: var(--r2); text-decoration: none;
-  border: 1px solid var(--border); border-left-width: 4px;
-  background: #fff; box-shadow: var(--sh);
-  transition: transform .15s, box-shadow .15s, border-color .15s;
+  padding: 12px 14px; border-radius: var(--r); text-decoration: none;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  box-shadow: none;
+  transition: background .15s, border-color .15s;
 }
 .idx-card:hover {
-  transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,.08);
+  background: var(--bg3);
   border-color: var(--border2);
 }
 .idx-card-badge {
-  align-self: flex-start; font-size: 11px; font-weight: 700; letter-spacing: .04em;
-  padding: 3px 9px; border-radius: 999px; line-height: 1.3;
+  align-self: flex-start; font-size: 11px; font-weight: 600; letter-spacing: .02em;
+  padding: 2px 8px; border-radius: var(--r); line-height: 1.3;
+  background: var(--bg3); color: var(--text2);
 }
 .idx-card-title {
-  font-size: 15px; font-weight: 700; line-height: 1.45; color: var(--text);
+  font-size: 14px; font-weight: 600; line-height: 1.5; color: var(--text);
 }
 .idx-card-full {
   font-size: 12px; line-height: 1.55; color: var(--text3);
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 
-.idx-card--hub { border-left-color: #4b5563; background: #f9fafb; }
-.idx-card--hub .idx-card-badge { background: #e5e7eb; color: #374151; }
-.idx-card--exam { border-left-color: #2563eb; background: #f8faff; }
-.idx-card--exam .idx-card-badge { background: #dbeafe; color: #1e40af; }
-.idx-card--study { border-left-color: #1a7a40; background: #f6fdf9; }
-.idx-card--study .idx-card-badge { background: #d1fae5; color: #166534; }
-.idx-card--law { border-left-color: #7c3aed; background: #faf8ff; }
-.idx-card--law .idx-card-badge { background: #ede9fe; color: #5b21b6; }
-.idx-card--rights { border-left-color: #ea580c; background: #fffaf5; }
-.idx-card--rights .idx-card-badge { background: #ffedd5; color: #9a3412; }
-.idx-card--limit { border-left-color: #0d9488; background: #f4fdfa; }
-.idx-card--limit .idx-card-badge { background: #ccfbf1; color: #115e59; }
-.idx-card--venue { border-left-color: #64748b; background: #f8fafc; }
-.idx-card--venue .idx-card-badge { background: #e2e8f0; color: #334155; }
-.idx-card--other { border-left-color: #9ca3af; background: #fafafa; }
-.idx-card--other .idx-card-badge { background: #f3f4f6; color: #4b5563; }
+/* カテゴリ別の色分けは使わない（一覧はサイト共通のグレー基調） */
+.idx-card--hub,
+.idx-card--exam,
+.idx-card--study,
+.idx-card--law,
+.idx-card--rights,
+.idx-card--limit,
+.idx-card--venue,
+.idx-card--other {
+  border-left: none;
+  background: var(--bg2);
+}
+.idx-card--hub .idx-card-badge,
+.idx-card--exam .idx-card-badge,
+.idx-card--study .idx-card-badge,
+.idx-card--law .idx-card-badge,
+.idx-card--rights .idx-card-badge,
+.idx-card--limit .idx-card-badge,
+.idx-card--venue .idx-card-badge,
+.idx-card--other .idx-card-badge {
+  background: var(--bg3);
+  color: var(--text2);
+}
 
 .term-learning-hub { border: 1px solid var(--border); border-radius: var(--r2); background: #fafafa; padding: 18px 20px; margin: 24px 0; }
 .term-learning-hub .term-learning-intro { font-size: 14px; color: var(--text2); margin-bottom: 12px; }
