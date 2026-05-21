@@ -219,6 +219,11 @@ def parse_term_tags(raw: str) -> list[str]:
     return [t.strip() for t in re.split(r"[,、/|]", raw or "") if t.strip()]
 
 
+def terms_index_href(slug_file: str) -> str:
+    """用語一覧からのリンク（/terms/ 配下）。pathname が /terms のときも壊れないようルート相対にする。"""
+    return f"/terms/{slug_file.lstrip('/')}"
+
+
 def sort_terms_index_entries(entries: list[dict]) -> list[dict]:
     return sorted(
         entries,
@@ -269,7 +274,7 @@ def render_terms_index_tbody(entries: list[dict]) -> str:
     rows: list[str] = []
 
     for item in items:
-        href = html.escape(item["slug_file"])
+        href = html.escape(terms_index_href(item["slug_file"]))
         href_attr = f' data-entry-href="{href}"'
         reading = item.get("reading") or ""
         reading_html = (
@@ -308,14 +313,14 @@ def terms_index_item_dict(entry: dict) -> dict:
         "category": entry.get("category") or "",
         "tags": tags,
         "shortDef": snippet,
-        "href": entry["slug_file"],
+        "href": terms_index_href(entry["slug_file"]),
         "fieldHub": entry.get("field_hub") or "",
         "search": " ".join(x for x in search_bits if x),
     }
 
 
 def build_terms_list_item(entry: dict) -> str:
-    href = html.escape(entry["slug_file"])
+    href = html.escape(terms_index_href(entry["slug_file"]))
     term = html.escape(entry["term"])
     reading = html.escape(entry.get("reading") or "")
     snippet = html.escape(terms_index_snippet(entry))
@@ -1029,7 +1034,8 @@ def build_terms_index(entries: list[dict], base_url: str) -> str:
     for cat in cat_keys:
         for e in by_cat[cat]:
             seo_links.append(
-                f'<li><a href="{html.escape(e["slug_file"])}">{html.escape(e["term"])}</a></li>'
+                f'<li><a href="{html.escape(terms_index_href(e["slug_file"]))}">'
+                f"{html.escape(e['term'])}</a></li>"
             )
     seo_html = (
         '<ul class="terms-idx-seo-list">\n    '
