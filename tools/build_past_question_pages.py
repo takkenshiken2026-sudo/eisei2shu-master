@@ -847,16 +847,19 @@ def build_q_index(pages: list[dict], base_url: str) -> str:
     year_jump_links = []
     for y in sorted_years:
         rows_html = "".join(build_index_table_row(pg) for pg in by_year[y])
-        heading = (
-            by_year[y][0]["wareki"]
+        sample = by_year[y][0]
+        year_label = norm(sample.get("year_label") or "")
+        heading = year_label or (
+            sample["wareki"]
             if y > 9999
-            else f"{y}年（{by_year[y][0]['wareki']}）"
+            else f"{y}年（{sample['wareki']}）"
         )
+        jump_label = year_label or (f"{y}年" if y <= 9999 else sample["wareki"])
         expanded = "true" if y in open_years else "false"
         collapsed = "" if y in open_years else " is-collapsed"
         year_jump_links.append(
             f'<a class="q-index-filter-opt q-index-year-link" href="#year-{y}" data-year="{y}">'
-            f'{html.escape(f"{y}年")}<span class="q-index-filter-count">（{len(by_year[y])}）</span></a>'
+            f'{html.escape(jump_label)}<span class="q-index-filter-count">（{len(by_year[y])}）</span></a>'
         )
         year_blocks.append(
             f'<section class="q-index-year-block{collapsed}" id="year-{y}">'

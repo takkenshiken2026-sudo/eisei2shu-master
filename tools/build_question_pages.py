@@ -41,6 +41,7 @@ from learning_links_lib import glossary_match_entries, matome_for_field
 from question_slug_lib import (
     FIELD_MAP,
     era_slug_past,
+    month_key_for_pool,
     normalize_era,
     question_string_id_orig,
     question_string_id_past,
@@ -48,6 +49,7 @@ from question_slug_lib import (
     relative_url_path_past,
     session_or_pool_slug,
 )
+from csv_to_eisei2_master import discover_pool_years, make_id
 from render_learning_hub import render_question_learning_hub, render_session_hub_page_body
 
 FIELD_LABEL_JA = {"law": "関係法令", "rights": "労働衛生", "limit": "労働生理"}
@@ -626,6 +628,40 @@ def href_past_question_from_hub(era_slug: str, session: str, r: dict) -> str:
     return f"{r['field']}/{r['qwidth']}/index.html"
 
 
+def eisei2_index_pages(parsed_rows: list[dict], pool_year: dict[tuple[str, str], int]) -> list[dict]:
+    """テンプレ build_q_index 用の page dict（既存 q/past/... URL を維持）。"""
+    from build_past_question_pages import glossary_links_for_tags, load_glossary_lookup
+
+    glossary_lookup = load_glossary_lookup()
+    pages: list[dict] = []
+    for r in parsed_rows:
+        if r["is_orig"]:
+            continue
+        era = normalize_era(r["era_raw"])
+        bk = month_key_for_pool({"開催年数": r["era_raw"], "開催月": r["month_raw"]})
+        py = pool_year[(era, bk)]
+        wareki = breadcrumb_label_past(r["era_raw"], r["month_raw"])
+        tags: list[str] = []
+        pages.append(
+            {
+                "year": py,
+                "year_label": wareki,
+                "qno": r["num"],
+                "wareki": wareki,
+                "category": FIELD_LABEL_JA[r["field"]],
+                "stem_plain": r["text"],
+                "tags": tags,
+                "correct": int(r["ans_display"]),
+                "is_exempt": False,
+                "is_invalidated": False,
+                "app_id": make_id(py, r["num"], r["field"], False),
+                "rel_path": f"q/{href_past_question_from_q_index(r)}",
+                "glossary_links": glossary_links_for_tags(tags, glossary_lookup),
+            }
+        )
+    return pages
+
+
 def write_q_past_index(
     out_root: Path,
     parsed_rows: list[dict],
@@ -634,56 +670,15 @@ def write_q_past_index(
     base_url: str,
     site_prefix: str,
 ) -> None:
-    rel = Path("q/index.html")
-    root_idx = href_repo_root(rel, "index.html")
-    css_href = rel_to_site_css(rel)
-    canonical = public_url(base_url, site_prefix, "q/index.html")
-    body_sections = build_past_list_sections(parsed_rows)
-    meta_robots = '<meta name="robots" content="index, follow">'
-    sitemap_href = html.escape(href_repo_root(rel, "sitemap.xml"))
+    from build_past_question_pages import build_q_index
 
-    exam_esc = html.escape(EXAM_NAME_OFFICIAL)
-    brand_esc = html.escape(BRAND_NAME)
-    meta_desc = (
-        f"{BRAND_NAME}が収録する{EXAM_NAME_OFFICIAL}の過去問を、"
-        "開催回・科目（関係法令・労働衛生・労働生理）別の静的ページで一覧しています。"
-        f"過去問 {n_past} 問。オリジナル問題 {n_orig} 問は学習アプリから利用できます。"
-    )
-    body = f"""<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>過去問一覧（{exam_esc}・静的一覧）｜{brand_esc}</title>
-<meta name="description" content="{html.escape(meta_desc)}">
-{meta_robots}
-<link rel="canonical" href="{html.escape(canonical)}">
-<script defer src="/site-analytics.js"></script>
-<link rel="stylesheet" href="{html.escape(css_href)}">
-</head>
-<body class="q-static-body">
-<header class="q-static-header">
-  <p class="q-static-brand"><a href="{html.escape(root_idx)}">{brand_esc}</a>（{exam_esc}）</p>
-  <nav aria-label="パンくず">
-    <ol class="q-breadcrumb">
-      <li><a href="{html.escape(root_idx)}">トップ</a></li>
-      <li aria-current="page">過去問一覧（{exam_esc}）</li>
-    </ol>
-  </nav>
-</header>
-<main class="q-static-main">
-  <h1 class="q-h1">{exam_esc}｜過去問一覧（静的一覧）</h1>
-  <p class="q-meta">{exam_esc}・過去問 <strong>{n_past}</strong> 問（静的）／オリジナル <strong>{n_orig}</strong> 問（アプリ）</p>
-  <p class="glos-static-intro q-index-intro">本ページは<strong>{exam_esc}</strong>の過去問を、各開催回ごとの単位で科目別にまとめた静的一覧です。<strong><a href="{html.escape(root_idx)}#past">アプリで過去問</a></strong>では開催年・科目の絞り込みや学習記録が使えます。オリジナル問題は <strong><a href="{html.escape(root_idx)}#orig">アプリのオリジナル</a></strong>から。</p>
-  <p class="q-meta"><a href="{sitemap_href}">サイトマップ（全ページ）</a></p>
-  {body_sections}
-  <p class="q-app-link"><a href="{html.escape(root_idx)}#past">アプリで過去問を開く</a></p>
-</main>
-{render_static_q_footer(rel, current_q_index=True)}
-</body>
-</html>
-"""
-    (out_root / "index.html").write_text(body, encoding="utf-8")
+    pool_rows = [
+        {"開催年数": r["era_raw"], "開催月": r["month_raw"]} for r in parsed_rows
+    ]
+    pool_year, _labels = discover_pool_years(pool_rows)
+    index_pages = eisei2_index_pages(parsed_rows, pool_year)
+    html_body = build_q_index(index_pages, base_url)
+    (out_root / "index.html").write_text(html_body, encoding="utf-8")
 
 
 def main() -> None:
