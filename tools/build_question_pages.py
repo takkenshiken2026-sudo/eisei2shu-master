@@ -29,15 +29,26 @@ from pathlib import Path
 from xml.sax.saxutils import escape as xml_escape
 
 _TOOLS_DIR = Path(__file__).resolve().parent
+ROOT = _TOOLS_DIR.parent
 FORM_URL_EISEI2 = "https://forms.gle/51E5d6D41BZETjhY6"
 SITE_COPYRIGHT_EISEI2 = "© 2026 二衛マスター"
 BRAND_NAME = "二衛マスター"
 EXAM_NAME_OFFICIAL = "第二種衛生管理者試験"
 SESSION_ORDER = ("cat90", "zenki", "koki", "apr", "oct")
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 if str(_TOOLS_DIR) not in sys.path:
     sys.path.insert(0, str(_TOOLS_DIR))
 
-from learning_links_lib import glossary_match_entries, matome_for_field
+from html_footer import (
+    ROBOTS_INDEX_FOLLOW,
+    breadcrumb_html,
+    site_page_footer,
+    site_page_header,
+    site_page_wrap_close,
+    site_page_wrap_open,
+)
+from learning_links_lib import matome_for_field
 from question_slug_lib import (
     FIELD_MAP,
     era_slug_past,
@@ -50,7 +61,7 @@ from question_slug_lib import (
     session_or_pool_slug,
 )
 from csv_to_eisei2_master import discover_pool_years, make_id
-from render_learning_hub import render_question_learning_hub, render_session_hub_page_body
+from render_learning_hub import render_session_hub_page_body
 
 FIELD_LABEL_JA = {"law": "関係法令", "rights": "労働衛生", "limit": "労働生理"}
 
@@ -305,36 +316,114 @@ def breadcrumb_label_past(era_raw: str, month_raw: str) -> str:
     return e
 
 
-def build_question_html(page: dict, rel_path: Path) -> str:
-    is_orig = page["is_orig"]
-    field = page["field"]
+def eisei2_page_and_row(
+    r: dict,
+    pool_year: dict[tuple[str, str], int],
+    *,
+    rel_path: Path,
+) -> tuple[dict, dict]:
+    """テンプレ build_past_question_pages 用の page / row dict。"""
+    field = r["field"]
     field_ja = FIELD_LABEL_JA[field]
-    qwidth = page["qwidth"]
-    num = page["num"]
-    base_url = page["base_url"].rstrip("/")
-    site_prefix = page["site_prefix"].strip("/").strip()
+    era = normalize_era(r["era_raw"])
+    bk = month_key_for_pool({"開催年数": r["era_raw"], "開催月": r["month_raw"]})
+    py = pool_year[(era, bk)]
+    wareki = breadcrumb_label_past(r["era_raw"], r["month_raw"])
+    stem_plain = r["text"]
+    stem_html = html.escape(stem_plain).replace("\n", "<br>\n")
+    if not stem_html.startswith("<"):
+        stem_html = f"<p>{stem_html}</p>"
+    ext = r["is_orig"]
+    app_id = make_id(py, r["num"], field, ext)
+    return (
+        {
+            "year": py,
+            "year_label": wareki if not ext else "オリジナル",
+            "qno": r["num"],
+            "wareki": wareki,
+            "category": field_ja,
+            "stem_html": stem_html,
+            "stem_plain": stem_plain,
+            "opts": r["opts"],
+            "correct": int(r["ans_display"]),
+            "is_exempt": False,
+            "is_invalidated": False,
+            "note": "",
+            "app_id": app_id,
+            "tags": [],
+            "rel_path": str(rel_path).replace("\\", "/"),
+        },
+        {
+            "explanation": r["exp"],
+            "explanation_summary": "",
+            "explanation_correct": "",
+            "explanation_choices": "",
+            "explanation_point": "",
+            "related_links": "",
+        },
+    )
+
+
+def build_question_html(
+    r: dict,
+    rel_path: Path,
+    all_pages: list[dict],
+    pool_year: dict[tuple[str, str], int],
+    glossary_lookup: dict[str, str],
+    guides: list[dict[str, str]],
+) -> str:
+    from build_past_question_pages import (
+        HEAD_FONTS,
+        build_explanation_html,
+        build_related_links_html,
+        rel_css,
+        rel_href,
+        rel_theme_css,
+    )
+
+    page, row = eisei2_page_and_row(r, pool_year, rel_path=rel_path)
+    is_orig = r["is_orig"]
+    field_ja = FIELD_LABEL_JA[r["field"]]
+    num = r["num"]
 
     if is_orig:
-        qid = question_string_id_orig(page["session_or_pool"], field, qwidth)
         title_mid = f"オリジナル・{field_ja} 第{num}問"
+        context_line = f"オリジナル · {field_ja}"
+        crumb_items: list[tuple[str, str | None]] = [
+            ("トップ", "index.html"),
+            (title_mid, None),
+        ]
     else:
-        era_slug = page["era_slug"]
-        sp = page["session_or_pool"]
-        qid = question_string_id_past(era_slug, sp, field, qwidth)
-        title_mid = f"{breadcrumb_label_past(page['era_raw'], page['month_raw'])}・{field_ja} 第{num}問"
+        title_mid = f"{breadcrumb_label_past(r['era_raw'], r['month_raw'])}・{field_ja} 第{num}問"
+        context_line = f"{page['wareki']} · {field_ja}"
+        crumb_items = [
+            ("トップ", "index.html"),
+            ("過去問一覧", "q/index.html"),
+        ]
+        session_label = breadcrumb_label_past(r["era_raw"], r["month_raw"])
+        if href_session_hub(rel_path):
+            parts = rel_path.parts
+            session_rel = "/".join(parts[1:4]) + "/index.html"
+            crumb_items.append((session_label, session_rel))
+        crumb_items.append((title_mid, None))
 
-    title = f"{title_mid}｜二衛マスター（第二種衛生管理者試験）"
-    desc = meta_description(page["text"])
-    canonical = page["canonical"]
-
-    root_idx = rel_to_root_index(rel_path)
-    q_hub_idx = href_q_index(rel_path)
-    css_href = rel_to_site_css(rel_path)
+    title = f"{title_mid}｜{BRAND_NAME}（{EXAM_NAME_OFFICIAL}）"
+    desc = meta_description(r["text"])
+    canonical = r["canonical"]
+    heading = title_mid
 
     opts_html = "".join(
         f'<li class="q-opt"><span class="q-opt-num">（{i}）</span> {html.escape(o)}</li>'
         for i, o in enumerate(page["opts"], start=1)
     )
+    ans_block = f'<p>正答は <strong>（{page["correct"]}）</strong> です。</p>'
+    exp_html = build_explanation_html(page, row)
+    related_html = build_related_links_html(
+        page, row, rel_path, all_pages, glossary_lookup, guides
+    )
+
+    base_url = r["base_url"].rstrip("/")
+    site_prefix = r["site_prefix"].strip("/").strip()
 
     def full_site_url(path_after_root: str) -> str:
         path_after_root = path_after_root.lstrip("/")
@@ -342,72 +431,35 @@ def build_question_html(page: dict, rel_path: Path) -> str:
             return f"{base_url}/{site_prefix}/{path_after_root}"
         return f"{base_url}/{path_after_root}"
 
-    session_hub_href = None
-    session_hub_label = None
-    learning_hub_html = ""
+    ld_items: list[dict] = [
+        {"@type": "ListItem", "position": 1, "name": "トップ", "item": full_site_url("index.html")},
+    ]
+    pos = 2
     if not is_orig:
-        crumbs_nav = [
-            ("トップ", root_idx),
-            ("過去問一覧", q_hub_idx),
-        ]
-        session_hub_href = href_session_hub(rel_path)
-        if session_hub_href:
-            session_hub_label = breadcrumb_label_past(page["era_raw"], page["month_raw"])
-            crumbs_nav.append((session_hub_label, session_hub_href))
-        hub_item_url = public_url(base_url, site_prefix, "q/index.html")
-        ld_items = [
-            {"@type": "ListItem", "position": 1, "name": "トップ", "item": full_site_url("index.html")},
-            {"@type": "ListItem", "position": 2, "name": "過去問一覧", "item": hub_item_url},
-        ]
-        pos = 3
-        if session_hub_label and session_hub_href:
-            session_canonical = session_hub_canonical(
-                base_url, site_prefix, page["era_slug"], page["session_or_pool"]
-            )
-            ld_items.append(
-                {
-                    "@type": "ListItem",
-                    "position": pos,
-                    "name": session_hub_label,
-                    "item": session_canonical,
-                }
-            )
-            pos += 1
         ld_items.append(
             {
                 "@type": "ListItem",
                 "position": pos,
-                "name": title_mid,
-                "item": canonical,
+                "name": "過去問一覧",
+                "item": full_site_url("q/index.html"),
             }
         )
-        blob = f"{page['text']}\n{page['exp']}\n" + "\n".join(page["opts"])
-        term_entries = glossary_match_entries(blob, max_terms=5)
-        learning_hub_html = render_question_learning_hub(
-            field,
-            term_entries,
-            session_hub_href=session_hub_href,
-            session_hub_label=session_hub_label,
-        )
-    else:
-        crumbs_nav = [("トップ", root_idx)]
-        ld_items = [
-            {"@type": "ListItem", "position": 1, "name": "トップ", "item": full_site_url("index.html")},
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": title_mid,
-                "item": canonical,
-            },
-        ]
-        blob = f"{page['text']}\n{page['exp']}\n" + "\n".join(page["opts"])
-        term_entries = glossary_match_entries(blob, max_terms=5)
-        learning_hub_html = render_question_learning_hub(field, term_entries)
-
-    nav_items = []
-    for name, href in crumbs_nav:
-        nav_items.append(f'<li><a href="{html.escape(href)}">{html.escape(name)}</a></li>')
-    nav_items.append(f"<li aria-current='page'>{html.escape(title_mid)}</li>")
+        pos += 1
+        if len(crumb_items) >= 4:
+            ld_items.append(
+                {
+                    "@type": "ListItem",
+                    "position": pos,
+                    "name": crumb_items[2][0],
+                    "item": session_hub_canonical(
+                        base_url, site_prefix, r["era_slug"], r["session_or_pool"]
+                    ),
+                }
+            )
+            pos += 1
+    ld_items.append(
+        {"@type": "ListItem", "position": pos, "name": title_mid, "item": canonical}
+    )
 
     json_ld = {
         "@context": "https://schema.org",
@@ -424,12 +476,15 @@ def build_question_html(page: dict, rel_path: Path) -> str:
         ],
     }
 
-    canonical_tag = f'<link rel="canonical" href="{html.escape(canonical)}">'
-
-    stem_html = html.escape(page["text"]).replace("\n", "<br>\n")
-    exp_html = html.escape(page["exp"]).replace("\n", "<br>\n")
-    app_hash = "#past" if not is_orig else "#orig"
-    app_label = "アプリで過去問を開く" if not is_orig else "アプリで演習する"
+    css_href = rel_css(rel_path)
+    theme_href = rel_theme_css(rel_path)
+    site_header = site_page_header(rel_path, current="q")
+    site_breadcrumb = breadcrumb_html(rel_path, crumb_items)
+    site_footer = site_page_footer(rel_path, current="q")
+    app_href = rel_href(rel_path, f"index.html#past-play-{page['app_id']}")
+    app_label = "アプリで演習する" if not is_orig else "アプリでオリジナル問題を開く"
+    if is_orig:
+        app_href = rel_href(rel_path, "index.html#orig")
 
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -438,34 +493,31 @@ def build_question_html(page: dict, rel_path: Path) -> str:
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(desc)}">
-{canonical_tag}
-<meta name="robots" content="index, follow">
+{ROBOTS_INDEX_FOLLOW}
+<link rel="canonical" href="{html.escape(canonical)}">
 <meta property="og:type" content="article">
 <meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:url" content="{html.escape(canonical)}">
 <meta name="twitter:card" content="summary">
-<script defer src="/site-analytics.js"></script>
+{HEAD_FONTS}
 <link rel="stylesheet" href="{html.escape(css_href)}">
+<link rel="stylesheet" href="{html.escape(theme_href)}">
 <script type="application/ld+json">
 {json.dumps(json_ld, ensure_ascii=False, indent=2)}
 </script>
 </head>
-<body class="q-static-body">
-<header class="q-static-header">
-  <p class="q-static-brand"><a href="{html.escape(root_idx)}">二衛マスター</a>（第二種衛生管理者試験）</p>
-  <nav aria-label="パンくず">
-    <ol class="q-breadcrumb">
-      {"".join(nav_items)}
-    </ol>
-  </nav>
-</header>
+<body>
+{site_page_wrap_open()}
+{site_header}
 <main class="q-static-main">
-  <p class="q-meta"><span class="q-id">ID: <code>{html.escape(qid)}</code></span> · <span>{html.escape(field_ja)}</span></p>
-  <h1 class="q-h1">{html.escape(title_mid)}</h1>
+  {site_breadcrumb}
+  <p class="q-meta-line">{html.escape(context_line)}</p>
+  <h1 class="q-h1">{html.escape(heading)}</h1>
+  <p class="q-page-lead">{html.escape(page["stem_plain"])}</p>
   <section class="q-block" aria-labelledby="q-stem-h">
     <h2 id="q-stem-h" class="q-h2">問題</h2>
-    <div class="q-stem">{stem_html}</div>
+    <div class="q-stem">{page["stem_html"]}</div>
   </section>
   <section class="q-block" aria-labelledby="q-opts-h">
     <h2 id="q-opts-h" class="q-h2">選択肢</h2>
@@ -475,16 +527,17 @@ def build_question_html(page: dict, rel_path: Path) -> str:
   </section>
   <section class="q-block q-answer" aria-labelledby="q-ans-h">
     <h2 id="q-ans-h" class="q-h2">正答</h2>
-    <p>正答は <strong>（{html.escape(page["ans_display"])}）</strong> です。</p>
+    {ans_block}
   </section>
   <section class="q-block" aria-labelledby="q-exp-h">
     <h2 id="q-exp-h" class="q-h2">解説</h2>
-    <div class="q-exp">{exp_html}</div>
+    {exp_html}
   </section>
-  {learning_hub_html}
-  <p class="q-app-link"><a href="{html.escape(root_idx)}{app_hash}">{html.escape(app_label)}</a></p>
+  {related_html}
+  <p class="q-app-link"><a href="{html.escape(app_href)}">{html.escape(app_label)}</a></p>
 </main>
-{render_static_q_footer(rel_path)}
+{site_footer}
+{site_page_wrap_close()}
 </body>
 </html>
 """
@@ -733,6 +786,16 @@ def main() -> None:
     base_url = args.base_url.rstrip("/")
     site_prefix = args.site_prefix.strip("/").strip()
 
+    pool_rows = [
+        {"開催年数": r["era_raw"], "開催月": r["month_raw"]} for r in parsed
+    ]
+    pool_year, _pool_labels = discover_pool_years(pool_rows)
+    all_index_pages = eisei2_index_pages(parsed, pool_year)
+    from build_past_question_pages import load_glossary_lookup, load_guide_articles
+
+    glossary_lookup = load_glossary_lookup()
+    guides = load_guide_articles()
+
     # 出力先を空にしてから生成
     if out_root.exists():
         shutil.rmtree(out_root)
@@ -777,7 +840,12 @@ def main() -> None:
         rel_under_q = Path(*rel.parts[1:])
         full_path = out_root / rel_under_q
         full_path.parent.mkdir(parents=True, exist_ok=True)
-        full_path.write_text(build_question_html(r, rel), encoding="utf-8")
+        full_path.write_text(
+            build_question_html(
+                r, rel, all_index_pages, pool_year, glossary_lookup, guides
+            ),
+            encoding="utf-8",
+        )
         urls_for_sitemap.append(canonical)
 
     hub_canonical = public_url(base_url, site_prefix, "q/index.html")

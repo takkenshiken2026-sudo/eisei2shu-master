@@ -344,6 +344,18 @@ def parse_explanation_choices(raw: str) -> dict[int, str]:
 
 
 CATEGORY_STUDY_HINTS: dict[str, str] = {
+    "関係法令": (
+        "法令・制度は条文の趣旨と数字・期限をセットで覚えると得点しやすくなります。"
+        "関連用語は用語解説で押さえてから同年の過去問に戻ると定着しやすくなります。"
+    ),
+    "労働衛生": (
+        "衛生・安全の問題は用語の定義と数値基準の組み合わせが多いです。"
+        "間違えた問題は復習リストに残し、用語解説で意味を確認しながら解き直してください。"
+    ),
+    "労働生理": (
+        "生理・人体の問題は図解と用語の対応づけが有効です。"
+        "分野別の用語一覧から関連語をたどると理解が深まります。"
+    ),
     "法令・制度": (
         "試験制度は年度で見直されることがあります。受験要項や公式発表を定期的に確認し、"
         "関連用語は用語解説で意味を押さえてから過去問に戻ると定着しやすくなります。"
@@ -596,9 +608,10 @@ def build_related_links_html(
             continue
         pg = pages_by_key.get((y, other_q))
         if pg:
+            ylabel = pg.get("year_label") or pg.get("wareki") or f"{y}年"
             add_auto(
                 rel_href(rel_path, pg["rel_path"]),
-                f"{y}年 第{other_q}問",
+                f"{ylabel} 第{other_q}問",
             )
 
     for gl in glossary_links_for_tags(page.get("tags") or [], glossary_lookup):
