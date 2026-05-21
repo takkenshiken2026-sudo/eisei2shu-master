@@ -1179,6 +1179,47 @@ def build_terms_index(entries: list[dict], base_url: str) -> str:
 </html>
 """
 
+GLOSSARY_SLUG_MAP_JSON = ROOT / "docs" / "glossary-article-slugs.json"
+INDEX_HTML = ROOT / "index.html"
+GLOS_SLUG_MAP_SCRIPT_RE = re.compile(
+    r'<script type="application/json" id="glos-article-slug-map-json"[^>]*>.*?</script>\s*',
+    re.DOTALL,
+)
+
+
+def write_glossary_article_slug_map(entries: list[dict]) -> None:
+    """トップ SPA 用語カード → terms/{slug}.html の対応表。"""
+    data = {e["term"]: e["slug_file"].removesuffix(".html") for e in entries}
+    GLOSSARY_SLUG_MAP_JSON.parent.mkdir(parents=True, exist_ok=True)
+    GLOSSARY_SLUG_MAP_JSON.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
+def sync_index_glossary_slug_map(entries: list[dict]) -> None:
+    """index.html にスラッグ JSON を埋め込み（fetch 失敗時のフォールバック）。"""
+    if not INDEX_HTML.is_file():
+        return
+    payload = json.dumps(
+        {e["term"]: e["slug_file"].removesuffix(".html") for e in entries},
+        ensure_ascii=False,
+    )
+    script = (
+        f'<script type="application/json" id="glos-article-slug-map-json">'
+        f"{payload}</script>\n"
+    )
+    text = INDEX_HTML.read_text(encoding="utf-8")
+    if GLOS_SLUG_MAP_SCRIPT_RE.search(text):
+        text = GLOS_SLUG_MAP_SCRIPT_RE.sub(script, text, count=1)
+    else:
+        needle = '<div id="glossary-list">'
+        if needle not in text:
+            raise ValueError("index.html: #glossary-list が見つかりません")
+        text = text.replace(needle, needle + "\n" + script, 1)
+    INDEX_HTML.write_text(text, encoding="utf-8")
+
+
 def load_glossary_rows() -> list[dict]:
     if not GLOSSARY_CSV.is_file():
         raise FileNotFoundError(str(GLOSSARY_CSV))
@@ -1277,7 +1318,12 @@ def main() -> int:
 
     (TERMS_DIR / "index.html").write_text(build_terms_index(entries, base), encoding="utf-8")
 
+    write_glossary_article_slug_map(entries)
+    sync_index_glossary_slug_map(entries)
+
     print(f"Wrote {len(entries)} term pages under {TERMS_DIR}")
+    print(f"Wrote {GLOSSARY_SLUG_MAP_JSON}")
+    print(f"Updated {INDEX_HTML} (glos-article-slug-map-json)")
     print(f"Wrote {hub_count} field hub pages under {TERMS_DIR}/field-*/")
     print(f"Wrote {TERMS_DIR / 'index.html'}")
     return 0

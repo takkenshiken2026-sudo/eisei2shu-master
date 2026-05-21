@@ -47,5 +47,9 @@ done
 if [[ -f "$ROOT/privacy-terms.html" ]]; then
   cp "$ROOT/privacy-terms.html" "$OUT/"
 fi
+if [[ -f "$ROOT/docs/glossary-article-slugs.json" ]]; then
+  mkdir -p "$OUT/docs"
+  cp "$ROOT/docs/glossary-article-slugs.json" "$OUT/docs/"
+fi
 n="$(find "$OUT" -type f | wc -l | tr -d ' ')"
 echo "prepare_public_site.sh: $OUT に $n ファイルを配置しました。"
