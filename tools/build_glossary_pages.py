@@ -198,7 +198,7 @@ def split_semicolon(s: str) -> list[str]:
 
 
 TERMS_INDEX_CSS_VER = "20260521-terms-tools-fix"
-TERMS_INDEX_JS_VER = "20260521-terms-snippet"
+TERMS_INDEX_JS_VER = "20260521-terms-no-reading"
 TERMS_INDEX_SEARCH_PLACEHOLDER = "例：ストレスチェック、ラインケア、うつ病…"
 
 # CSV enrich 時の分野テンプレ（一覧の定義抜粋には出さない）
@@ -224,12 +224,20 @@ def terms_index_href(slug_file: str) -> str:
     return f"/terms/{slug_file.lstrip('/')}"
 
 
+def terms_index_reading_for_search(reading: str) -> str:
+    """一覧ではよみを出さない。検索用にプレースホルダは除外する。"""
+    r = (reading or "").strip()
+    if not r or r == "（読み未登録）":
+        return ""
+    return r
+
+
 def sort_terms_index_entries(entries: list[dict]) -> list[dict]:
     return sorted(
         entries,
         key=lambda e: (
             e.get("category") or "",
-            e.get("reading") or e.get("term") or "",
+            e.get("term") or "",
         ),
     )
 
@@ -276,18 +284,12 @@ def render_terms_index_tbody(entries: list[dict]) -> str:
     for item in items:
         href = html.escape(terms_index_href(item["slug_file"]))
         href_attr = f' data-entry-href="{href}"'
-        reading = item.get("reading") or ""
-        reading_html = (
-            f'<span class="terms-idx-reading">{html.escape(reading)}</span>'
-            if reading
-            else ""
-        )
         short_def = html.escape(terms_index_snippet(item))
         rows.append(
             "<tr class=\"terms-idx-table-row\">"
-            f'<td class="terms-idx-td-term" data-label="用語（よみ）"{href_attr} tabindex="0">'
+            f'<td class="terms-idx-td-term" data-label="用語"{href_attr} tabindex="0">'
             f'<div class="terms-idx-term-cell"><a href="{href}">{html.escape(item["term"])}</a>'
-            f"{reading_html}</div></td>"
+            f"</div></td>"
             f'<td class="terms-idx-td-cat" data-label="分野"{href_attr}>'
             f'{html.escape(item.get("category") or "")}</td>'
             f'<td class="terms-idx-td-snippet" data-label="定義（抜粋）"{href_attr}>'
@@ -302,7 +304,7 @@ def terms_index_item_dict(entry: dict) -> dict:
     snippet = terms_index_snippet(entry)
     search_bits = [
         entry["term"],
-        entry.get("reading") or "",
+        terms_index_reading_for_search(entry.get("reading") or ""),
         entry.get("category") or "",
         snippet,
         *tags,
@@ -322,11 +324,7 @@ def terms_index_item_dict(entry: dict) -> dict:
 def build_terms_list_item(entry: dict) -> str:
     href = html.escape(terms_index_href(entry["slug_file"]))
     term = html.escape(entry["term"])
-    reading = html.escape(entry.get("reading") or "")
     snippet = html.escape(terms_index_snippet(entry))
-    reading_html = (
-        f'<span class="terms-idx-reading">{reading}</span>' if reading else ""
-    )
     snippet_html = (
         f'<span class="terms-idx-snippet">{snippet}</span>' if snippet else ""
     )
@@ -337,7 +335,7 @@ def build_terms_list_item(entry: dict) -> str:
         f'    <li class="terms-idx-item" data-search="{search_attr}">'
         f'<a href="{href}">'
         f'<span class="terms-idx-item-main">'
-        f'<span class="terms-idx-term">{term}</span>{reading_html}'
+        f'<span class="terms-idx-term">{term}</span>'
         f"</span>{snippet_html}</a></li>"
     )
 
@@ -1155,7 +1153,7 @@ def build_terms_index(entries: list[dict], base_url: str) -> str:
       <div class="terms-idx-table-wrap">
         <table class="terms-idx-table">
           <thead><tr>
-            <th scope="col" class="terms-idx-th-term">用語（よみ）</th>
+            <th scope="col" class="terms-idx-th-term">用語</th>
             <th scope="col" class="terms-idx-th-cat">分野</th>
             <th scope="col" class="terms-idx-th-def">定義（抜粋）</th>
           </tr></thead>

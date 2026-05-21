@@ -106,7 +106,7 @@
     return [...list].sort((a, b) => {
       const c = a.category.localeCompare(b.category, 'ja');
       if (c) return c;
-      return (a.reading || a.term).localeCompare(b.reading || b.term, 'ja');
+      return a.term.localeCompare(b.term, 'ja');
     });
   }
 
@@ -119,11 +119,8 @@
   function rowHtml(item, query) {
     const href = resolveEntryHref(item.href);
     const hrefAttr = ` data-entry-href="${escapeHtml(href)}"`;
-    const reading = item.reading
-      ? `<span class="terms-idx-reading">${highlightText(item.reading, query)}</span>`
-      : '';
     return `<tr class="terms-idx-table-row">
-<td class="terms-idx-td-term" data-label="用語（よみ）"${hrefAttr} tabindex="0"><div class="terms-idx-term-cell"><a href="${escapeHtml(href)}">${highlightText(item.term, query)}</a>${reading}</div></td>
+<td class="terms-idx-td-term" data-label="用語"${hrefAttr} tabindex="0"><div class="terms-idx-term-cell"><a href="${escapeHtml(href)}">${highlightText(item.term, query)}</a></div></td>
 <td class="terms-idx-td-cat" data-label="分野"${hrefAttr}>${escapeHtml(item.category)}</td>
 <td class="terms-idx-td-snippet" data-label="定義（抜粋）"${hrefAttr}>${item.shortDef ? highlightText(item.shortDef, query) : ''}</td>
 </tr>`;
