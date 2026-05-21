@@ -4,7 +4,7 @@ author_name: 二衛マスター編集部
 author_profile: 第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。
 category: 労働生理
 content_status: published
-description: 第二種衛生管理者試験頻出の振動障害を解説。振動白ろう（レイノー現象）・末梢神経障害・チェーンソー作業・寒冷での悪化を表で整理。
+description: 振動障害・白ろう病（はくろう病）を第二種衛生管理者試験向けに解説。手先振動・レイノー現象・予防の頻出ポイントを表で整理。
 fact_checked_at: '2026-05-12'
 last_reviewed_at: '2026-05-12'
 related_links: taion-chosetsu:体温調節とは？仕組みの整理;junka:循環とは？血液循環の整理;jinpai:じん肺とは？原因と予防の整理

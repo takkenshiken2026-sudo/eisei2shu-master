@@ -1,4 +1,4 @@
-/* eisei2-data-original.js — オリジナル演習（サンプル） unit は index 内 ORIG_UNITS の id と一致
+/* eisei2-data-original.js — 実践演習（サンプル） unit は index 内 ORIG_UNITS の id と一致
  * field: law / rights / limit の3科目
  */
 

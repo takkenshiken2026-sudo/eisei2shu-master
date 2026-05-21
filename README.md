@@ -11,7 +11,7 @@
 | `index.html` | UI・アプリ本体（宅建テンプレから自動パッチ） |
 | `eisei2-master-data.js` | 分野定義・過去問（令和7年度CSV取り込み・計60問。前期=year2025・後期=2026） |
 | `eisei2-data-glossary.js` | 用語サンプル |
-| `eisei2-data-original.js` | オリジナル演習サンプル（レベル1〜3） |
+| `eisei2-data-original.js` | 実践演習サンプル（レベル1〜3） |
 | `about.html` | このサイトについて（目的・推奨環境など） |
 | `privacy-terms.html` | 利用規約・プライバシー・免責（1ページに統合） |
 | `site-pages.css` | 上記静的ページ用の共通スタイル |
@@ -52,7 +52,7 @@ python3 tools/build_question_pages.py --base-url https://USER.github.io --site-p
 
 `--base-url` は canonical・サイトマップの絶対URLに使われます。ユーザサイト直下だけなら `--site-prefix` は省略でよいです。
 
-過去問・オリジナル用の集約 JS は従来どおり次です。
+過去問・実践演習用の集約 JS は従来どおり次です。
 
 ```bash
 python3 tools/csv_to_eisei2_master.py -o eisei2-master-data.js

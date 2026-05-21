@@ -29,6 +29,18 @@ CATEGORY_MATOME = {
 }
 
 # 科目別の検索意図ガイド（試験・学習の入口記事）
+# GSC 等で見える表記ゆれ → (用語解説の表示名, slug)。最長一致は呼び出し側で行う。
+GLOSSARY_QUERY_ALIASES: list[tuple[str, str, str]] = [
+    ("はくろう病", "白ろう", "hakurou"),
+    ("白ろう病", "白ろう", "hakurou"),
+    ("温熱条件", "WBGT", "wbgt"),
+    ("二酸化炭素濃度基準", "労働衛生基準", "rodo-eisei-kijun"),
+    ("二酸化炭素濃度", "労働衛生基準", "rodo-eisei-kijun"),
+    ("衛生管理者 専任とは", "専任の衛生管理者", "sennin-eisei-kanrisha"),
+    ("衛生管理者専任とは", "専任の衛生管理者", "sennin-eisei-kanrisha"),
+    ("衛生管理者 専任", "専任の衛生管理者", "sennin-eisei-kanrisha"),
+]
+
 INTENT_BY_CATEGORY = {
     "関係法令": [
         ("/articles/dokugaku-guide.html", "独学合格ガイド"),
@@ -145,6 +157,17 @@ def glossary_match_entries(text: str, max_terms: int = 5) -> list[tuple[str, str
     names = sorted(slugs.keys(), key=len, reverse=True)
     found: list[tuple[str, str]] = []
     used_slug: set[str] = set()
+
+    for phrase, display, slug in sorted(
+        GLOSSARY_QUERY_ALIASES, key=lambda x: len(x[0]), reverse=True
+    ):
+        if slug in used_slug or phrase not in text:
+            continue
+        used_slug.add(slug)
+        found.append((display, slug))
+        if len(found) >= max_terms:
+            return found
+
     for name in names:
         slug = slugs[name]
         if slug in used_slug:

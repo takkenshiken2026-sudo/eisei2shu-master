@@ -4,7 +4,7 @@ author_name: 二衛マスター編集部
 author_profile: 第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。
 category: 労働衛生
 content_status: published
-description: 第二種衛生管理者試験頻出のWBGTを解説。屋外・屋内の計算式・WBGTと作業強度の管理方法を表で整理。
+description: 温熱条件・WBGT（暑熱）を第二種衛生管理者試験向けに解説。計算式・基準値・作業管理の頻出ポイントを表で整理。
 fact_checked_at: '2026-05-12'
 last_reviewed_at: '2026-05-12'
 related_links: sagyo-kankyo-sokutei:作業環境測定とは？頻度と評価の整理;kojin-hogo-gu:個人用保護具とは？選び方の整理;kyoyo-nodo:許容濃度とは？ばく露基準の整理

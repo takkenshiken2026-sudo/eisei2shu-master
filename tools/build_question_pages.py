@@ -428,8 +428,8 @@ def build_question_html(
     num = r["num"]
 
     if is_orig:
-        title_mid = f"オリジナル・{field_ja} 第{num}問"
-        context_line = f"オリジナル · {field_ja}"
+        title_mid = f"実践演習・{field_ja} 第{num}問"
+        context_line = f"実践演習 · {field_ja}"
         crumb_items: list[tuple[str, str | None]] = [
             ("トップ", "index.html"),
             (title_mid, None),
@@ -523,7 +523,7 @@ def build_question_html(
     site_breadcrumb = breadcrumb_html(rel_path, crumb_items)
     site_footer = site_page_footer(rel_path, current="q")
     app_href = rel_href(rel_path, f"index.html#past-play-{page['app_id']}")
-    app_label = "アプリで演習する" if not is_orig else "アプリでオリジナル問題を開く"
+    app_label = "アプリで演習する" if not is_orig else "アプリで実践演習を開く"
     if is_orig:
         app_href = rel_href(rel_path, "index.html#orig")
 

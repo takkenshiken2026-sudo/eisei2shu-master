@@ -62,7 +62,7 @@ def render_question_learning_hub(
     session_hub_label: str | None = None,
 ) -> str:
     matome_href, matome_label = matome_for_field(field)
-    term_links = [(term_href(s), name) for name, s in term_entries[:5]]
+    term_links = [(term_href(s), name) for name, s in term_entries[:6]]
     intent_links = intent_links_for_field(field, limit=2)
     extra = ""
     if session_hub_href and session_hub_label:
@@ -73,7 +73,7 @@ def render_question_learning_hub(
         )
     return f"""<section class="q-block term-learning-hub" aria-labelledby="q-learn-h">
   <h2 id="q-learn-h" class="q-h2">学習のつながり</h2>
-  <p class="term-learning-intro">解説を読んだあとは、用語記事と科目まとめ、関連過去問で定着を確認しましょう。</p>
+  <p class="term-learning-intro">解説を読んだあとは、下の<strong>関連用語</strong>（用語解説記事）と科目まとめで定着を確認しましょう。キーワードの意味は <a href="/terms/">用語解説一覧</a> からも探せます。</p>
 {extra}  <h3 class="term-learning-subhead">関連用語</h3>
   {_ul(term_links)}
   <h3 class="term-learning-subhead">科目まとめ</h3>

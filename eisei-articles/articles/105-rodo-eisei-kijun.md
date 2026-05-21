@@ -4,7 +4,7 @@ author_name: 二衛マスター編集部
 author_profile: 第二種衛生管理者試験の学習用語、過去問の復習導線、試験ガイドを整理する編集チームです。
 category: 関係法令
 content_status: published
-description: 第二種衛生管理者試験頻出の労働衛生基準を解説。事務所衛生基準規則の温度17〜28℃・照度300ルクス以上・CO₂基準0.1%以下を表で整理。
+description: 二酸化炭素濃度基準・労働衛生基準を試験向けに解説。事務所のCO₂ 0.1%以下・温度・照度の数値を表で整理。
 fact_checked_at: '2026-05-12'
 last_reviewed_at: '2026-05-12'
 related_links: eisei-kanrisha:衛生管理者とは？選任要件・人数の整理;sangyo-i:産業医とは？選任要件と職務;sagyo-kankyo-sokutei:作業環境測定とは？頻度と評価の整理
