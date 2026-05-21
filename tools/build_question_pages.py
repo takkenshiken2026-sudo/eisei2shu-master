@@ -64,6 +64,7 @@ from csv_to_eisei2_master import discover_pool_years, make_id
 from render_learning_hub import render_session_hub_page_body
 
 FIELD_LABEL_JA = {"law": "関係法令", "rights": "労働衛生", "limit": "労働生理"}
+EXPLANATION_META_CSV = "eisei2_past_explanation_meta.csv"
 
 
 def load_rows(path: Path) -> list[dict]:
@@ -316,11 +317,43 @@ def breadcrumb_label_past(era_raw: str, month_raw: str) -> str:
     return e
 
 
+def explanation_meta_key(era_raw: str, month_raw: str, num: int, field: str) -> tuple[str, str, str, str]:
+    return (
+        (era_raw or "").strip(),
+        (month_raw or "").strip(),
+        str(num),
+        FIELD_LABEL_JA.get(field, field),
+    )
+
+
+def load_explanation_meta(data_dir: Path) -> dict[tuple[str, str, str, str], dict[str, str]]:
+    path = data_dir / EXPLANATION_META_CSV
+    if not path.is_file():
+        return {}
+    rows = load_rows(path)
+    out: dict[tuple[str, str, str, str], dict[str, str]] = {}
+    for row in rows:
+        key = (
+            (row.get("開催年数") or "").strip(),
+            (row.get("開催月") or "").strip(),
+            (row.get("問番号") or "").strip(),
+            (row.get("科目") or "").strip(),
+        )
+        out[key] = {
+            "explanation_summary": (row.get("explanation_summary") or "").strip(),
+            "explanation_correct": (row.get("explanation_correct") or "").strip(),
+            "explanation_choices": (row.get("explanation_choices") or "").strip(),
+            "explanation_point": (row.get("explanation_point") or "").strip(),
+        }
+    return out
+
+
 def eisei2_page_and_row(
     r: dict,
     pool_year: dict[tuple[str, str], int],
     *,
     rel_path: Path,
+    explanation_meta: dict[tuple[str, str, str, str], dict[str, str]] | None = None,
 ) -> tuple[dict, dict]:
     """テンプレ build_past_question_pages 用の page / row dict。"""
     field = r["field"]
@@ -335,6 +368,12 @@ def eisei2_page_and_row(
         stem_html = f"<p>{stem_html}</p>"
     ext = r["is_orig"]
     app_id = make_id(py, r["num"], field, ext)
+    meta = {}
+    if explanation_meta is not None:
+        meta = explanation_meta.get(
+            explanation_meta_key(r["era_raw"], r["month_raw"], r["num"], field),
+            {},
+        )
     return (
         {
             "year": py,
@@ -355,10 +394,10 @@ def eisei2_page_and_row(
         },
         {
             "explanation": r["exp"],
-            "explanation_summary": "",
-            "explanation_correct": "",
-            "explanation_choices": "",
-            "explanation_point": "",
+            "explanation_summary": meta.get("explanation_summary", ""),
+            "explanation_correct": meta.get("explanation_correct", ""),
+            "explanation_choices": meta.get("explanation_choices", ""),
+            "explanation_point": meta.get("explanation_point", ""),
             "related_links": "",
         },
     )
@@ -381,7 +420,9 @@ def build_question_html(
         rel_theme_css,
     )
 
-    page, row = eisei2_page_and_row(r, pool_year, rel_path=rel_path)
+    page, row = eisei2_page_and_row(
+        r, pool_year, rel_path=rel_path, explanation_meta=r.get("explanation_meta")
+    )
     is_orig = r["is_orig"]
     field_ja = FIELD_LABEL_JA[r["field"]]
     num = r["num"]
@@ -795,6 +836,13 @@ def main() -> None:
 
     glossary_lookup = load_glossary_lookup()
     guides = load_guide_articles()
+    explanation_meta = load_explanation_meta(data_dir)
+    if not explanation_meta:
+        print(
+            f"warning: {EXPLANATION_META_CSV} がありません。"
+            " tools/enrich_eisei2_past_explanations.py を先に実行してください。",
+            file=sys.stderr,
+        )
 
     # 出力先を空にしてから生成
     if out_root.exists():
@@ -805,6 +853,7 @@ def main() -> None:
 
     n_past = n_orig = 0
     for r in parsed:
+        r["explanation_meta"] = explanation_meta
         if r["is_orig"]:
             rel = Path(
                 relative_url_path_orig(r["session_or_pool"], r["field"], r["qwidth"])
