@@ -33,6 +33,7 @@ from tools.html_footer import (
     site_page_wrap_close,
     site_page_wrap_open,
 )
+from tools.render_learning_hub import render_term_learning_hub
 from tools.site_config import (
     brand_name,
     category_order,
@@ -797,6 +798,7 @@ def build_term_html(
         ("term-sec-faq", "よくある質問"),
         ("article-info-title", "記事の基本情報"),
         ("official-info-title", "公式情報の確認"),
+        ("term-learning-path", "学習のつながり"),
     ]
     if rel_section:
         toc_items.append(("term-related-title", "関連用語"))
@@ -809,6 +811,9 @@ def build_term_html(
     )
 
     next_links = next_links_html(root_idx, field_hub or None, category, guide_links)
+
+    term_slug = Path(slug_file).stem
+    learning_hub_html = render_term_learning_hub(term_slug, category, None)
 
     official_links_ld = external_links() or [primary_external_link()]
     defined_term: dict = {
@@ -916,6 +921,7 @@ def build_term_html(
     {article_section("faq", "よくある質問", faq_html)}
     {info_table}
     {official_html}
+    {learning_hub_html}
     {rel_section}
     {next_links}
   </article>

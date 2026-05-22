@@ -29,17 +29,11 @@ CATEGORY_MATOME = {
 }
 
 # 科目別の検索意図ガイド（試験・学習の入口記事）
-# GSC 等で見える表記ゆれ → (用語解説の表示名, slug)。最長一致は呼び出し側で行う。
-GLOSSARY_QUERY_ALIASES: list[tuple[str, str, str]] = [
-    ("はくろう病", "白ろう", "hakurou"),
-    ("白ろう病", "白ろう", "hakurou"),
-    ("温熱条件", "WBGT", "wbgt"),
-    ("二酸化炭素濃度基準", "労働衛生基準", "rodo-eisei-kijun"),
-    ("二酸化炭素濃度", "労働衛生基準", "rodo-eisei-kijun"),
-    ("衛生管理者 専任とは", "専任の衛生管理者", "sennin-eisei-kanrisha"),
-    ("衛生管理者専任とは", "専任の衛生管理者", "sennin-eisei-kanrisha"),
-    ("衛生管理者 専任", "専任の衛生管理者", "sennin-eisei-kanrisha"),
-]
+# 過去問本文・検索クエリの表記ゆれ → (フレーズ, 表示名, slug)。最長一致で優先マッチ。
+try:
+    from glossary_match_aliases import GLOSSARY_MATCH_ALIASES as GLOSSARY_QUERY_ALIASES
+except ImportError:
+    from tools.glossary_match_aliases import GLOSSARY_MATCH_ALIASES as GLOSSARY_QUERY_ALIASES
 
 INTENT_BY_CATEGORY = {
     "関係法令": [
@@ -212,10 +206,10 @@ def question_links_for_term(slug: str, frontmatter_value) -> list[tuple[str, str
             if path:
                 links.append((path, label or qid))
         if links:
-            return links[:5]
+            return links[:8]
 
     stored = load_term_question_links().get(slug, [])
-    for item in stored[:5]:
+    for item in stored[:8]:
         qid = str(item.get("id", "")).strip()
         label = str(item.get("label", qid)).strip()
         path = question_id_to_web_path(qid)
