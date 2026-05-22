@@ -548,7 +548,7 @@ def build_question_html(
 {json.dumps(json_ld, ensure_ascii=False, indent=2)}
 </script>
 </head>
-<body>
+<body class="q-static-page">
 {site_page_wrap_open()}
 {site_header}
 <main class="q-static-main">
@@ -692,7 +692,7 @@ def write_session_hubs(
 {json.dumps(json_ld, ensure_ascii=False, indent=2)}
 </script>
 </head>
-<body class="q-static-body">
+<body class="q-static-page">
 <header class="q-static-header">
   <p class="q-static-brand"><a href="{html.escape(root_idx)}">{html.escape(BRAND_NAME)}</a>（{html.escape(EXAM_NAME_OFFICIAL)}）</p>
   <nav aria-label="パンくず">

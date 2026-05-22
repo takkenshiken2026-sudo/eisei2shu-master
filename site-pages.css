@@ -608,6 +608,7 @@ a.site-page-brand:hover {
   cursor: default;
 }
 /* 静的問題ページ（tools/build_question_pages.py 生成） */
+.q-static-page,
 .q-static-body {
   font-family: var(--font);
   font-size: var(--fs-body);
@@ -4364,4 +4365,456 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
 .term-learning-empty {
   font-size: 14px;
   color: var(--text2);
+}
+
+/* =============================================================================
+   用語・過去問（4ページ種のみ）タイポグラフィ・文字色
+   site-theme.css 読込後も --text を #121212 に固定するため body クラス配下で再定義
+   ============================================================================= */
+.terms-index-page,
+.term-article-page,
+.q-index-page,
+.q-static-page {
+  --text: #121212;
+  --ink: #333333;
+  --text2: #555555;
+  --text3: #999999;
+  --on-dark: #ffffff;
+}
+
+/* --- 用語解説一覧 --- */
+.terms-index-page .terms-idx-page-title,
+.terms-index-page .site-page-main > h1 {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+}
+.terms-index-page .terms-idx-lead,
+.terms-index-page .site-page-lead,
+.terms-index-page .glos-static-intro {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.75;
+}
+.terms-index-page .terms-idx-hit,
+.terms-index-page .terms-index-hit {
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  color: var(--text3);
+}
+.terms-index-page .terms-idx-head p,
+.terms-index-page .terms-idx-panel-intro {
+  font-size: var(--fs-sub);
+  color: var(--text2);
+}
+.terms-index-page .terms-idx-table th {
+  background: var(--table-head-bg);
+  color: var(--on-dark);
+  font-size: var(--fs-sub);
+  font-weight: 700;
+}
+.terms-index-page .terms-idx-table td,
+.terms-index-page .terms-idx-snippet {
+  font-size: var(--fs-body);
+  color: var(--text);
+  font-weight: 400;
+}
+.terms-index-page .terms-idx-td-cat {
+  font-size: var(--fs-small);
+  color: var(--text2);
+}
+.terms-index-page a {
+  color: var(--ink);
+}
+
+/* --- 用語詳細 --- */
+.term-article-page .article-title {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+}
+.term-article-page .article-lead {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.9;
+}
+.term-article-page .meta-category {
+  font-size: var(--fs-tiny);
+  color: var(--accent-emphasis);
+}
+.term-article-page .meta-updated {
+  font-size: var(--fs-caption);
+  color: var(--text3);
+}
+.term-article-page .seo-toc h2,
+.term-article-page .article-body h2,
+.term-article-page .seo-article-section > h2,
+.term-article-page .seo-quality-panel > h2,
+.term-article-page .seo-action-box > h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--text);
+}
+.term-article-page .seo-toc a,
+.term-article-page .seo-toc li {
+  font-size: var(--fs-sub);
+  color: var(--ink);
+}
+.term-article-page .article-body p,
+.term-article-page .article-body li,
+.term-article-page .seo-article-section p,
+.term-article-page .term-faq-item summary,
+.term-article-page .term-faq-item div {
+  font-size: var(--fs-body);
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.75;
+}
+.term-article-page .article-body th {
+  background: var(--table-head-bg);
+  color: var(--on-dark);
+  font-size: var(--fs-sub);
+  font-weight: 700;
+}
+.term-article-page .article-body td,
+.term-article-page .seo-info-table td {
+  color: var(--text);
+  font-size: var(--fs-body);
+  font-weight: 400;
+}
+.term-article-page .seo-info-table th {
+  background: var(--table-head-bg);
+  color: var(--on-dark);
+}
+.term-article-page .term-learning-intro {
+  font-size: var(--fs-sub);
+  color: var(--text2);
+}
+.term-article-page .term-learning-subhead {
+  font-size: var(--fs-sub);
+  font-weight: 700;
+  color: var(--text);
+}
+.term-article-page .related-box-title {
+  font-size: var(--fs-sub);
+  font-weight: 700;
+  color: var(--text);
+}
+.term-article-page a {
+  color: var(--ink);
+}
+
+/* --- 過去問一覧 --- */
+.q-index-page .q-index-hero-title,
+.q-index-page .past-index-hero h1,
+.q-index-page .site-page-main > h1 {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  color: var(--text);
+}
+.q-index-page .q-index-hero-lead,
+.q-index-page .past-index-intro,
+.q-index-page .glos-static-intro,
+.q-index-page .q-index-intro {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.75;
+}
+.q-index-page .past-index-hit,
+.q-index-page .q-index-hit {
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  color: var(--text3);
+}
+.q-index-page .q-index-head p,
+.q-index-page .q-index-filter-opt,
+.q-index-page .q-index-chip-btn,
+.q-index-page .q-index-status-btn {
+  font-size: var(--fs-small);
+  color: var(--ink);
+}
+.q-index-page .q-year-table th {
+  background: var(--table-head-bg);
+  color: var(--on-dark);
+  font-size: var(--fs-sub);
+  font-weight: 700;
+}
+.q-index-page .q-year-table td {
+  font-size: var(--fs-body);
+  color: var(--text);
+}
+.q-index-page .q-index-year-head h2,
+.q-index-page .q-index-year-head h3 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--text);
+}
+.q-index-page a {
+  color: var(--ink);
+}
+
+/* --- 過去問静的（個別問題・開催回ハブ） --- */
+.q-static-page {
+  color: var(--text);
+}
+.q-static-page .q-h1 {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+}
+.q-static-page .q-h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--text);
+}
+.q-static-page .q-page-lead,
+.q-static-page .q-stem,
+.q-static-page .q-stem p,
+.q-static-page .q-opt,
+.q-static-page .q-block p,
+.q-static-page .q-block li,
+.q-static-page .q-exp-body {
+  font-size: var(--fs-body);
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.75;
+}
+.q-static-page .q-meta-line,
+.q-static-page .q-meta {
+  font-size: var(--fs-caption);
+  color: var(--text3);
+  font-weight: 700;
+}
+.q-static-page .q-breadcrumb {
+  font-size: var(--fs-small);
+  color: var(--text2);
+}
+.q-static-page .q-breadcrumb a {
+  color: var(--ink);
+}
+.q-static-page .q-app-link {
+  font-size: var(--fs-sub);
+  color: var(--ink);
+}
+.q-static-page .q-block table th {
+  background: var(--table-head-bg);
+  color: var(--on-dark);
+  font-size: var(--fs-sub);
+  font-weight: 700;
+}
+.q-static-page .q-block table td {
+  color: var(--text);
+  font-size: var(--fs-body);
+}
+.q-static-page .term-learning-subhead {
+  font-size: var(--fs-sub);
+  font-weight: 700;
+  color: var(--text);
+}
+.q-static-page .term-learning-intro,
+.q-static-page .term-learning-empty {
+  font-size: var(--fs-sub);
+  color: var(--text2);
+}
+.q-static-page a {
+  color: var(--ink);
+}
+
+/* =============================================================================
+   追加ページ種（試験ガイド・静的ページ・用語分野ハブ）
+   ============================================================================= */
+.guide-article-page,
+.articles-index-page,
+.terms-field-hub-page,
+.site-static-page {
+  --text: #121212;
+  --ink: #333333;
+  --text2: #555555;
+  --text3: #999999;
+  --on-dark: #ffffff;
+}
+
+/* --- 試験ガイド記事（matome 含む・seo-article-main） --- */
+.guide-article-page .article-title {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.4;
+}
+.guide-article-page .article-lead {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.9;
+}
+.guide-article-page .meta-category {
+  font-size: var(--fs-tiny);
+}
+.guide-article-page .meta-updated {
+  font-size: var(--fs-caption);
+  color: var(--text3);
+}
+.guide-article-page .seo-toc h2,
+.guide-article-page .article-body h2,
+.guide-article-page .seo-article-section > h2,
+.guide-article-page .seo-quality-panel > h2,
+.guide-article-page .seo-action-box > h2,
+.guide-article-page .matome-learning-hub > h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--text);
+}
+.guide-article-page .article-body p,
+.guide-article-page .article-body li,
+.guide-article-page .seo-article-section p,
+.guide-article-page .term-faq-item summary,
+.guide-article-page .term-faq-item div {
+  font-size: var(--fs-body);
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.75;
+}
+.guide-article-page .article-body th,
+.guide-article-page .seo-info-table th {
+  background: var(--table-head-bg);
+  color: var(--on-dark);
+  font-size: var(--fs-sub);
+  font-weight: 700;
+}
+.guide-article-page .article-body td,
+.guide-article-page .seo-info-table td {
+  color: var(--text);
+  font-size: var(--fs-body);
+}
+.guide-article-page .term-learning-intro {
+  font-size: var(--fs-sub);
+  color: var(--text2);
+}
+.guide-article-page .term-learning-subhead {
+  font-size: var(--fs-sub);
+  font-weight: 700;
+  color: var(--text);
+}
+.guide-article-page a {
+  color: var(--ink);
+}
+
+/* --- 試験ガイド一覧 --- */
+.articles-index-page .site-page-main > h1 {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  color: var(--text);
+}
+.articles-index-page .site-page-lead {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.65;
+}
+.articles-index-page .article-index-head h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--text);
+}
+.articles-index-page .article-index-head p {
+  font-size: var(--fs-sub);
+  color: var(--text2);
+}
+.articles-index-page .article-index-hit {
+  font-size: var(--fs-caption);
+  font-weight: 700;
+  color: var(--text3);
+}
+.articles-index-page .article-index-card h2 {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.45;
+}
+.articles-index-page .article-index-card p {
+  font-size: var(--fs-sub);
+  color: var(--ink);
+  line-height: 1.65;
+}
+.articles-index-page .article-index-card-tags {
+  font-size: var(--fs-caption);
+  color: var(--text2);
+}
+.articles-index-page .article-index-search span {
+  font-size: var(--fs-small);
+  color: var(--text2);
+}
+.articles-index-page a {
+  color: var(--ink);
+}
+
+/* --- 用語分野ハブ --- */
+.terms-field-hub-page .terms-idx-page-title,
+.terms-field-hub-page .site-page-main > h1 {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  color: var(--text);
+}
+.terms-field-hub-page .terms-idx-lead,
+.terms-field-hub-page .site-page-lead {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.75;
+}
+.terms-field-hub-page .terms-idx-list a {
+  font-size: var(--fs-body);
+  color: var(--ink);
+  font-weight: 500;
+}
+.terms-field-hub-page a {
+  color: var(--ink);
+}
+
+/* --- 静的ページ（about / privacy / related-sites 等） --- */
+.site-static-page .site-page-main > h1 {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  color: var(--text);
+}
+.site-static-page .site-page-lead {
+  font-size: var(--fs-body);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.65;
+}
+.site-static-page .site-page-section h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--text);
+}
+.site-static-page .site-page-section p,
+.site-static-page .site-page-section li {
+  font-size: var(--fs-body);
+  color: var(--ink);
+  font-weight: 400;
+  line-height: 1.75;
+}
+.site-static-page .site-page-section th {
+  background: var(--table-head-bg);
+  color: var(--on-dark);
+  font-size: var(--fs-sub);
+  font-weight: 700;
+}
+.site-static-page .site-page-section td {
+  color: var(--text);
+  font-size: var(--fs-body);
+}
+.site-static-page .site-page-footer-copy {
+  font-size: var(--fs-caption);
+  color: var(--text2);
+}
+.site-static-page a {
+  color: var(--ink);
 }
