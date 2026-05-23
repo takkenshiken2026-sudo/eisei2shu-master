@@ -4457,9 +4457,6 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
   .terms-index-page .terms-idx-td-term a {
     font-size: var(--fs-small);
   }
-  .terms-index-page .terms-idx-td-term a {
-    font-size: var(--fs-body);
-  }
   .q-index-page .past-index-panel {
     padding: 6px 0 0;
   }
@@ -4894,7 +4891,7 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
 }
 .terms-index-page .terms-idx-td-term a {
   color: var(--ink);
-  font-size: var(--fs-body);
+  font-size: var(--fs-small);
   font-weight: 600;
 }
 .terms-index-page .terms-idx-td-cat {
