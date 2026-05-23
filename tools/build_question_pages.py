@@ -949,6 +949,7 @@ def main() -> None:
         "import_eisei2_original_to_practice_csv.py",
         "import_base_questions_to_ichimon_csv.py",
         "build_practice_ichimon_pages.py",
+        "build_sitemap.py",
     ):
         subprocess.run(
             [sys.executable, f"tools/{script}"],
