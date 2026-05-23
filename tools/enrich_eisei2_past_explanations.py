@@ -198,7 +198,7 @@ def postprocess_choice_notes(
 
 def enrich_one(row: dict) -> dict:
     enrich_in = eisei2_to_enrich_row(row)
-    choices_field, correct_body, summary = build_row_fields(enrich_in)
+    choices_field, correct_body, summary, _enrich_point = build_row_fields(enrich_in)
     try:
         correct_n = int(enrich_in["correct"])
     except (TypeError, ValueError):

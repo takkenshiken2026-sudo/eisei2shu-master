@@ -23,6 +23,7 @@ import html
 import json
 import re
 import shutil
+import subprocess
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -442,10 +443,12 @@ def build_question_html(
             ("過去問一覧", "q/index.html"),
         ]
         session_label = breadcrumb_label_past(r["era_raw"], r["month_raw"])
-        if href_session_hub(rel_path):
-            parts = rel_path.parts
-            session_rel = "/".join(parts[1:4]) + "/index.html"
-            crumb_items.append((session_label, session_rel))
+        crumb_items.append(
+            (
+                session_label,
+                f"q/past/{r['era_slug']}/{r['session_or_pool']}/index.html",
+            )
+        )
         crumb_items.append((title_mid, None))
 
     title = f"{title_mid}｜{BRAND_NAME}（{EXAM_NAME_OFFICIAL}）"
@@ -796,6 +799,11 @@ def main() -> None:
     args = ap.parse_args()
 
     repo_root = Path(__file__).resolve().parent.parent
+    subprocess.run(
+        [sys.executable, "tools/enrich_eisei2_past_explanations.py"],
+        cwd=repo_root,
+        check=True,
+    )
     out_root = args.out_dir or (repo_root / "q")
     data_dir = repo_root / "data"
     csv_paths = [
@@ -936,6 +944,17 @@ def main() -> None:
 
     write_session_hubs(out_root, parsed, base_url, site_prefix, urls_for_sitemap)
     write_q_past_index(out_root, parsed, n_past, n_orig, base_url, site_prefix)
+
+    for script in (
+        "import_eisei2_original_to_practice_csv.py",
+        "import_base_questions_to_ichimon_csv.py",
+        "build_practice_ichimon_pages.py",
+    ):
+        subprocess.run(
+            [sys.executable, f"tools/{script}"],
+            cwd=repo_root,
+            check=True,
+        )
 
     print(
         f"生成完了: {len(seen_paths)} 問 + q/index.html（過去問一覧）+ {root_sitemap_path.name} + robots.txt → {out_root} ほか"

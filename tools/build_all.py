@@ -11,9 +11,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def run(cmd: list[str], *, cwd: Path | None = None) -> None:
+def run(cmd: list[str]) -> None:
     print("+", " ".join(cmd))
-    subprocess.run(cmd, cwd=cwd or ROOT, check=True)
+    subprocess.run(cmd, cwd=ROOT, check=True)
 
 
 def main() -> int:
@@ -22,15 +22,13 @@ def main() -> int:
     run([py, "tools/apply_site_config.py"])
     run([py, "tools/csv_to_exam_site_past_js.py"])
     run([py, "tools/csv_to_exam_site_ichimondou_js.py"])
-    run([py, "tools/build_question_pages.py"])
+    run([py, "tools/build_past_question_pages.py"])
+    run([py, "tools/build_practice_ichimon_pages.py"])
     run([py, "tools/build_article_pages.py"])
-    run([py, "tools/populate_glossary_related_terms.py"])
-    run([py, "tools/build_term_question_links.py"])
-    run([py, "tools/sync_term_related_questions.py"])
-    run([py, "build.py"], cwd=ROOT / "eisei-articles")
     run([py, "tools/build_glossary_pages.py"])
     run([py, "tools/build_sitemap.py"])
     run([py, "tools/validate_generated_seo.py"])
+    run([py, "tools/validate_site_integration.py"])
     run([py, "tools/validate_internal_links.py"])
     run([py, "tools/validate_public_content.py"])
     run(["bash", "tools/prepare_public_site.sh"])
