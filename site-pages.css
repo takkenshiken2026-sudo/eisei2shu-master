@@ -2741,7 +2741,7 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
 .terms-idx-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--fs-caption);
+  font-size: var(--fs-small);
   table-layout: fixed;
   border: none;
   background: var(--bg);
@@ -4455,7 +4455,10 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
   }
   .terms-index-page .terms-idx-table td,
   .terms-index-page .terms-idx-td-term a {
-    font-size: var(--fs-caption);
+    font-size: var(--fs-small);
+  }
+  .terms-index-page .terms-idx-td-term a {
+    font-size: var(--fs-body);
   }
   .q-index-page .past-index-panel {
     padding: 6px 0 0;
@@ -4886,18 +4889,21 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
 }
 .terms-index-page .terms-idx-table td {
   color: var(--ink);
-  font-size: var(--fs-caption);
+  font-size: var(--fs-small);
+  line-height: 1.6;
 }
 .terms-index-page .terms-idx-td-term a {
   color: var(--ink);
+  font-size: var(--fs-body);
+  font-weight: 600;
 }
 .terms-index-page .terms-idx-td-cat {
   color: var(--text2);
-  font-size: var(--fs-caption);
+  font-size: var(--fs-small);
 }
 .terms-index-page .terms-idx-td-snippet {
   color: var(--text2);
-  font-size: var(--fs-sub);
+  font-size: var(--fs-small);
 }
 .terms-index-page .terms-idx-page-title,
 .terms-field-hub-page .terms-idx-page-title {
@@ -4943,7 +4949,7 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
 .term-article-page .article-body td,
 .term-article-page .seo-info-table td {
   color: var(--text);
-  font-size: var(--fs-sub);
+  font-size: var(--fs-body);
 }
 .term-article-page .seo-toc h2 {
   color: var(--text);
@@ -4951,7 +4957,7 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
 }
 .term-article-page .seo-toc a {
   color: var(--ink);
-  font-size: var(--fs-sub);
+  font-size: var(--fs-body);
 }
 .term-article-page .meta-category {
   font-size: var(--fs-tiny);
@@ -4959,7 +4965,8 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
 }
 .term-article-page .term-faq-item summary {
   color: var(--text);
-  font-size: var(--fs-sub);
+  font-size: var(--fs-body);
+  font-weight: 600;
 }
 .term-article-page .term-faq-item div {
   color: var(--ink);
