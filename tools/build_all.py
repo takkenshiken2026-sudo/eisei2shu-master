@@ -26,7 +26,7 @@ def main() -> int:
     run([py, "tools/build_practice_ichimon_pages.py"])
     run([py, "tools/build_article_pages.py"])
     run([py, "tools/populate_glossary_related_terms.py"])
-    run([py, "tools/enrich_glossary_quality_finish.py"])
+    run([py, "tools/apply_glossary_handmade_rewrite.py"])
     run([py, "tools/build_term_question_links.py"])
     run([py, "tools/sync_term_related_questions.py"])
     run([py, "build.py"], cwd=ROOT / "eisei-articles")
