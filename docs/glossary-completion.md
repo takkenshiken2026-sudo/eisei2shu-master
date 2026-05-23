@@ -3,10 +3,17 @@
 ## 完了（2026-05-22）
 
 - [x] 用語 **267語**（第4弾50語＋気集＋既存）
-- [x] 全語 `exam_points` / `common_mistakes` 整備
-- [x] 過去問リンク **267/267**（本文マッチ＋関連語伝播＋科目フォールバック）
+- [x] 全語 `exam_points` / `common_mistakes` 整備（汎用テンプレート 0 件）
+- [x] 品質仕上げ（`enrich_glossary_quality_finish.py`）— 試験整理表・比較表・独自解説
+- [x] 過去問リンク **267/267**（`match`: primary / related / fallback、ラベルに種別表示）
 - [x] `terms/*.html` に学習のつながり（まとめ・過去問・ガイド）
-- [x] `tools/build_all.py` / GitHub Actions に用語ビルドを組み込み
+- [x] `tools/build_all.py` に品質仕上げステップを組み込み
+
+### 品質監査
+
+```bash
+python3 tools/audit_glossary_quality.py
+```
 
 ## 一括ビルド
 

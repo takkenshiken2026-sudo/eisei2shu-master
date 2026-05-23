@@ -186,8 +186,22 @@ def question_id_to_web_path(qid: str) -> str | None:
     return web
 
 
+def format_question_link_label(label: str, match: str) -> str:
+    if match == "fallback":
+        return f"{label}（同科目・参考）"
+    if match == "related":
+        return f"{label}（関連語経由）"
+    return label
+
+
 def question_links_for_term(slug: str, frontmatter_value) -> list[tuple[str, str]]:
-    """(href, label) の過去問リンク。frontmatter の related_questions を優先。"""
+    """(href, label) の過去問リンク。JSON の match 種別をラベルに反映。"""
+    stored = load_term_question_links().get(slug, [])
+    match_by_id = {
+        str(item.get("id", "")).strip(): str(item.get("match", "primary")).strip()
+        for item in stored
+        if item.get("id")
+    }
     links: list[tuple[str, str]] = []
     if frontmatter_value:
         rows = (
@@ -204,17 +218,18 @@ def question_links_for_term(slug: str, frontmatter_value) -> list[tuple[str, str
             label = label.strip() if sep else qid
             path = question_id_to_web_path(qid)
             if path:
-                links.append((path, label or qid))
+                match = match_by_id.get(qid, "primary")
+                links.append((path, format_question_link_label(label or qid, match)))
         if links:
             return links[:8]
 
-    stored = load_term_question_links().get(slug, [])
     for item in stored[:8]:
         qid = str(item.get("id", "")).strip()
         label = str(item.get("label", qid)).strip()
+        match = str(item.get("match", "primary")).strip()
         path = question_id_to_web_path(qid)
         if path:
-            links.append((path, label))
+            links.append((path, format_question_link_label(label, match)))
     return links
 
 
