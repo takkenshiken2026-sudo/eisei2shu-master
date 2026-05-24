@@ -734,7 +734,16 @@ def build_term_html(
     elif points:
         points_html = '<ol class="term-point-list">' + "".join(f"<li>{html.escape(p)}</li>" for p in points) + "</ol>"
     detail_html = text_paragraphs(term_detail_body or definition)
-    mistakes_html = text_paragraphs(common_mistakes)
+    mistakes_html = (
+        semicolon_list_html(common_mistakes)
+        if common_mistakes and ("；" in common_mistakes or ";" in common_mistakes)
+        else text_paragraphs(common_mistakes)
+    )
+    exam_angle_html = (
+        semicolon_list_html(explanation)
+        if explanation and ("；" in explanation or ";" in explanation)
+        else text_paragraphs(explanation)
+    )
     memory_html = memory_tip_html(memory_tip)
     summary_html = summary_section_html(short_def, summary_example)
     example_html = ""
@@ -819,7 +828,7 @@ def build_term_html(
         ("points", "試験で押さえるポイント", points_html),
         ("definition", "定義と基本理解", detail_html),
         ("legal", "法令・根拠", legal_basis_html(legal)),
-        ("exam", "選択肢で問われやすい点", text_paragraphs(explanation)),
+        ("exam", "選択肢で問われやすい点", exam_angle_html),
         ("mistakes", "よくある誤解・注意点", mistakes_html),
         ("memory", "覚え方・整理のコツ", memory_html),
         ("example", "例題で確認", example_html),
