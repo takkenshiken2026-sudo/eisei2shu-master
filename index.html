@@ -1858,6 +1858,10 @@ var FIELDS = [
   { id: 'rights', name: '労働衛生' },
   { id: 'limit', name: '労働生理' }
 ];
+var YEARS = [];
+var QUESTIONS = [];
+var BASE_QUESTIONS = [];
+
 function applyCsvImportedQuestions() {
   if (typeof CSV_IMPORTED_QUESTIONS === 'undefined' || !Array.isArray(CSV_IMPORTED_QUESTIONS)) return;
   var rows = CSV_IMPORTED_QUESTIONS;
@@ -2614,7 +2618,7 @@ function getMissionProgress(mission, u){
   }
   if(mission.type==='field'){
     const cur=todayAnswers.filter(([qid])=>{
-      const q=QUESTIONS.find(qq=>qq.id==qid);
+      const q=(typeof QUESTIONS!=='undefined'&&Array.isArray(QUESTIONS)?QUESTIONS:[]).find(qq=>qq.id==qid);
       return q&&q.field===mission.field;
     }).length;
     return {cur, target:mission.target};
@@ -2647,6 +2651,7 @@ function renderDailyStatus(){
   const wrap=document.getElementById('daily-status-wrap');
   if(!wrap) return;
   const u=getUserData(); if(!u) return;
+  try{
   const total=Object.keys(u.answers||{}).length;
   const lv=getLevel(total);
   const next=getLevelNext(total);
@@ -2688,7 +2693,7 @@ function renderDailyStatus(){
   const calloutHTML = window._missionSpotlightPending
     ? `<div class="mission-callout"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v7"/><path d="M5 6l3 3 3-3"/><path d="M3 13h10"/></svg><span>今日のミッションはこれです。まず1つ、解いてみよう！</span></div>`
     : '';
-  wrap.innerHTML=`<div class="mission-card${spotlight}" id="today-mission-card">${calloutHTML}<div class="mode-card-header"><div class="mode-icon-wrap"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="#444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M8 3l5 5-5 5"/></svg></div><div class="mode-card-title">今日のミッション</div></div>${mHTML}</div>`;
+  wrap.innerHTML=`${statusHTML}<div class="mission-card${spotlight}" id="today-mission-card">${calloutHTML}<div class="mode-card-header"><div class="mode-icon-wrap"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="#444" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M8 3l5 5-5 5"/></svg></div><div class="mode-card-title">今日のミッション</div></div>${mHTML}</div>`;
   if(window._missionSpotlightPending){
     window._missionSpotlightPending=false;
     setTimeout(()=>{
@@ -2701,6 +2706,9 @@ function renderDailyStatus(){
       card.style.background='';
       card.classList.remove('spotlight');
     }, 4500);
+  }
+  }catch(err){
+    console.error('[renderDailyStatus]',err);
   }
 }
 
@@ -2893,7 +2901,12 @@ function buildYearHistoryHTML(q){
 
 // ===== STATE =====
 let currentUser = null, db = {};
-let quizState = {mode:'past',fields:FIELDS.map(f=>f.id),years:[...YEARS],count:10,order:'seq',queue:[],idx:0,startTime:0,sessionResults:[],scoreReplayMode:false};
+let quizState = {
+  mode:'past',
+  fields:(typeof FIELDS!=='undefined'&&Array.isArray(FIELDS)?FIELDS:[]).map(f=>f.id),
+  years:(typeof YEARS!=='undefined'&&Array.isArray(YEARS)?[...YEARS]:[]),
+  count:10,order:'seq',queue:[],idx:0,startTime:0,sessionResults:[],scoreReplayMode:false
+};
 
 // Storage: localStorage (works in real browsers / GitHub Pages)
 var _memStore = {};
@@ -4705,7 +4718,8 @@ function allPracticeQuestions(){
 }
 function findQuestionById(qid){
   const s=String(qid);
-  const hit=QUESTIONS.find(qq=>String(qq.id)===s);
+  const pool=(typeof QUESTIONS!=='undefined'&&Array.isArray(QUESTIONS)?QUESTIONS:[]);
+  const hit=pool.find(qq=>String(qq.id)===s);
   if(hit)return hit;
   if(typeof ORIG_QUESTIONS==='undefined')return null;
   for(const lv of [1,2,3]){
@@ -6744,16 +6758,34 @@ function openPremium(){document.getElementById('premium-modal').classList.add('o
 function closePremium(){document.getElementById('premium-modal').classList.remove('open')}
 function mockUpgrade(){const u=getUserData();u.plan='premium';saveUser(u);closePremium();gotoPage('dash')}
 
-loadDB();
-// ゲストとしてまず入場
-(function(){
+function bootGuestAndMissions(){
+  if(window.__guestBootDone){
+    if(typeof renderDailyStatus==='function'&&document.getElementById('page-quiz-start')?.classList.contains('active')){
+      renderDailyStatus();
+    }
+    return;
+  }
+  loadDB();
   const guestEmail='__guest__';
-  if(!db[guestEmail]){db[guestEmail]={name:'ゲスト',plan:'free',answers:{},sessions:[],streak:0};saveDB();}
+  if(!db[guestEmail]){db[guestEmail]={name:'ゲスト',plan:'free',answers:{},sessions:[],bookmarks:{},streak:0};saveDB();}
   currentUser={email:guestEmail,name:'ゲスト'};
-  enterApp();
-  renderOrigPage();
-  gotoPage('quiz-start');
-})();
+  try{
+    enterApp();
+    renderOrigPage();
+    gotoPage('quiz-start');
+  }catch(err){
+    console.error('[bootGuestAndMissions]',err);
+    document.getElementById('auth-screen').style.display='none';
+    document.getElementById('app').style.display='block';
+    gotoPage('quiz-start');
+  }
+  if(typeof renderDailyStatus==='function') renderDailyStatus();
+  window.__guestBootDone=true;
+}
+bootGuestAndMissions();
+window.addEventListener('DOMContentLoaded',function(){
+  bootGuestAndMissions();
+});
 // 用語ページが表示されたまま JS の初期化順で一覧が描画されなかった場合の再試行
 window.addEventListener('load', function(){
   var gp = document.getElementById('page-glossary');
@@ -7066,7 +7098,7 @@ window.addEventListener('load', function(){
 </div>
 
 <!-- ===== 追加JavaScript ===== -->
-<script>
+<script defer>
 (function(){
 'use strict';
 
