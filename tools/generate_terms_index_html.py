@@ -11,9 +11,16 @@ import argparse
 import csv
 import html
 import json
+import sys
 from collections import defaultdict
 from pathlib import Path
 
+_TOOLS_DIR = Path(__file__).resolve().parent
+if str(_TOOLS_DIR) not in sys.path:
+    sys.path.insert(0, str(_TOOLS_DIR))
+from site_config import ga4_measurement_id  # noqa: E402
+
+GA4_MEASUREMENT_ID = ga4_measurement_id()
 
 CAT_ORDER = ("関係法令", "労働衛生", "労働生理")
 
@@ -162,6 +169,7 @@ def main() -> None:
 <script type="application/ld+json">
 {ld_json}
 </script>
+<script>window.__GA4_MEASUREMENT_ID__="{html.escape(GA4_MEASUREMENT_ID, quote=True)}";</script>
 <script defer src="/site-analytics.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
