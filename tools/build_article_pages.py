@@ -131,22 +131,51 @@ def pipe_table_html(text: str) -> str:
     return f"<table>{thead}<tbody>{''.join(body_rows)}</tbody></table>"
 
 
+def affiliate_figure_html(block: str) -> str:
+    """[affiliate-figure]url|image|alt|cta[/affiliate-figure]"""
+    parts = [p.strip() for p in block.strip().split("|")]
+    if len(parts) < 4:
+        return ""
+    url, src, alt, cta = parts[0], parts[1], parts[2], parts[3]
+    rel = ' rel="noopener noreferrer sponsored"'
+    return (
+        '<figure class="article-affiliate-card">'
+        f'<a href="{html.escape(url)}" target="_blank"{rel}>'
+        f'<img src="{html.escape(src)}" alt="{html.escape(alt)}" loading="lazy" decoding="async" width="640" height="360">'
+        "</a>"
+        f'<figcaption>{html.escape(alt)}<br>'
+        f'<a class="article-affiliate-cta" href="{html.escape(url)}" target="_blank"{rel}>'
+        f"{html.escape(cta)}</a></figcaption></figure>"
+    )
+
+
+def render_body_block(tag: str, content: str) -> str:
+    tag_l = tag.lower()
+    if tag_l == "table":
+        table_html = pipe_table_html(content)
+        return table_html if table_html else paragraphs(content)
+    if tag_l == "affiliate-figure":
+        fig = affiliate_figure_html(content)
+        return fig if fig else paragraphs(content)
+    return paragraphs(content)
+
+
 def section_body_html(text: str) -> str:
-    """Paragraphs, semicolon lists, and [table]…[/table] blocks."""
+    """Paragraphs, semicolon lists, [table], and [affiliate-figure] blocks."""
     body = apply_vars(text)
     if not body.strip():
         return ""
     parts: list[str] = []
     pos = 0
-    for match in re.finditer(r"\[table\](.*?)\[/table\]", body, flags=re.DOTALL | re.IGNORECASE):
+    block_re = re.compile(
+        r"\[(table|affiliate-figure)\](.*?)\[/\1\]",
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    for match in block_re.finditer(body):
         before = body[pos : match.start()].strip()
         if before:
             parts.append(list_or_paragraph(before))
-        table_html = pipe_table_html(match.group(1))
-        if table_html:
-            parts.append(table_html)
-        else:
-            parts.append(paragraphs(match.group(1)))
+        parts.append(render_body_block(match.group(1), match.group(2)))
         pos = match.end()
     tail = body[pos:].strip()
     if tail:
@@ -255,8 +284,10 @@ def parse_related_links(
             links.append(f'<a class="related-link" href="{href}">{html.escape(apply_vars(text_label))}</a>')
         elif target.startswith(("http://", "https://")):
             text_label = label or target
+            rel = "noopener noreferrer sponsored" if "px.a8.net" in target else "noopener noreferrer"
             links.append(
-                f'<a class="related-link" href="{html.escape(target)}" target="_blank" rel="noopener noreferrer">{html.escape(apply_vars(text_label))}</a>'
+                f'<a class="related-link" href="{html.escape(target)}" target="_blank" rel="{rel}">'
+                f"{html.escape(apply_vars(text_label))}</a>"
             )
     if len(links) < 2 and article:
         genre = apply_vars(article.get("genre", ""))
