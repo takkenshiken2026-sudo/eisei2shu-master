@@ -80,6 +80,29 @@ def split_semicolon(value: str) -> list[str]:
     return [x.strip() for x in (value or "").split(";") if x.strip()]
 
 
+def parse_related_link_item(item: str) -> tuple[str, str]:
+    """Return (target, label). target is slug or absolute URL."""
+    text = (item or "").strip()
+    if not text:
+        return "", ""
+    if text.startswith("https://"):
+        rest = text[8:]
+        if ":" in rest:
+            path, label = rest.rsplit(":", 1)
+            return f"https://{path}", label.strip()
+        return text, text
+    if text.startswith("http://"):
+        rest = text[7:]
+        if ":" in rest:
+            path, label = rest.rsplit(":", 1)
+            return f"http://{path}", label.strip()
+        return text, text
+    if ":" in text:
+        target, label = [x.strip() for x in text.split(":", 1)]
+        return target, label
+    return text, text
+
+
 def paragraphs(text: str) -> str:
     body = apply_vars(text)
     if not body:
@@ -173,9 +196,11 @@ def parse_related_links(
     links: list[str] = []
     seen: set[str] = set()
     for item in split_semicolon(value):
-        target, label = item, item
-        if ":" in item:
-            target, label = [x.strip() for x in item.split(":", 1)]
+        target, label = parse_related_link_item(item)
+        if not target:
+            continue
+        if label == target:
+            label = item
         if not target:
             continue
         if target in by_slug and target not in seen:

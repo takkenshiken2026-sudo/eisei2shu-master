@@ -386,8 +386,10 @@ class Validator:
                         )
             related = self.norm(row.get("related_links"))
             if related:
+                from tools.build_article_pages import parse_related_link_item
+
                 for item in split_semicolon(related):
-                    target = item.split(":", 1)[0].strip()
+                    target, _ = parse_related_link_item(item)
                     if target.startswith(("http://", "https://")):
                         continue
                     if not target:
@@ -423,8 +425,10 @@ class Validator:
                     )
                 internal_related = 0
                 if related:
+                    from tools.build_article_pages import parse_related_link_item
+
                     for item in split_semicolon(related):
-                        target = item.split(":", 1)[0].strip()
+                        target, _ = parse_related_link_item(item)
                         if target and not target.startswith(("http://", "https://")):
                             internal_related += 1
                 if internal_related < 2:
