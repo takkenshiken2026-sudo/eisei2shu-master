@@ -27,6 +27,9 @@ FORBIDDEN_SNIPPETS: list[tuple[str, str]] = [
     ("guide_articles.csv", "CSV運用の説明"),
     ("related_terms に", "CSV列名の説明（FAQ・本文）"),
     ("term_detail_body、", "CSV列名の説明"),
+    ("について試験前に整理したい", "user_intent の内部向けテンプレ"),
+    ("関連するガイド・用語", "移行時の壊れた関連リンクブロック"),
+    ("科目全体の得点源になるため", "汎用FAQテンプレの残骸"),
 ]
 
 ARTICLE_INDEX_FORBIDDEN = [
@@ -92,6 +95,9 @@ class PublicContentValidator:
             for snippet in ARTICLE_INDEX_FORBIDDEN:
                 if snippet in text:
                     self.error(path, f"試験ガイド一覧に禁止語「{snippet}」")
+        elif rel.startswith("articles/") and rel.endswith("/index.html"):
+            if re.search(r"<p>[^<]*\|[^<]*\|[^<]*</p>", text):
+                self.error(path, "本文に未変換の表（パイプ記法）が段落として表示されています")
 
     def run(self) -> int:
         files = collect_html_files()

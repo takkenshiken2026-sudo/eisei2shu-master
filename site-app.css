@@ -24,8 +24,8 @@
   --grn-b: rgba(26,122,64,0.14);
   --amber: #444444;
   --amb-s: #f0f0f2;
-  --font:  'Noto Sans JP', sans-serif;
-  --mono:  'Noto Sans JP', sans-serif;
+  --font:  'Noto Sans JP', system-ui, -apple-system, sans-serif;
+  --mono:  'Noto Sans JP', system-ui, -apple-system, sans-serif;
   --fs-title: 24px;
   --fs-body: 16px;
   --fs-sub: 14px;
