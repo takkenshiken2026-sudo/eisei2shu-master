@@ -28,6 +28,7 @@ if str(ROOT) not in sys.path:
 from tools.html_footer import (
     ROBOTS_INDEX_FOLLOW,
     breadcrumb_html,
+    ga4_head_snippet,
     shell_body_class,
     site_page_footer,
     site_page_header,
@@ -942,6 +943,7 @@ def build_term_html(
 {HEAD_FONTS}
 <link rel="stylesheet" href="{html.escape(css_href)}">
 <link rel="stylesheet" href="{html.escape(theme_href)}">
+{ga4_head_snippet()}
 </head>
 <body class="{shell_body_class('term-article-page')}">
 {site_page_wrap_open()}
@@ -1042,6 +1044,7 @@ def build_field_hub_html(
 {HEAD_FONTS}
 <link rel="stylesheet" href="{html.escape(rel_css(rel_path))}">
 <link rel="stylesheet" href="{html.escape(rel_theme_css(rel_path))}">
+{ga4_head_snippet()}
 </head>
 <body class="{shell_body_class('terms-field-hub-page')}">
 {site_page_wrap_open()}
@@ -1164,6 +1167,7 @@ def build_terms_index(entries: list[dict], base_url: str) -> str:
 <link rel="stylesheet" href="../site-pages.css?v={TERMS_INDEX_CSS_VER}">
 <link rel="stylesheet" href="../site-theme.css">
 <script>document.documentElement.classList.add("js");</script>
+{ga4_head_snippet()}
 </head>
 <body class="{shell_body_class('terms-index-page')}" data-terms-total="{n_terms}">
 {site_page_wrap_open()}

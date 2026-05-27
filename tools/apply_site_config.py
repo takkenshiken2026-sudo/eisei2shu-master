@@ -80,21 +80,16 @@ def replace_all(text: str) -> str:
     for src, dst in replacements:
         text = text.replace(src, dst)
 
-    marker = '<script src="./site-config.js"></script>'
-    if "site-config.js" not in text and "site-analytics.js" in text:
-        for old, new_block in (
-            (
-                '<script defer src="./site-analytics.js"></script>',
-                marker + '\n<script defer src="./site-analytics.js"></script>',
-            ),
-            (
-                '<script defer src="site-analytics.js"></script>',
-                '<script src="site-config.js"></script>\n<script defer src="site-analytics.js"></script>',
-            ),
-        ):
-            if old in text:
-                text = text.replace(old, new_block, 1)
-                break
+    # index.html のみ SPA 用 site-analytics.js（head に Google タグ済みのページへ二重追加しない）
+    if path == ROOT / "index.html":
+        marker = '<script src="site-config.js"></script>'
+        body_ga = marker + '\n<script defer src="site-analytics.js"></script>'
+        if "site-config.js" not in text and "</body>" in text:
+            text = text.replace(
+                "</body>",
+                f"<!-- GA4: SPA page_view helper -->\n{body_ga}\n</body>",
+                1,
+            )
     return text
 
 
