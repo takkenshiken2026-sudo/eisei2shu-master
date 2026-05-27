@@ -23,15 +23,77 @@ def split_semicolon(value: str) -> list[str]:
     return [x.strip() for x in re.split(r"[;；]", value or "") if x.strip()]
 
 
-def professional_lead(title: str, genre: str, existing: str) -> str:
-    existing = (existing or "").strip()
-    tail = GENRE_LEAD_TAIL.get(genre, "受験生の疑問に答える形で構成しています。")
-    if len(existing) > 80 and "。" in existing:
-        return f"{existing} 本記事は{EXAM_NAME}に特化し、{tail}"
-    return (
-        f"「{title}」について、{EXAM_NAME}を目指す方の視点で解説します。"
-        f"{tail} 公式の試験要項とあわせてご確認ください。"
-    )
+EXAM_SPECIALIZE_PREFIX = f"本記事は{EXAM_NAME}に特化し、"
+
+LEAD_BOILERPLATE_MARKERS = (
+    f"について、{EXAM_NAME}を目指す方の視点で解説",
+    f"について、{EXAM_NAME}の受験者が迷いやすい点を整理",
+)
+
+
+def topic_from_title(title: str) -> str:
+    t = re.sub(r"【[^】]+】", "", title)
+    t = re.sub(r"｜.+$", "", t)
+    return t.strip() or title
+
+
+def is_boilerplate_lead(text: str) -> bool:
+    text = (text or "").strip()
+    if not text:
+        return True
+    return any(marker in text for marker in LEAD_BOILERPLATE_MARKERS)
+
+
+def is_generic_faq(row: dict[str, str]) -> bool:
+    answer = (row.get("faq_1_answer") or "").strip()
+    question = (row.get("faq_1_question") or "").strip()
+    faq3 = (row.get("faq_3_answer") or "").strip()
+    if is_boilerplate_lead(answer) or "公…" in answer:
+        return True
+    if "どんな人が読むと効果的" in question and "初めて第二種衛生管理者試験を調べる方" in answer:
+        if "受験時期を決めた方" not in answer:
+            return True
+    if "努力規定と義務の取り違え" in faq3:
+        return True
+    if "科目全体の得点源になるため" in answer:
+        return True
+    return False
+
+
+def lead_from_row(row: dict[str, str]) -> str:
+    """公開用リード: 定型文を除き meta または既存の有用な文を採用。"""
+    meta = (row.get("meta_description") or "").strip()
+    existing = dedupe_guide_lead((row.get("lead") or "").strip())
+    if EXAM_SPECIALIZE_PREFIX in existing:
+        first = existing.find(EXAM_SPECIALIZE_PREFIX)
+        before = existing[:first].strip()
+        if before and not is_boilerplate_lead(before):
+            existing = before
+    if existing and not is_boilerplate_lead(existing) and len(existing) >= 24:
+        return existing
+    if meta and not is_boilerplate_lead(meta):
+        return meta
+    title = topic_from_title((row.get("title") or "").strip())
+    return f"{title}について、{EXAM_NAME}受験生が押さえる要点を整理します。"
+
+
+def dedupe_guide_lead(lead: str) -> str:
+    """複数回 enrich された際に重複するリード文の定型句を1回に戻す。"""
+    lead = (lead or "").strip()
+    if EXAM_SPECIALIZE_PREFIX not in lead:
+        return lead
+    first = lead.find(EXAM_SPECIALIZE_PREFIX)
+    before = lead[:first].strip()
+    rest = lead[first + len(EXAM_SPECIALIZE_PREFIX) :]
+    second = rest.find(EXAM_SPECIALIZE_PREFIX)
+    tail = rest[:second].strip() if second >= 0 else rest.strip()
+    return f"{before} {EXAM_SPECIALIZE_PREFIX}{tail}".strip()
+
+
+def professional_lead(title: str, genre: str, existing: str, meta: str = "") -> str:
+    """リードを引き上げる。定型の「目指す方の視点で解説」は生成しない。"""
+    row = {"title": title, "genre": genre, "lead": existing, "meta_description": meta}
+    return lead_from_row(row)
 
 
 def boost_section_body(heading: str, body: str, genre: str, title: str) -> str:
@@ -58,20 +120,18 @@ def boost_section_body(heading: str, body: str, genre: str, title: str) -> str:
         addon = (
             "\n\n苦手科目は“丸暗記”より、過去問で出た論点リストを作り、用語ページと往復する復習が効率的です。"
         )
-    else:
-        addon = (
-            f"\n\n{EXAM_NAME}では、この見出しの内容が他のテーマと組み合わされて出題されることがあります。"
-            "関連リンクの用語・ガイドもあわせて確認し、知識を孤立させないようにしてください。"
-        )
-    return body + addon
+    return body + addon if addon else body
 
 
 def professional_faqs(title: str, genre: str, lead: str) -> list[tuple[str, str]]:
+    lead_summary = dedupe_guide_lead(lead)
+    if len(lead_summary) > 120:
+        lead_summary = lead_summary[:120].rstrip("、。") + "…"
     return [
         (
             f"「{title}」は、どんな人が読むと効果的ですか？",
             f"初めて{EXAM_NAME}を調べる方、受験時期を決めた方、{genre}で迷っている方に向けた記事です。"
-            f"{lead[:100]}…" if len(lead) > 100 else lead,
+            f"{lead_summary}",
         ),
         (
             "独学でもこの内容は活かせますか？",
@@ -107,7 +167,8 @@ def enrich_guide_row(row: dict) -> dict:
 
     title = (row.get("title") or "").strip()
     genre = (row.get("genre") or "試験対策").strip()
-    lead = professional_lead(title, genre, row.get("lead", ""))
+    meta = (row.get("meta_description") or "").strip()
+    lead = professional_lead(title, genre, row.get("lead", ""), meta)
     row["lead"] = lead
 
     for idx in range(1, 8):
@@ -116,10 +177,10 @@ def enrich_guide_row(row: dict) -> dict:
         if h and b.strip():
             row[f"section_{idx}_body"] = boost_section_body(h, b, genre, title)
 
-    faqs = professional_faqs(title, genre, lead)
-    for i, (q, a) in enumerate(faqs, 1):
-        row[f"faq_{i}_question"] = q
-        row[f"faq_{i}_answer"] = a
+    if is_generic_faq(row):
+        from tools.guide_pro_content_lib import expert_faqs_guide
+
+        row.update(expert_faqs_guide(row))
 
     meta = (row.get("meta_description") or "").strip()
     if len(meta) < 40:

@@ -26,6 +26,8 @@ from tools.html_footer import (  # noqa: E402
     site_page_wrap_close,
     site_page_wrap_open,
 )
+from tools.glossary_link_lib import article_term_lookup, linkify_glossary_terms  # noqa: E402
+from tools.guide_link_lib import linkify_inline  # noqa: E402
 from tools.site_config import (  # noqa: E402
     brand_name,
     clean_origin,
@@ -103,12 +105,33 @@ def parse_related_link_item(item: str) -> tuple[str, str]:
     return text, text
 
 
-def paragraphs(text: str) -> str:
+_TERM_LOOKUP: dict[str, str] | None = None
+
+
+def get_term_lookup() -> dict[str, str]:
+    global _TERM_LOOKUP
+    if _TERM_LOOKUP is None:
+        _TERM_LOOKUP = article_term_lookup()
+    return _TERM_LOOKUP
+
+
+def enrich_body_text(text: str) -> str:
     body = apply_vars(text)
+    return linkify_glossary_terms(body, get_term_lookup())
+
+
+def linkify_cell(text: str) -> str:
+    return linkify_inline(enrich_body_text(text) if text else "")
+
+
+def paragraphs(text: str) -> str:
+    body = enrich_body_text(text)
     if not body:
         return ""
     parts = [p.strip() for p in re.split(r"\n{2,}", body) if p.strip()] or [body]
-    return "\n".join(f"<p>{html.escape(p).replace(chr(10), '<br>')}</p>" for p in parts)
+    return "\n".join(
+        f"<p>{linkify_inline(p).replace(chr(10), '<br>')}</p>" for p in parts
+    )
 
 
 def pipe_table_html(text: str) -> str:
@@ -120,13 +143,13 @@ def pipe_table_html(text: str) -> str:
     head = rows[0]
     while len(head) < width:
         head.append("")
-    thead = "<thead><tr>" + "".join(f"<th>{html.escape(c)}</th>" for c in head) + "</tr></thead>"
+    thead = "<thead><tr>" + "".join(f"<th>{linkify_cell(c)}</th>" for c in head) + "</tr></thead>"
     body_rows: list[str] = []
     for row in rows[1:]:
         while len(row) < width:
             row.append("")
         body_rows.append(
-            "<tr>" + "".join(f"<td>{html.escape(c)}</td>" for c in row[:width]) + "</tr>"
+            "<tr>" + "".join(f"<td>{linkify_cell(c)}</td>" for c in row[:width]) + "</tr>"
         )
     return f"<table>{thead}<tbody>{''.join(body_rows)}</tbody></table>"
 
@@ -207,7 +230,7 @@ def render_body_block(tag: str, content: str) -> str:
 
 def section_body_html(text: str) -> str:
     """Paragraphs, semicolon lists, [table], [affiliate-card], [affiliate-cards] blocks."""
-    body = apply_vars(text)
+    body = enrich_body_text(text)
     if not body.strip():
         return ""
     parts: list[str] = []
@@ -231,9 +254,14 @@ def section_body_html(text: str) -> str:
 
 
 def list_or_paragraph(text: str) -> str:
-    items = split_semicolon(apply_vars(text))
+    if "\n\n" in text:
+        head, tail = text.split("\n\n", 1)
+        head_html = list_or_paragraph(head)
+        tail_html = paragraphs(tail.strip()) if tail.strip() else ""
+        return head_html + tail_html
+    items = split_semicolon(text)
     if len(items) >= 2:
-        return "<ul>" + "".join(f"<li>{html.escape(item)}</li>" for item in items) + "</ul>"
+        return "<ul>" + "".join(f"<li>{linkify_inline(item)}</li>" for item in items) + "</ul>"
     return paragraphs(text)
 
 
@@ -366,7 +394,7 @@ def parse_related_links(
             )
             if len(links) >= 2:
                 break
-        for slug in ("exam-overview", "study-plan", "past-question-strategy", "glossary-how-to"):
+        for slug in ("shiken-kamoku", "benkyou-jikan", "past-question-strategy", "glossary-how-to"):
             if len(links) >= 2:
                 break
             if slug in by_slug and slug not in seen and slug != current_slug:

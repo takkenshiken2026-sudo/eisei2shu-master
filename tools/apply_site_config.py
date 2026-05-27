@@ -49,7 +49,7 @@ STATIC_PAGE_CURRENTS = {
 }
 
 
-def replace_all(text: str) -> str:
+def replace_all(text: str, path: Path | None = None) -> str:
     origin = clean_origin()
     host = origin.replace("https://", "").replace("http://", "").strip("/")
     official = primary_external_link()
@@ -256,7 +256,7 @@ def main() -> int:
         if not path.is_file():
             continue
         old = path.read_text(encoding="utf-8")
-        new = replace_static_chrome(replace_all(old), path)
+        new = replace_static_chrome(replace_all(old, path), path)
         if path == ROOT / "index.html":
             new = ensure_index_theme(new)
             new = update_index_shell_footer(new)
