@@ -18,6 +18,7 @@ from tools.pro_content.guide_writer import is_boilerplate_lead, is_generic_faq  
 from tools.validate_csv import GUIDE_BROKEN_LINK_MARKERS, OPERATOR_CONTENT_FRAGMENTS  # noqa: E402
 
 GUIDE_CSV = ROOT / "data" / "guide_articles.csv"
+USER_INTENT_TEMPLATE = "について試験前に整理したい"
 
 # 既知の誤字・表記ゆれ
 KNOWN_TYPOS: list[tuple[str, str]] = [
@@ -86,6 +87,9 @@ class ContentQualityValidator:
                 self.error(source, "lead に無意味な定型文が残っています")
             if is_generic_faq(row):
                 self.error(source, "faq_1 が汎用テンプレのままです")
+            ui = row.get("user_intent") or ""
+            if USER_INTENT_TEMPLATE in ui:
+                self.error(source, "user_intent に内部向けテンプレが残っています")
             for col in ("lead", "meta_description", "action_items"):
                 self.check_text(f"{source} {col}", row.get(col) or "")
             for n in range(1, 8):
@@ -102,8 +106,14 @@ class ContentQualityValidator:
                 continue
             text = path.read_text(encoding="utf-8")
             source = str(path.relative_to(ROOT))
-            if "項目内容" in text and "<table>" not in text:
-                self.warn(source, "HTML内に表崩れの可能性（tableタグなしで項目内容）")
+            if USER_INTENT_TEMPLATE in text:
+                self.error(source, "公開HTMLに user_intent テンプレが表示されています")
+            if "関連するガイド・用語" in text:
+                self.error(source, "移行時の壊れた関連リンクブロックが残っています")
+            for sec in re.findall(r'seo-article-section.*?</section>', text, re.DOTALL):
+                if re.search(r"<p>[^<]*\|[^<]*\|[^<]*</p>", sec):
+                    self.error(source, "段落内に未変換の表（パイプ記法）があります")
+                    break
             if DUP_CHAR_RE.search(text):
                 self.error(source, "HTML内に同一文字の重複があります")
 

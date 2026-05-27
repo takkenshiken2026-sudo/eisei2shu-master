@@ -128,7 +128,8 @@ def audit_html(slug: str, lookup: dict[str, str]) -> list[str]:
 
 
 def main() -> int:
-    rows = list(csv.DictReader(GUIDE_CSV.read_text(encoding="utf-8-sig").splitlines()))
+    with GUIDE_CSV.open(encoding="utf-8-sig", newline="") as f:
+        rows = list(csv.DictReader(f))
     lookup = article_term_lookup()
     legacy = load_legacy_body_lengths()
 
