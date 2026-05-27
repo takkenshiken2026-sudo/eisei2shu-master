@@ -131,22 +131,64 @@ def pipe_table_html(text: str) -> str:
     return f"<table>{thead}<tbody>{''.join(body_rows)}</tbody></table>"
 
 
-def affiliate_figure_html(block: str) -> str:
-    """[affiliate-figure]url|image|alt|cta[/affiliate-figure]"""
+def affiliate_link_rel(url: str) -> str:
+    rel = "noopener noreferrer"
+    if "px.a8.net" in url or url.startswith(("http://", "https://")):
+        rel += " sponsored"
+    return rel
+
+
+def affiliate_card_html(block: str) -> str:
+    """[affiliate-card]a8_url|image_url|title|price_meta|features|cta[/affiliate-card]
+
+    features: セミコロン区切り（任意）。4要素の旧形式 url|image|title|cta も可。
+    """
     parts = [p.strip() for p in block.strip().split("|")]
     if len(parts) < 4:
         return ""
-    url, src, alt, cta = parts[0], parts[1], parts[2], parts[3]
-    rel = ' rel="noopener noreferrer sponsored"'
+    url = parts[0]
+    img = parts[1]
+    title = parts[2]
+    if len(parts) >= 6:
+        meta, features_raw, cta = parts[3], parts[4], parts[5]
+    elif len(parts) == 5:
+        meta, features_raw, cta = parts[3], "", parts[4]
+    else:
+        meta, features_raw, cta = "", "", parts[3]
+    rel = affiliate_link_rel(url)
+    alt = title
+    points = split_semicolon(features_raw)
+    points_html = ""
+    if points:
+        points_html = "<ul>" + "".join(f"<li>{html.escape(p)}</li>" for p in points) + "</ul>"
+    meta_html = f'<p class="article-affiliate-product-card-meta">{html.escape(meta)}</p>' if meta else ""
     return (
-        '<figure class="article-affiliate-card">'
-        f'<a href="{html.escape(url)}" target="_blank"{rel}>'
-        f'<img src="{html.escape(src)}" alt="{html.escape(alt)}" loading="lazy" decoding="async" width="640" height="360">'
+        '<article class="article-affiliate-product-card">'
+        f'<a class="article-affiliate-product-card-media" href="{html.escape(url)}" target="_blank" rel="{rel}">'
+        f'<img src="{html.escape(img)}" alt="{html.escape(alt)}" loading="lazy" decoding="async" width="480" height="270">'
         "</a>"
-        f'<figcaption>{html.escape(alt)}<br>'
-        f'<a class="article-affiliate-cta" href="{html.escape(url)}" target="_blank"{rel}>'
-        f"{html.escape(cta)}</a></figcaption></figure>"
+        '<div class="article-affiliate-product-card-body">'
+        f'<h3 class="article-affiliate-product-card-title">{html.escape(title)}</h3>'
+        f"{meta_html}{points_html}"
+        f'<p class="article-affiliate-product-card-action">'
+        f'<a class="article-affiliate-cta" href="{html.escape(url)}" target="_blank" rel="{rel}">'
+        f"{html.escape(cta)}</a></p></div></article>"
     )
+
+
+def affiliate_cards_grid_html(content: str) -> str:
+    cards: list[str] = []
+    for match in re.finditer(
+        r"\[affiliate-card\](.*?)\[/affiliate-card\]",
+        content,
+        flags=re.DOTALL | re.IGNORECASE,
+    ):
+        card = affiliate_card_html(match.group(1))
+        if card:
+            cards.append(card)
+    if not cards:
+        return ""
+    return '<div class="article-affiliate-cards-grid">' + "".join(cards) + "</div>"
 
 
 def render_body_block(tag: str, content: str) -> str:
@@ -154,21 +196,24 @@ def render_body_block(tag: str, content: str) -> str:
     if tag_l == "table":
         table_html = pipe_table_html(content)
         return table_html if table_html else paragraphs(content)
-    if tag_l == "affiliate-figure":
-        fig = affiliate_figure_html(content)
-        return fig if fig else paragraphs(content)
+    if tag_l in ("affiliate-figure", "affiliate-card"):
+        card = affiliate_card_html(content)
+        return card if card else paragraphs(content)
+    if tag_l == "affiliate-cards":
+        grid = affiliate_cards_grid_html(content)
+        return grid if grid else paragraphs(content)
     return paragraphs(content)
 
 
 def section_body_html(text: str) -> str:
-    """Paragraphs, semicolon lists, [table], and [affiliate-figure] blocks."""
+    """Paragraphs, semicolon lists, [table], [affiliate-card], [affiliate-cards] blocks."""
     body = apply_vars(text)
     if not body.strip():
         return ""
     parts: list[str] = []
     pos = 0
     block_re = re.compile(
-        r"\[(table|affiliate-figure)\](.*?)\[/\1\]",
+        r"\[(table|affiliate-figure|affiliate-card|affiliate-cards)\](.*?)\[/\1\]",
         flags=re.DOTALL | re.IGNORECASE,
     )
     for match in block_re.finditer(body):
