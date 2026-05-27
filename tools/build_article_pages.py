@@ -111,6 +111,51 @@ def paragraphs(text: str) -> str:
     return "\n".join(f"<p>{html.escape(p).replace(chr(10), '<br>')}</p>" for p in parts)
 
 
+def pipe_table_html(text: str) -> str:
+    """Pipe-separated rows (3+ columns) → HTML table."""
+    rows = [[cell.strip() for cell in line.split("|")] for line in text.strip().splitlines() if line.strip()]
+    if len(rows) < 2 or not all(len(r) >= 2 for r in rows):
+        return ""
+    width = max(len(r) for r in rows)
+    head = rows[0]
+    while len(head) < width:
+        head.append("")
+    thead = "<thead><tr>" + "".join(f"<th>{html.escape(c)}</th>" for c in head) + "</tr></thead>"
+    body_rows: list[str] = []
+    for row in rows[1:]:
+        while len(row) < width:
+            row.append("")
+        body_rows.append(
+            "<tr>" + "".join(f"<td>{html.escape(c)}</td>" for c in row[:width]) + "</tr>"
+        )
+    return f"<table>{thead}<tbody>{''.join(body_rows)}</tbody></table>"
+
+
+def section_body_html(text: str) -> str:
+    """Paragraphs, semicolon lists, and [table]…[/table] blocks."""
+    body = apply_vars(text)
+    if not body.strip():
+        return ""
+    parts: list[str] = []
+    pos = 0
+    for match in re.finditer(r"\[table\](.*?)\[/table\]", body, flags=re.DOTALL | re.IGNORECASE):
+        before = body[pos : match.start()].strip()
+        if before:
+            parts.append(list_or_paragraph(before))
+        table_html = pipe_table_html(match.group(1))
+        if table_html:
+            parts.append(table_html)
+        else:
+            parts.append(paragraphs(match.group(1)))
+        pos = match.end()
+    tail = body[pos:].strip()
+    if tail:
+        parts.append(list_or_paragraph(tail))
+    if not parts:
+        return list_or_paragraph(body)
+    return "".join(parts)
+
+
 def list_or_paragraph(text: str) -> str:
     items = split_semicolon(apply_vars(text))
     if len(items) >= 2:
@@ -127,7 +172,7 @@ def section_html(article: dict[str, str], idx: int, display_num: int) -> str:
     return (
         f'<section class="seo-article-section" aria-labelledby="{sid}">'
         f'<h2 id="{sid}"><span class="section-heading-num">{display_num}</span>{html.escape(heading)}</h2>'
-        f"{list_or_paragraph(body)}</section>"
+        f"{section_body_html(body)}</section>"
     )
 
 
@@ -631,7 +676,8 @@ def build_index_html(articles: list[dict[str, str]]) -> str:
 def load_articles() -> list[dict[str, str]]:
     if not ARTICLES_CSV.is_file():
         raise FileNotFoundError(str(ARTICLES_CSV))
-    rows = list(csv.DictReader(ARTICLES_CSV.read_text(encoding="utf-8-sig").splitlines()))
+    with ARTICLES_CSV.open(encoding="utf-8-sig", newline="") as f:
+        rows = list(csv.DictReader(f))
     return sorted(rows, key=lambda x: int(norm(x.get("priority")) or 9999))
 
 

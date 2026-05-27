@@ -93,6 +93,18 @@ def professional_faqs(title: str, genre: str, lead: str) -> list[tuple[str, str]
 
 
 def enrich_guide_row(row: dict) -> dict:
+    tags = split_semicolon(row.get("tags") or "")
+    if "アフィリエイト" in tags:
+        meta = (row.get("meta_description") or "").strip()
+        if len(meta) < 40:
+            title = (row.get("title") or "").strip()
+            genre = (row.get("genre") or "試験対策").strip()
+            row["meta_description"] = (
+                f"{title}について、{EXAM_NAME}受験生向けに要点を整理。"
+                f"{GENRE_LEAD_TAIL.get(genre, '')}"
+            )[:155]
+        return row
+
     title = (row.get("title") or "").strip()
     genre = (row.get("genre") or "試験対策").strip()
     lead = professional_lead(title, genre, row.get("lead", ""))
