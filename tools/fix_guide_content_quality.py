@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import io
 import re
 import sys
 from pathlib import Path
@@ -166,9 +167,9 @@ def category_terms_body(slug: str, lookup: dict[str, str]) -> str:
 
 
 def main() -> int:
-    text = GUIDE_CSV.read_text(encoding="utf-8-sig")
-    rows = list(csv.DictReader(text.splitlines()))
-    fieldnames = list(rows[0].keys()) if rows else []
+    with GUIDE_CSV.open(encoding="utf-8-sig", newline="") as f:
+        rows = list(csv.DictReader(f))
+        fieldnames = list(rows[0].keys()) if rows else []
     lookup = article_term_lookup()
     stripped_addon = 0
     category_fixed = 0

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import html
+import io
 import re
 import shutil
 import subprocess

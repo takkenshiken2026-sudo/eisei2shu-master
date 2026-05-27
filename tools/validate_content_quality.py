@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import io
 import re
 import sys
 from dataclasses import dataclass
@@ -76,7 +77,7 @@ class ContentQualityValidator:
             self.error(source, f"同一段落の重複: {dup[:40]}…")
 
     def validate_guide_csv(self) -> None:
-        rows = list(csv.DictReader(GUIDE_CSV.open(encoding="utf-8-sig")))
+        rows = list(csv.DictReader(GUIDE_CSV.open(encoding="utf-8-sig", newline="")))
         for idx, row in enumerate(rows, start=2):
             slug = (row.get("slug") or "").strip()
             source = f"guide_articles.csv:{idx} ({slug})"

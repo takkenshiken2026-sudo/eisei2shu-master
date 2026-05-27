@@ -106,7 +106,6 @@ def main() -> int:
     with GUIDE_CSV.open(encoding="utf-8-sig", newline="") as f:
         rows = list(csv.DictReader(f))
         fieldnames = list(rows[0].keys())
-
     git_leads = load_git_leads(args.git_ref)
     stats = {"lead": 0, "faq": 0, "skipped_affiliate": 0}
 
