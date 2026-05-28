@@ -32,6 +32,17 @@ AFFILIATE_GENRES = frozenset(
 AFFILIATE_PR_MARKERS = ("アフィリエイト", "広告", "PR", "プロモーション")
 
 # Must not appear in published section headings / body (guide_articles.csv).
+GUIDE_LEAD_BOILERPLATE_MARKERS = (
+    "について、第二種衛生管理者試験を目指す方の視点で解説",
+    "について、第二種衛生管理者試験の受験者が迷いやすい点を整理",
+)
+
+GUIDE_BROKEN_LINK_MARKERS = (
+    "](../../terms/.html)",
+    "](https://eisei2shu-master.jp/)",
+    "→ [お問い合わせフォーム](#)",
+)
+
 OPERATOR_CONTENT_FRAGMENTS: list[tuple[str, str]] = [
     ("記事を増やす", "編集者向け見出し"),
     ("テンプレの増やし", "編集者向け見出し"),
@@ -344,6 +355,17 @@ class Validator:
             self.require_text(path, row, idx, "title")
             self.require_text(path, row, idx, "meta_description")
             self.require_text(path, row, idx, "lead")
+            lead = self.norm(row.get("lead"))
+            row_tags = split_semicolon(self.norm(row.get("tags")))
+            if lead and AFFILIATE_TAG not in row_tags:
+                for fragment in GUIDE_LEAD_BOILERPLATE_MARKERS:
+                    if fragment in lead:
+                        self.error(
+                            path,
+                            idx,
+                            f"lead に無意味な定型文が含まれています（tools/fix_guide_boilerplate.py で修復）: …{fragment}…",
+                        )
+                        break
             self.require_int(path, row, idx, "priority", min_value=1)
             self.require_text(path, row, idx, "section_1_heading")
             self.require_text(path, row, idx, "section_1_body")
@@ -360,6 +382,16 @@ class Validator:
                                 idx,
                                 f"{col} に公開禁止の文言「{fragment}」: {reason}",
                             )
+                    if col.endswith("_body"):
+                        for fragment in GUIDE_BROKEN_LINK_MARKERS:
+                            if fragment in value:
+                                self.error(
+                                    path,
+                                    idx,
+                                    f"{col} に壊れたリンク形式があります: {fragment} "
+                                    "（tools/restore_guide_article_links.py を実行）",
+                                )
+                                break
             for col in ("author_name", "fact_checked_at", "primary_sources", "original_note", "action_items"):
                 if col in row and not self.norm(row.get(col)):
                     self.warn(path, idx, f"{col} はSEO品質確認用の推奨列です")
@@ -368,7 +400,7 @@ class Validator:
                     label, url = [x.strip() for x in item.split("|", 1)]
                     if not label or not url.startswith(("http://", "https://")):
                         self.warn(path, idx, f"primary_sources は ラベル|URL 形式を推奨します: {item}")
-            for n in range(1, 4):
+            for n in range(1, 5):
                 q = self.norm(row.get(f"faq_{n}_question"))
                 a = self.norm(row.get(f"faq_{n}_answer"))
                 if bool(q) != bool(a):
@@ -377,6 +409,20 @@ class Validator:
                     self.warn(path, idx, f"faq_{n}_question は質問文として入力してください: {q}")
                 if a and re.fullmatch(r"[a-z0-9][a-z0-9-]*:.+", a):
                     self.warn(path, idx, f"faq_{n}_answer に related_links らしき値が入っています: {a}")
+                if (
+                    n == 1
+                    and AFFILIATE_TAG not in row_tags
+                    and q
+                    and a
+                    and "どんな人が読むと効果的" in q
+                    and "初めて第二種衛生管理者試験を調べる方" in a
+                    and "受験時期を決めた方" not in a
+                ):
+                    self.error(
+                        path,
+                        idx,
+                        "faq_1 が汎用テンプレのままです（tools/fix_guide_boilerplate.py で修復）",
+                    )
                 for fragment, reason in OPERATOR_CONTENT_FRAGMENTS:
                     if (q and fragment in q) or (a and fragment in a):
                         self.error(
@@ -386,8 +432,10 @@ class Validator:
                         )
             related = self.norm(row.get("related_links"))
             if related:
+                from tools.build_article_pages import parse_related_link_item
+
                 for item in split_semicolon(related):
-                    target = item.split(":", 1)[0].strip()
+                    target, _ = parse_related_link_item(item)
                     if target.startswith(("http://", "https://")):
                         continue
                     if not target:
@@ -423,8 +471,10 @@ class Validator:
                     )
                 internal_related = 0
                 if related:
+                    from tools.build_article_pages import parse_related_link_item
+
                     for item in split_semicolon(related):
-                        target = item.split(":", 1)[0].strip()
+                        target, _ = parse_related_link_item(item)
                         if target and not target.startswith(("http://", "https://")):
                             internal_related += 1
                 if internal_related < 2:

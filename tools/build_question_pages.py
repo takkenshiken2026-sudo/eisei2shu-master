@@ -42,8 +42,10 @@ if str(_TOOLS_DIR) not in sys.path:
     sys.path.insert(0, str(_TOOLS_DIR))
 
 from html_footer import (
+    GA4_MEASUREMENT_ID,
     ROBOTS_INDEX_FOLLOW,
     breadcrumb_html,
+    ga4_head_snippet,
     site_page_footer,
     site_page_header,
     site_page_wrap_close,
@@ -689,7 +691,7 @@ def write_session_hubs(
 <meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(meta_desc)}">
 <meta property="og:url" content="{html.escape(canonical)}">
-<script defer src="/site-analytics.js"></script>
+{ga4_head_snippet()}
 <link rel="stylesheet" href="{html.escape(css_href)}">
 <script type="application/ld+json">
 {json.dumps(json_ld, ensure_ascii=False, indent=2)}

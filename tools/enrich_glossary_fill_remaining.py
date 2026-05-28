@@ -307,13 +307,19 @@ def keyword_tips(term: str, category: str) -> list[str]:
     if "局所排気" in term or "換気" in term or "排気" in term:
         tips.append("「換気だけでばく露はゼロ」→ 発生源対策・局所排気")
     if category == "関係法令" and not tips:
-        tips.append(f"「{term}は努力規定のみ」→ 義務・手続き・記録を法令条文で確認")
+        tips.append(
+            f"「{term}は任意の努力規定とみなす」→ 義務・手続き・記録の有無を条文で確認"
+        )
     if category == "労働生理" and not tips:
         tips.append(f"「{term}の症状を他疾患と混同」→ 原因・ばく露経路で区別")
     if not tips:
         short = term.split("・")[0][:12]
-        tips.append(f"「{short}の定義・数値を類似語と混同」→ 本文の表と関連用語で比較")
-        tips.append(f"「{short}は単独で完結する制度」→ 関連規則・手順とセットで復習")
+        tips.append(
+            f"「{short}の数値・単位を類似指標と取り違え」→ 単位・測定条件・適用範囲を確認"
+        )
+        tips.append(
+            f"「{short}だけ暗記し手続きを抜く」→ 義務・記録・措置の流れを関連規則とセットで整理"
+        )
     return tips[:3]
 
 

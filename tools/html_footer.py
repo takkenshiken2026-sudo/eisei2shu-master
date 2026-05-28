@@ -168,14 +168,33 @@ def footer_href(rel_path: Path, site_rel: str) -> str:
     return html_rel_href(rel_path.as_posix(), site_rel)
 
 
-def analytics_snippet(rel_path: Path) -> str:
-    """全静的ページ共通: フッター直後（</body> 直前想定）に置く GA4 タグ。相対パスで site-analytics.js を読む。"""
-    src = html.escape(footer_href(rel_path, "site-analytics.js"))
+def ga4_head_snippet() -> str:
+    """Google 推奨: <head> 内に gtag.js を async で読み込み（全ページ計測の本体）。"""
     mid = html.escape(GA4_MEASUREMENT_ID)
+    if not mid:
+        return ""
     return (
-        "<!-- GA4: tools/html_footer.analytics_snippet（測定IDは GA4_MEASUREMENT_ID） -->\n"
-        f'<script>window.__GA4_MEASUREMENT_ID__="{mid}";</script>\n'
-        f'<script defer src="{src}"></script>'
+        "<!-- Google tag (gtag.js) -->\n"
+        f'<script async src="https://www.googletagmanager.com/gtag/js?id={mid}"></script>\n'
+        "<script>\n"
+        "window.dataLayer = window.dataLayer || [];\n"
+        "function gtag(){dataLayer.push(arguments);}\n"
+        "window.gtag = gtag;\n"
+        f'window.__GA4_HEAD_INIT__ = "{mid}";\n'
+        'gtag("js", new Date());\n'
+        f'gtag("config", "{mid}");\n'
+        "</script>"
+    )
+
+
+def analytics_snippet(rel_path: Path) -> str:
+    """静的ページ: head に ga4_head_snippet、body 末尾は MID 設定のみ（二重 init 防止）。"""
+    mid = html.escape(GA4_MEASUREMENT_ID)
+    if not mid:
+        return ""
+    return (
+        "<!-- GA4: tools/html_footer.analytics_snippet -->\n"
+        f'<script>window.__GA4_MEASUREMENT_ID__="{mid}";</script>'
     )
 
 

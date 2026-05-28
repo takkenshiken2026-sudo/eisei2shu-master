@@ -28,6 +28,7 @@ if str(ROOT) not in sys.path:
 from tools.html_footer import (
     ROBOTS_INDEX_FOLLOW,
     breadcrumb_html,
+    ga4_head_snippet,
     shell_body_class,
     site_page_footer,
     site_page_header,
@@ -208,7 +209,7 @@ def meta_description(text: str, limit: int = 155) -> str:
 
 
 def split_semicolon(s: str) -> list[str]:
-    return [x.strip() for x in (s or "").split(";") if x.strip()]
+    return [x.strip() for x in re.split(r"[;；]", s or "") if x.strip()]
 
 
 TERMS_INDEX_CSS_VER = "20260525-responsive-h1"
@@ -552,12 +553,20 @@ def faq_items_for_term(term: str, short_def: str, definition: str, explanation: 
     exam_answer = " ".join(first_points) if first_points else explanation
     return [
         {
-            "question": f"{term}とは何ですか？",
-            "answer": f"{term}とは、{short_def.rstrip('。')}。{definition}",
+            "question": f"{term}とは、何のために学ぶ用語ですか？",
+            "answer": f"{short_def} {definition}".strip(),
         },
         {
-            "question": f"{term}は試験でどう押さえればよいですか？",
-            "answer": exam_answer,
+            "question": f"{term}は、試験でどんな出題形式になりやすいですか？",
+            "answer": exam_answer or f"{term}は、定義の確認と誤り選択肢の見抜きが中心です。",
+        },
+        {
+            "question": f"{term}を覚えるときのコツはありますか？",
+            "answer": "長文を丸暗記するより、「誰が・いつ・何をするか」または「測定→評価→措置」の流れに分解して覚えると復習しやすくなります。",
+        },
+        {
+            "question": f"受験直前に{term}で最終確認すべき点は？",
+            "answer": "定義・頻出の誤り肢・関連用語の3点を、本文の表と過去問リンクで確認してください。",
         },
     ]
 
@@ -578,12 +587,51 @@ def faq_section_html(items: list[dict[str, str]]) -> str:
 
 def custom_faq_items(entry: dict, fallback: list[dict[str, str]]) -> list[dict[str, str]]:
     items: list[dict[str, str]] = []
-    for idx in range(1, 4):
+    for idx in range(1, 5):
         q = norm(entry.get(f"faq_{idx}_question"))
         a = norm(entry.get(f"faq_{idx}_answer"))
         if q and a:
             items.append({"question": q, "answer": a})
     return items or fallback
+
+
+def memory_tip_html(memory_tip: str) -> str:
+    memory_tip = norm(memory_tip)
+    if not memory_tip:
+        return ""
+    if "\n" in memory_tip:
+        lines = [ln.strip() for ln in memory_tip.splitlines() if ln.strip()]
+        return '<ul class="term-memory-list">' + "".join(
+            f"<li>{html.escape(ln)}</li>" for ln in lines
+        ) + "</ul>"
+    parts = split_semicolon(memory_tip.replace("■", ";"))
+    if len(parts) > 1:
+        return '<ul class="term-memory-list">' + "".join(
+            f"<li>{html.escape(p)}</li>" for p in parts if p
+        ) + "</ul>"
+    return f"<blockquote><p>{html.escape(memory_tip)}</p></blockquote>"
+
+
+def summary_section_html(short_def: str, summary_example: str) -> str:
+    body = text_paragraphs_global(short_def)
+    ex = norm(summary_example).replace("【具体例】", "").strip()
+    if ex:
+        body += (
+            '<div class="term-summary-example" role="note">'
+            f"<p><strong>具体例でイメージする</strong></p>"
+            f"<p>{html.escape(ex).replace(chr(10), '<br>')}</p>"
+            "</div>"
+        )
+    return body
+
+
+def text_paragraphs_global(body: str) -> str:
+    if not body.strip():
+        return ""
+    paras = [p.strip() for p in re.split(r"\n{2,}", body.strip()) if p.strip()]
+    if not paras:
+        paras = [body.strip()]
+    return "\n".join(f"<p>{html.escape(p).replace(chr(10), '<br>')}</p>" for p in paras)
 
 
 def semicolon_list_html(value: str) -> str:
@@ -620,6 +668,7 @@ def build_term_html(
     memory_tip = norm(entry.get("memory_tip"))
     example_question = norm(entry.get("example_question"))
     example_answer = norm(entry.get("example_answer"))
+    summary_example = norm(entry.get("summary_example"))
 
     title = f"{article_title or term + 'とは？意味・根拠・試験ポイント'}｜{brand_name()}"
     desc = meta_description(
@@ -688,9 +737,9 @@ def build_term_html(
             f'<div class="related-links term-related-links">{rel_html}</div></div>'
         )
 
-    lead = (
-        f"{term}は、{short_def.rstrip('。')}。"
-        f"{exam_name()}では、{category}分野の用語として、意味・根拠・似た用語との違いをセットで押さえると理解しやすくなります。"
+    lead = article_lead or (
+        f"このページでは、{term}の意味をやさしい言葉で説明し、"
+        f"{category}の過去問で問われやすいポイントを具体例つきで整理します。"
     )
     points = study_points(explanation)
     points_html = ""
@@ -699,8 +748,18 @@ def build_term_html(
     elif points:
         points_html = '<ol class="term-point-list">' + "".join(f"<li>{html.escape(p)}</li>" for p in points) + "</ol>"
     detail_html = text_paragraphs(term_detail_body or definition)
-    mistakes_html = text_paragraphs(common_mistakes)
-    memory_html = f"<blockquote><p>{html.escape(memory_tip)}</p></blockquote>" if memory_tip else ""
+    mistakes_html = (
+        semicolon_list_html(common_mistakes)
+        if common_mistakes and ("；" in common_mistakes or ";" in common_mistakes)
+        else text_paragraphs(common_mistakes)
+    )
+    exam_angle_html = (
+        semicolon_list_html(explanation)
+        if explanation and ("；" in explanation or ";" in explanation)
+        else text_paragraphs(explanation)
+    )
+    memory_html = memory_tip_html(memory_tip)
+    summary_html = summary_section_html(short_def, summary_example)
     example_html = ""
     if example_question or example_answer:
         example_html = (
@@ -779,11 +838,11 @@ def build_term_html(
     content_sections: list[str] = []
     body_toc_items: list[tuple[str, str]] = []
     for sec_id, label, body_html in [
-        ("summary", "まず押さえる要点", text_paragraphs(short_def)),
+        ("summary", "まず押さえる要点", summary_html),
         ("points", "試験で押さえるポイント", points_html),
         ("definition", "定義と基本理解", detail_html),
         ("legal", "法令・根拠", legal_basis_html(legal)),
-        ("exam", "選択肢で問われやすい点", text_paragraphs(explanation)),
+        ("exam", "選択肢で問われやすい点", exam_angle_html),
         ("mistakes", "よくある誤解・注意点", mistakes_html),
         ("memory", "覚え方・整理のコツ", memory_html),
         ("example", "例題で確認", example_html),
@@ -897,6 +956,7 @@ def build_term_html(
 {HEAD_FONTS}
 <link rel="stylesheet" href="{html.escape(css_href)}">
 <link rel="stylesheet" href="{html.escape(theme_href)}">
+{ga4_head_snippet()}
 </head>
 <body class="{shell_body_class('term-article-page')}">
 {site_page_wrap_open()}
@@ -997,6 +1057,7 @@ def build_field_hub_html(
 {HEAD_FONTS}
 <link rel="stylesheet" href="{html.escape(rel_css(rel_path))}">
 <link rel="stylesheet" href="{html.escape(rel_theme_css(rel_path))}">
+{ga4_head_snippet()}
 </head>
 <body class="{shell_body_class('terms-field-hub-page')}">
 {site_page_wrap_open()}
@@ -1119,6 +1180,7 @@ def build_terms_index(entries: list[dict], base_url: str) -> str:
 <link rel="stylesheet" href="../site-pages.css?v={TERMS_INDEX_CSS_VER}">
 <link rel="stylesheet" href="../site-theme.css">
 <script>document.documentElement.classList.add("js");</script>
+{ga4_head_snippet()}
 </head>
 <body class="{shell_body_class('terms-index-page')}" data-terms-total="{n_terms}">
 {site_page_wrap_open()}
@@ -1280,6 +1342,9 @@ def main() -> int:
                 "faq_2_answer": norm(row.get("faq_2_answer")),
                 "faq_3_question": norm(row.get("faq_3_question")),
                 "faq_3_answer": norm(row.get("faq_3_answer")),
+                "faq_4_question": norm(row.get("faq_4_question")),
+                "faq_4_answer": norm(row.get("faq_4_answer")),
+                "summary_example": norm(row.get("summary_example")),
                 "slug_file": slug_file,
                 "field_hub": field_hub_slug(norm(row.get("category"))),
             }

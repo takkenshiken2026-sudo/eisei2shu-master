@@ -136,11 +136,18 @@ def build_links(
         hits.sort(key=lambda x: (x[0], x[3]), reverse=True)
         seen_qid: set[str] = set()
         items: list[dict] = []
-        for _sk, qid, label, _pri in hits:
+        pri_map = {1: "primary", 0: "related"}
+        for _sk, qid, label, pri in hits:
             if qid in seen_qid:
                 continue
             seen_qid.add(qid)
-            items.append({"id": qid, "label": label})
+            items.append(
+                {
+                    "id": qid,
+                    "label": label,
+                    "match": pri_map.get(pri, "primary"),
+                }
+            )
             if len(items) >= max_per_term:
                 break
         if items:
@@ -207,7 +214,7 @@ def apply_field_fallback(
             if qid in seen:
                 continue
             seen.add(qid)
-            items.append({"id": qid, "label": label})
+            items.append({"id": qid, "label": label, "match": "fallback"})
             if len(items) >= per_term:
                 break
         if items:

@@ -271,6 +271,7 @@ def update_csv_row(term: str, slug: str, tips: list[str], csv_desc: str) -> bool
             row["short_def"] = csv_desc
             row["definition"] = csv_desc
             row["explanation"] = csv_desc
+            row["term_detail_body"] = csv_desc
         break
     if not hit:
         return False

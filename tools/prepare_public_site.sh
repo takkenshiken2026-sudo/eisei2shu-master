@@ -15,6 +15,7 @@ for f in \
   site-config.js \
   site-pages.css \
   site-theme.css \
+  site-app.css \
   site-q-index.js \
   site-terms-index.js \
   site-compare-index.js \

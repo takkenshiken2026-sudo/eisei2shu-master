@@ -27,6 +27,9 @@ FORBIDDEN_SNIPPETS: list[tuple[str, str]] = [
     ("guide_articles.csv", "CSV運用の説明"),
     ("related_terms に", "CSV列名の説明（FAQ・本文）"),
     ("term_detail_body、", "CSV列名の説明"),
+    ("について試験前に整理したい", "user_intent の内部向けテンプレ"),
+    ("関連するガイド・用語", "移行時の壊れた関連リンクブロック"),
+    ("科目全体の得点源になるため", "汎用FAQテンプレの残骸"),
 ]
 
 ARTICLE_INDEX_FORBIDDEN = [
