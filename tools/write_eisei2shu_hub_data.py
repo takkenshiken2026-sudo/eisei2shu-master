@@ -84,7 +84,7 @@ from tools.write_eisei2shu_hub_s44_content import (  # noqa: E402
     NUMBERS_ADD as NUMBERS_ADD_S44,
 )
 from tools.write_eisei2shu_hub_premium_faqs import apply_all as apply_premium_faqs  # noqa: E402
-from tools.hub_faq_expand import expand_all as expand_short_faqs  # noqa: E402
+from tools.hub_merge_data import finalize_hub_rows  # noqa: E402
 
 
 def _merge(*groups: list[dict]) -> list[dict]:
@@ -108,68 +108,65 @@ def write_csv(path: Path, header: list[str], rows: list[dict]) -> None:
 
 
 def main() -> None:
-    comparisons = expand_short_faqs(
-        apply_premium_faqs(
-            _merge(
-                C30,
-                COMPARISONS_ADD,
-                COMPARISONS_ADD_S32,
-                COMPARISONS_ADD_S33,
-                COMPARISONS_ADD_S34,
-                COMPARISONS_ADD_S35,
-                COMPARISONS_ADD_S36,
-                COMPARISONS_ADD_S37,
-                COMPARISONS_ADD_S38,
-                COMPARISONS_ADD_S39,
-                COMPARISONS_ADD_S40,
-                COMPARISONS_ADD_S41,
-                COMPARISONS_ADD_S42,
-                COMPARISONS_ADD_S43,
-                COMPARISONS_ADD_S44,
-            )
-        )
+    comparisons = finalize_hub_rows(
+        _merge(
+            C30,
+            COMPARISONS_ADD,
+            COMPARISONS_ADD_S32,
+            COMPARISONS_ADD_S33,
+            COMPARISONS_ADD_S34,
+            COMPARISONS_ADD_S35,
+            COMPARISONS_ADD_S36,
+            COMPARISONS_ADD_S37,
+            COMPARISONS_ADD_S38,
+            COMPARISONS_ADD_S39,
+            COMPARISONS_ADD_S40,
+            COMPARISONS_ADD_S41,
+            COMPARISONS_ADD_S42,
+            COMPARISONS_ADD_S43,
+            COMPARISONS_ADD_S44,
+        ),
+        apply_premium=apply_premium_faqs,
     )
-    numbers = expand_short_faqs(
-        apply_premium_faqs(
-            _merge(
-                N30,
-                NUMBERS_ADD,
-                NUMBERS_ADD_S32,
-                NUMBERS_ADD_S33,
-                NUMBERS_ADD_S34,
-                NUMBERS_ADD_S35,
-                NUMBERS_ADD_S36,
-                NUMBERS_ADD_S37,
-                NUMBERS_ADD_S38,
-                NUMBERS_ADD_S39,
-                NUMBERS_ADD_S40,
-                NUMBERS_ADD_S41,
-                NUMBERS_ADD_S42,
-                NUMBERS_ADD_S43,
-                NUMBERS_ADD_S44,
-            )
-        )
+    numbers = finalize_hub_rows(
+        _merge(
+            N30,
+            NUMBERS_ADD,
+            NUMBERS_ADD_S32,
+            NUMBERS_ADD_S33,
+            NUMBERS_ADD_S34,
+            NUMBERS_ADD_S35,
+            NUMBERS_ADD_S36,
+            NUMBERS_ADD_S37,
+            NUMBERS_ADD_S38,
+            NUMBERS_ADD_S39,
+            NUMBERS_ADD_S40,
+            NUMBERS_ADD_S41,
+            NUMBERS_ADD_S42,
+            NUMBERS_ADD_S43,
+            NUMBERS_ADD_S44,
+        ),
+        apply_premium=apply_premium_faqs,
     )
-    mistakes = expand_short_faqs(
-        apply_premium_faqs(
-            _merge(
-                M30,
-                MISTAKES_ADD,
-                MISTAKES_ADD_S32,
-                MISTAKES_ADD_S33,
-                MISTAKES_ADD_S34,
-                MISTAKES_ADD_S35,
-                MISTAKES_ADD_S36,
-                MISTAKES_ADD_S37,
-                MISTAKES_ADD_S38,
-                MISTAKES_ADD_S39,
-                MISTAKES_ADD_S40,
-                MISTAKES_ADD_S41,
-                MISTAKES_ADD_S42,
-                MISTAKES_ADD_S43,
-                MISTAKES_ADD_S44,
-            )
-        )
+    mistakes = finalize_hub_rows(
+        _merge(
+            M30,
+            MISTAKES_ADD,
+            MISTAKES_ADD_S32,
+            MISTAKES_ADD_S33,
+            MISTAKES_ADD_S34,
+            MISTAKES_ADD_S35,
+            MISTAKES_ADD_S36,
+            MISTAKES_ADD_S37,
+            MISTAKES_ADD_S38,
+            MISTAKES_ADD_S39,
+            MISTAKES_ADD_S40,
+            MISTAKES_ADD_S41,
+            MISTAKES_ADD_S42,
+            MISTAKES_ADD_S43,
+            MISTAKES_ADD_S44,
+        ),
+        apply_premium=apply_premium_faqs,
     )
     write_csv(DATA / "comparisons.csv", HEADER_COMPARE, comparisons)
     write_csv(DATA / "numbers.csv", HEADER_NUMBERS, numbers)
