@@ -1,10 +1,10 @@
 {
   "numbers_rows": 150,
-  "numbers_flagged": 41,
+  "numbers_flagged": 31,
   "numbers_verified_ok": 41,
   "numbers_verify_pending": 0,
   "faq_issues": 0,
   "batch_suffix": 0,
-  "thin_body": 564,
+  "thin_body": 134,
   "title_dup_similar": 710
 }
