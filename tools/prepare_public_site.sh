@@ -6,6 +6,7 @@ OUT="$ROOT/public_site"
 rm -rf "$OUT"
 mkdir -p "$OUT"
 cd "$ROOT"
+python3 tools/build_article_pages.py
 for f in \
   index.html \
   about.html \
