@@ -170,7 +170,55 @@ def split_wrong_inline_list(exp: str) -> dict[int, str]:
     return out
 
 
-def extract_paren_number_clauses(exp: str) -> dict[int, str]:
+def stem_asks_false_statement(stem: str) -> bool:
+    return bool(
+        re.search(r"誤っている|誤りである|正しくない|不適切なもの|適切でない", norm(stem))
+    )
+
+
+def strip_false_correct_suffix(text: str) -> str:
+    """誤り設問の正答解説に誤付与された「本問の正答ではありません」を除去。"""
+    t = norm(text)
+    t = t.replace(" この記述は本問の正答ではありません。", "")
+    t = t.replace("この記述は本問の正答ではありません。", "")
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def build_correct_explanation_body(
+    *,
+    exp: str,
+    correct: int,
+    stem: str,
+    markers: dict[int, str],
+    buckets: dict[int, list[str]],
+    explicit: str = "",
+) -> str:
+    """正答肢向けの解説本文。extract_correct_body を優先し、誤ったマーカー付与を避ける。"""
+    if explicit:
+        body = strip_false_correct_suffix(explicit)
+    else:
+        body = extract_correct_body(exp, correct)
+        if not body:
+            parts: list[str] = []
+            marker = markers.get(correct, "")
+            if marker and "本問の正答ではありません" not in marker:
+                parts.append(marker)
+            for s in buckets.get(correct, []):
+                if "本問の正答ではありません" not in s and s not in parts:
+                    parts.append(s)
+            body = " ".join(parts) or exp[:500]
+        body = strip_false_correct_suffix(body)
+
+    if stem_asks_false_statement(stem) and body and "本問は誤っている" not in body:
+        body = (
+            f"本問は誤っている記述を選ぶ問題です。"
+            f"正答（{correct}）は、選択肢の内容が法令・制度上誤っている肢です。 "
+            f"{body}"
+        )
+    return body
+
+
+def extract_paren_number_clauses(exp: str, *, correct: int | None = None) -> dict[int, str]:
     """(1)…、(2)の記述は正しい など、括弧番号付きの短句を各肢へ割り当てる。"""
     out: dict[int, str] = {}
     for m in re.finditer(
@@ -185,10 +233,11 @@ def extract_paren_number_clauses(exp: str) -> dict[int, str]:
             continue
         clause = f"（{n}）{body}"
         if any(k in body for k in ("誤", "なし", "不要", "ない", "できない", "違反", "対象外")):
-            if "この記述は" not in clause:
+            if "この記述は" not in clause and n != correct:
                 clause += " この記述は本問の正答ではありません。"
         elif "正しい" in body or "妥当" in body:
-            clause += "（単独の記述としては妥当な場合がありますが、設問全体の正答かどうかは他肢と比較して判断してください。）"
+            if n != correct:
+                clause += "（単独の記述としては妥当な場合がありますが、設問全体の正答かどうかは他肢と比較して判断してください。）"
         if len(clause) > len(out.get(n, "")):
             out[n] = clause
     return out
@@ -574,7 +623,7 @@ def build_row_fields(row: dict) -> tuple[str, str, str]:
     ).items():
         if clause and (n not in markers or len(clause) > len(markers.get(n, ""))):
             markers[n] = clause
-    paren_markers = extract_paren_number_clauses(exp)
+    paren_markers = extract_paren_number_clauses(exp, correct=correct)
     for n, clause in paren_markers.items():
         if clause and (n not in markers or len(clause) > len(markers.get(n, ""))):
             markers[n] = clause
@@ -664,20 +713,21 @@ def build_row_fields(row: dict) -> tuple[str, str, str]:
             wrong_map[n], n, texts[n], correct, category
         )
 
-    correct_body = norm(row.get("explanation_correct"))
-    if not correct_body:
-        parts = []
-        if markers.get(correct):
-            parts.append(markers[correct])
-        parts.extend(buckets.get(correct, []))
-        correct_body = " ".join(dict.fromkeys(parts)) or extract_correct_body(exp, correct)
-        if not correct_body:
-            correct_body = exp[:500]
+    correct_body = build_correct_explanation_body(
+        exp=exp,
+        correct=correct,
+        stem=stem,
+        markers=markers,
+        buckets=buckets,
+        explicit=norm(row.get("explanation_correct")),
+    )
 
     summary = norm(row.get("explanation_summary"))
     if not summary or summary == exp[:200]:
-        lead = extract_correct_body(exp, correct) or exp[:180]
-        summary = lead[:220]
+        lead = strip_false_correct_suffix(extract_correct_body(exp, correct) or exp[:180])
+        if stem_asks_false_statement(stem) and lead and "本問は誤っている" not in lead:
+            lead = f"本問は誤っている記述を選びます。{lead}"
+        summary = lead[:240]
 
     choices_field = ";".join(f"{n}:{wrong_map[n]}" for n in sorted(wrong_map))
     point = norm(row.get("explanation_point")) or CATEGORY_STUDY_HINTS.get(category, "")

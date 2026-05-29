@@ -806,6 +806,11 @@ def main() -> None:
         cwd=repo_root,
         check=True,
     )
+    subprocess.run(
+        [sys.executable, "tools/validate_answer_explanation_consistency.py"],
+        cwd=repo_root,
+        check=True,
+    )
     out_root = args.out_dir or (repo_root / "q")
     data_dir = repo_root / "data"
     csv_paths = [

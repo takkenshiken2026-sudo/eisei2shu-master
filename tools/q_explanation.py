@@ -419,9 +419,14 @@ def build_explanation_html(page: dict, row: dict) -> str:
     correct = page.get("correct")
     if correct and not page.get("is_invalidated"):
         opt_text = page["opts"][correct - 1] if 1 <= correct <= len(page["opts"]) else ""
+        stem = norm(page.get("stem_plain") or page.get("stem") or "")
+        mode = question_ask_mode(stem)
+        reason_heading = "正解の理由"
+        if mode == "least_appropriate":
+            reason_heading = "正答（誤りの記述）の理由"
         parts.append(
             '<section class="q-exp-section" aria-labelledby="q-exp-correct-h">'
-            '<h3 id="q-exp-correct-h" class="q-exp-h3">正解の理由</h3>'
+            f'<h3 id="q-exp-correct-h" class="q-exp-h3">{reason_heading}</h3>'
         )
         if correct_body:
             parts.append(f"<p>{text_to_html(correct_body)}</p>")
