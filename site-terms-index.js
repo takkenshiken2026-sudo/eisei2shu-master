@@ -1,5 +1,5 @@
 /**
- * 用語集一覧 terms/index.html — 4セクション（用語解説 / 比較・整理表 / 数値・期限早見表 / よくある誤答）
+ * 用語集一覧 terms/index.html — 用語 / 分野 / 定義
  * 再生成: python3 tools/build_glossary_pages.py
  */
 (() => {
@@ -22,22 +22,11 @@
   const activeFilters = document.getElementById('terms-idx-active-filters');
   const toolbar = document.querySelector('.terms-index-tools');
   const topBtn = document.getElementById('terms-idx-top');
-  const sectionBodies = $$('tbody[data-section]');
-  const sectionHits = $$('.terms-index-section-hit[data-section]');
-  const sectionBlocks = $$('.terms-index-section');
+  const flatBody = document.getElementById('terms-idx-flat-body');
   const TERMS_INDEX_BASE = '/terms/';
-
-  const SECTION_META = {
-    term: { col1: '用語', col3: '定義', unit: '語' },
-    comparison: { col1: '項目', col3: '概要', unit: '項目' },
-    numeric: { col1: '項目', col3: '概要', unit: '項目' },
-    mistake: { col1: '項目', col3: '概要', unit: '項目' },
-  };
 
   let activeCat = 'all';
   let urlSyncTimer = null;
-  const DEBOUNCE_MS = 150;
-  let inputDebounceTimer = null;
 
   const norm = (s) => (s || '').toString().trim().toLowerCase();
 
@@ -127,39 +116,24 @@
     return `${TERMS_INDEX_BASE}${String(href).replace(/^\.\//, '')}`;
   }
 
-  function sectionItems(sectionId) {
-    return sortItems(
-      ITEMS.filter((item) => (item.sections || ['term']).includes(sectionId) && itemVisible(item))
-    );
-  }
-
-  function sectionTotal(sectionId) {
-    return ITEMS.filter((item) => (item.sections || ['term']).includes(sectionId)).length;
-  }
-
-  function rowHtml(item, query, sectionId, mode) {
-    const meta = SECTION_META[sectionId] || SECTION_META.term;
+  function rowHtml(item, query) {
     const href = resolveEntryHref(item.href);
     const hrefAttr = ` data-entry-href="${escapeHtml(href)}"`;
-    const col3 =
-      mode === 'summary'
-        ? item.summary || item.shortDef || ''
-        : item.shortDef || item.definition || '';
-    const col3Class = mode === 'summary' ? 'terms-idx-td-summary' : 'terms-idx-td-snippet';
+    const def = item.shortDef || item.definition || '';
     return `<tr class="terms-idx-table-row">
-<td class="terms-idx-td-term" data-label="${escapeHtml(meta.col1)}"${hrefAttr} tabindex="0"><div class="terms-idx-term-cell"><a href="${escapeHtml(href)}">${highlightText(item.term, query)}</a></div></td>
+<td class="terms-idx-td-term" data-label="用語"${hrefAttr} tabindex="0"><div class="terms-idx-term-cell"><a href="${escapeHtml(href)}">${highlightText(item.term, query)}</a></div></td>
 <td class="terms-idx-td-cat" data-label="分野"${hrefAttr}>${escapeHtml(item.category)}</td>
-<td class="${col3Class}" data-label="${escapeHtml(meta.col3)}"${hrefAttr}>${col3 ? highlightText(col3, query) : ''}</td>
+<td class="terms-idx-td-snippet" data-label="定義"${hrefAttr}>${def ? highlightText(def, query) : ''}</td>
 </tr>`;
   }
 
-  function bindRows(root) {
-    if (!root) return;
+  function bindRows() {
+    if (!flatBody) return;
     const go = (href) => {
       const target = resolveEntryHref(href);
       if (target) window.location.href = target;
     };
-    root.querySelectorAll('[data-entry-href]').forEach((cell) => {
+    flatBody.querySelectorAll('[data-entry-href]').forEach((cell) => {
       if (cell.dataset.bound) return;
       cell.dataset.bound = '1';
       const href = cell.dataset.entryHref;
@@ -176,12 +150,12 @@
         });
       }
       cell.addEventListener('mouseenter', () => {
-        root.querySelectorAll(`[data-entry-href="${CSS.escape(href)}"]`).forEach((c) => {
+        flatBody.querySelectorAll(`[data-entry-href="${CSS.escape(href)}"]`).forEach((c) => {
           c.classList.add('is-entry-hover');
         });
       });
       cell.addEventListener('mouseleave', () => {
-        root.querySelectorAll(`[data-entry-href="${CSS.escape(href)}"]`).forEach((c) => {
+        flatBody.querySelectorAll(`[data-entry-href="${CSS.escape(href)}"]`).forEach((c) => {
           c.classList.remove('is-entry-hover');
         });
       });
@@ -241,31 +215,23 @@
     chips.forEach((b) => b.classList.toggle('on', (b.dataset.cat || 'all') === activeCat));
   }
 
-  function renderTables(query) {
-    let totalShown = 0;
-    sectionBodies.forEach((body) => {
-      const sectionId = body.dataset.section || 'term';
-      const mode = body.dataset.mode || 'definition';
-      const visible = sectionItems(sectionId);
-      totalShown += visible.length;
-      body.innerHTML = visible.map((item) => rowHtml(item, query, sectionId, mode)).join('');
-      bindRows(body);
+  function visibleItems() {
+    return sortItems(ITEMS.filter(itemVisible));
+  }
 
-      const total = sectionTotal(sectionId);
-      const meta = SECTION_META[sectionId] || SECTION_META.term;
-      const hitEl = sectionHits.find((el) => el.dataset.section === sectionId);
-      if (hitEl) hitEl.textContent = `${visible.length} / ${total} ${meta.unit}`;
-
-      const block = sectionBlocks.find((el) => el.id === `terms-idx-section-${sectionId}`);
-      if (block) block.classList.toggle('is-empty', visible.length === 0);
-    });
-    return totalShown;
+  function renderTable(visible, query) {
+    if (!flatBody) return;
+    flatBody.innerHTML = visible.map((item) => rowHtml(item, query)).join('');
+    bindRows();
   }
 
   function apply(syncUrlFlag = true) {
     const query = q?.value || '';
-    const shown = renderTables(query);
+    const visible = visibleItems();
     const total = ITEMS.length;
+    const shown = visible.length;
+
+    renderTable(visible, query);
 
     if (hit) hit.textContent = `${shown} / ${total} 語`;
     if (empty) {
@@ -303,11 +269,7 @@
 
   q?.addEventListener('input', () => {
     syncClear();
-    if (inputDebounceTimer) clearTimeout(inputDebounceTimer);
-    inputDebounceTimer = setTimeout(() => {
-      inputDebounceTimer = null;
-      apply();
-    }, DEBOUNCE_MS);
+    apply();
   });
   clearBtn?.addEventListener('click', () => {
     if (!q) return;

@@ -216,47 +216,9 @@ def split_semicolon(s: str) -> list[str]:
     return [x.strip() for x in re.split(r"[;；]", s or "") if x.strip()]
 
 
-TERMS_INDEX_CSS_VER = "20260529-four-sections"
-TERMS_INDEX_JS_VER = "20260529-four-sections"
+TERMS_INDEX_CSS_VER = "20260529-hub-columns"
+TERMS_INDEX_JS_VER = "20260529-hub-columns"
 TERMS_INDEX_SEARCH_PLACEHOLDER = "例：ストレスチェック、ラインケア、うつ病…"
-
-TERMS_INDEX_SECTIONS: tuple[dict[str, str], ...] = (
-    {
-        "id": "term",
-        "title": "用語解説",
-        "col1": "用語",
-        "col3": "定義",
-        "mode": "definition",
-        "unit": "語",
-    },
-    {
-        "id": "comparison",
-        "title": "比較・整理表",
-        "col1": "項目",
-        "col3": "概要",
-        "mode": "summary",
-        "unit": "項目",
-    },
-    {
-        "id": "numeric",
-        "title": "数値・期限早見表",
-        "col1": "項目",
-        "col3": "概要",
-        "mode": "summary",
-        "unit": "項目",
-    },
-    {
-        "id": "mistake",
-        "title": "よくある誤答",
-        "col1": "項目",
-        "col3": "概要",
-        "mode": "summary",
-        "unit": "項目",
-    },
-)
-
-_COMPARISON_TITLE_RE = re.compile(r"完全整理|違い|区別|比較|整理表|を表で")
-_NUMERIC_INDEX_RE = re.compile(r"保存期間|頻度|総まとめ|早見|数値|一覧|sogo-")
 
 # CSV enrich 時の分野テンプレ（一覧の定義抜粋には出さない）
 _GENERIC_SNIPPET_SUFFIXES = (
@@ -299,43 +261,6 @@ def _is_generic_index_snippet(text: str, term: str) -> bool:
     return any(t.endswith(suffix) for suffix in _GENERIC_SNIPPET_SUFFIXES)
 
 
-def terms_index_article_summary(entry: dict) -> str:
-    """比較・数値・誤答セクション向けの記事サマリ（article_lead を優先）。"""
-    term = (entry.get("term") or "").strip()
-    lead = (entry.get("article_lead") or "").strip()
-    if lead:
-        if lead.startswith("「") and "」" in lead:
-            lead = lead.split("」", 1)[1].lstrip("、。 ")
-        lead = re.sub(r"^を[、,]?\s*", "", lead)
-        if term and lead.startswith(term):
-            lead = lead[len(term) :].lstrip("、。については").lstrip()
-        lead = re.sub(r"^を[、,]?\s*", "", lead)
-        return lead
-    return terms_index_snippet(entry)
-
-
-def terms_index_section_ids(entry: dict) -> list[str]:
-    """一覧セクションへの掲載先。CSV の index_sections があれば優先。"""
-    raw = norm(entry.get("index_sections"))
-    if raw:
-        allowed = {s["id"] for s in TERMS_INDEX_SECTIONS}
-        ids = [x.strip() for x in re.split(r"[,、;/|]", raw) if x.strip()]
-        picked = [x for x in ids if x in allowed]
-        if picked:
-            return picked
-
-    sections = ["term"]
-    title = entry.get("article_title") or ""
-    blob = (entry.get("term") or "") + title + (entry.get("slug_file") or "")
-    if _COMPARISON_TITLE_RE.search(title):
-        sections.append("comparison")
-    if _NUMERIC_INDEX_RE.search(blob):
-        sections.append("numeric")
-    if norm(entry.get("common_mistakes")):
-        sections.append("mistake")
-    return sections
-
-
 def terms_index_snippet(entry: dict) -> str:
     """一覧・検索用の定義抜粋。enrich テンプレ文は definition から実義を拾う。"""
     term = (entry.get("term") or "").strip()
@@ -363,54 +288,36 @@ def terms_index_snippet(entry: dict) -> str:
     return short
 
 
-def render_terms_index_row(
-    item: dict,
-    *,
-    section: dict[str, str],
-) -> str:
-    href = html.escape(terms_index_href(item["slug_file"]))
-    href_attr = f' data-entry-href="{href}"'
-    col1_label = html.escape(section["col1"])
-    col3_label = html.escape(section["col3"])
-    if section["mode"] == "summary":
-        col3_text = html.escape(terms_index_article_summary(item))
-        col3_class = "terms-idx-td-summary"
-    else:
-        col3_text = html.escape(terms_index_snippet(item))
-        col3_class = "terms-idx-td-snippet"
-    return (
-        "<tr class=\"terms-idx-table-row\">"
-        f'<td class="terms-idx-td-term" data-label="{col1_label}"{href_attr} tabindex="0">'
-        f'<div class="terms-idx-term-cell"><a href="{href}">{html.escape(item["term"])}</a>'
-        f"</div></td>"
-        f'<td class="terms-idx-td-cat" data-label="分野"{href_attr}>'
-        f'{html.escape(item.get("category") or "")}</td>'
-        f'<td class="{col3_class}" data-label="{col3_label}"{href_attr}>'
-        f"{col3_text}</td>"
-        "</tr>"
-    )
+def render_terms_index_tbody(entries: list[dict]) -> str:
+    """JS 未実行時も一覧が見えるよう、全件の tbody をサーバー側で生成する（1語1行・3列）。"""
+    items = sort_terms_index_entries(entries)
+    rows: list[str] = []
 
-
-def render_terms_index_tbody(entries: list[dict], section: dict[str, str]) -> str:
-    """JS 未実行時も一覧が見えるよう、セクション別 tbody をサーバー側で生成する。"""
-    section_id = section["id"]
-    items = sort_terms_index_entries(
-        [e for e in entries if section_id in terms_index_section_ids(e)]
-    )
-    return "\n".join(render_terms_index_row(item, section=section) for item in items)
+    for item in items:
+        href = html.escape(terms_index_href(item["slug_file"]))
+        href_attr = f' data-entry-href="{href}"'
+        short_def = html.escape(terms_index_snippet(item))
+        rows.append(
+            "<tr class=\"terms-idx-table-row\">"
+            f'<td class="terms-idx-td-term" data-label="用語"{href_attr} tabindex="0">'
+            f'<div class="terms-idx-term-cell"><a href="{href}">{html.escape(item["term"])}</a>'
+            f"</div></td>"
+            f'<td class="terms-idx-td-cat" data-label="分野"{href_attr}>'
+            f'{html.escape(item.get("category") or "")}</td>'
+            f'<td class="terms-idx-td-snippet" data-label="定義"{href_attr}>'
+            f"{short_def}</td>"
+            "</tr>"
+        )
+    return "\n".join(rows)
 
 
 def terms_index_item_dict(entry: dict) -> dict:
     tags = parse_term_tags(entry.get("tags") or "")
     snippet = terms_index_snippet(entry)
-    summary = terms_index_article_summary(entry)
-    sections = terms_index_section_ids(entry)
     search_bits = [
         entry["term"],
         entry.get("category") or "",
         snippet,
-        summary,
-        entry.get("article_title") or "",
         *tags,
     ]
     return {
@@ -418,8 +325,6 @@ def terms_index_item_dict(entry: dict) -> dict:
         "category": entry.get("category") or "",
         "tags": tags,
         "shortDef": snippet,
-        "summary": summary,
-        "sections": sections,
         "href": terms_index_href(entry["slug_file"]),
         "fieldHub": entry.get("field_hub") or "",
         "search": " ".join(x for x in search_bits if x),
@@ -1282,39 +1187,7 @@ def build_terms_index(entries: list[dict], base_url: str) -> str:
         [terms_index_item_dict(e) for e in entries], ensure_ascii=False
     )
 
-    jump_links: list[str] = []
-    section_blocks: list[str] = []
-    for section in TERMS_INDEX_SECTIONS:
-        sid = section["id"]
-        section_entries = [e for e in entries if sid in terms_index_section_ids(e)]
-        count = len(section_entries)
-        tbody_html = render_terms_index_tbody(entries, section)
-        jump_links.append(
-            f'      <a class="terms-idx-jump-link" href="#terms-idx-section-{html.escape(sid)}">'
-            f'{html.escape(section["title"])}<b>{count}</b></a>'
-        )
-        section_blocks.append(
-            f"""    <section class="terms-index-section" id="terms-idx-section-{html.escape(sid)}" aria-labelledby="terms-idx-heading-{html.escape(sid)}">
-      <div class="terms-index-section-head">
-        <h2 id="terms-idx-heading-{html.escape(sid)}">{html.escape(section["title"])}</h2>
-        <span class="terms-index-section-hit" data-section="{html.escape(sid)}" aria-live="polite">{count} / {count} {html.escape(section["unit"])}</span>
-      </div>
-      <div class="terms-idx-table-wrap">
-        <table class="terms-idx-table">
-          <thead><tr>
-            <th scope="col" class="terms-idx-th-term">{html.escape(section["col1"])}</th>
-            <th scope="col" class="terms-idx-th-cat">分野</th>
-            <th scope="col" class="terms-idx-th-def">{html.escape(section["col3"])}</th>
-          </tr></thead>
-          <tbody id="terms-idx-body-{html.escape(sid)}" data-section="{html.escape(sid)}" data-mode="{html.escape(section["mode"])}">
-{tbody_html}
-          </tbody>
-        </table>
-      </div>
-    </section>"""
-        )
-    jump_html = "\n".join(jump_links)
-    sections_html = "\n".join(section_blocks)
+    tbody_html = render_terms_index_tbody(entries)
 
     idx_path = Path("terms/index.html")
     terms_header = site_page_header(idx_path, current="terms", wide=True)
@@ -1328,8 +1201,8 @@ def build_terms_index(entries: list[dict], base_url: str) -> str:
         "分野別に整理し、検索と絞り込みで目的の語句を探せます。"
     )
     lead = (
-        f"{exam_name()}の試験で押さえたい重要用語を、用語解説・比較整理・数値早見・よくある誤答の4つの観点から探せます。"
-        "検索と分野の絞り込みで目的の記事を見つけ、各解説ページで詳しく確認できます。"
+        f"{exam_name()}の試験で押さえたい重要用語を、分野別にまとめています。"
+        "検索と分野の絞り込みで目的の用語を探し、各解説記事で意味や試験での使い方を確認できます。"
     )
     return f"""<!DOCTYPE html>
 <html lang="ja">
@@ -1365,13 +1238,10 @@ def build_terms_index(entries: list[dict], base_url: str) -> str:
   <section class="terms-index-panel" aria-labelledby="terms-index-heading">
     <div class="terms-index-head">
       <div>
-        <h2 id="terms-index-heading">用語・整理表一覧</h2>
+        <h2 id="terms-index-heading">用語一覧</h2>
         <p>全{n_terms}語・{n_cats}分野。キーワード検索と分野で絞り込めます。</p>
       </div>
     </div>
-    <nav class="terms-idx-jump" aria-label="一覧セクション">
-{jump_html}
-    </nav>
     <div class="terms-index-tools">
       <div class="terms-index-tools-primary">
       <label class="terms-index-search" for="terms-idx-q">
@@ -1391,8 +1261,19 @@ def build_terms_index(entries: list[dict], base_url: str) -> str:
       <p class="terms-idx-empty-hint">検索語を短くするか、分野を「すべて」に戻してお試しください。</p>
       <button type="button" class="terms-idx-reset" id="terms-idx-empty-reset">条件をクリア</button>
     </div>
-    <div class="terms-idx-layout terms-idx-layout-sections" aria-label="用語・整理表一覧">
-{sections_html}
+    <div class="terms-idx-layout" aria-label="用語一覧">
+      <div class="terms-idx-table-wrap">
+        <table class="terms-idx-table">
+          <thead><tr>
+            <th scope="col" class="terms-idx-th-term">用語</th>
+            <th scope="col" class="terms-idx-th-cat">分野</th>
+            <th scope="col" class="terms-idx-th-def">定義</th>
+          </tr></thead>
+          <tbody id="terms-idx-flat-body">
+{tbody_html}
+          </tbody>
+        </table>
+      </div>
       <div class="terms-idx-seo-fallback" aria-hidden="true" hidden>
 {seo_html}
       </div>
@@ -1495,7 +1376,6 @@ def main() -> int:
                 "explanation": norm(row.get("explanation")),
                 "article_title": norm(row.get("article_title")),
                 "article_lead": norm(row.get("article_lead")),
-                "index_sections": norm(row.get("index_sections")),
                 "term_detail_body": norm(row.get("term_detail_body")),
                 "exam_points": norm(row.get("exam_points")),
                 "common_mistakes": norm(row.get("common_mistakes")),
