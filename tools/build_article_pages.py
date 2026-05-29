@@ -26,6 +26,8 @@ from tools.html_footer import (  # noqa: E402
     site_page_wrap_open,
 )
 from tools.seo_utils import content_date_from_row, json_ld_date_modified, meta_updated_html  # noqa: E402
+from tools.glossary_link_lib import article_term_lookup, linkify_glossary_terms  # noqa: E402
+from tools.guide_link_lib import linkify_inline  # noqa: E402
 from tools.site_config import (  # noqa: E402
     brand_name,
     clean_origin,
