@@ -26,8 +26,6 @@ from tools.html_footer import (  # noqa: E402
     site_page_wrap_open,
 )
 from tools.seo_utils import content_date_from_row, json_ld_date_modified, meta_updated_html  # noqa: E402
-from tools.glossary_link_lib import article_term_lookup, linkify_glossary_terms  # noqa: E402
-from tools.guide_link_lib import linkify_inline  # noqa: E402
 from tools.site_config import (  # noqa: E402
     brand_name,
     clean_origin,
@@ -82,186 +80,18 @@ def split_semicolon(value: str) -> list[str]:
     return [x.strip() for x in (value or "").split(";") if x.strip()]
 
 
-def parse_related_link_item(item: str) -> tuple[str, str]:
-    """Return (target, label). target is slug or absolute URL."""
-    text = (item or "").strip()
-    if not text:
-        return "", ""
-    if text.startswith("https://"):
-        rest = text[8:]
-        if ":" in rest:
-            path, label = rest.rsplit(":", 1)
-            return f"https://{path}", label.strip()
-        return text, text
-    if text.startswith("http://"):
-        rest = text[7:]
-        if ":" in rest:
-            path, label = rest.rsplit(":", 1)
-            return f"http://{path}", label.strip()
-        return text, text
-    if ":" in text:
-        target, label = [x.strip() for x in text.split(":", 1)]
-        return target, label
-    return text, text
-
-
-_TERM_LOOKUP: dict[str, str] | None = None
-
-
-def get_term_lookup() -> dict[str, str]:
-    global _TERM_LOOKUP
-    if _TERM_LOOKUP is None:
-        _TERM_LOOKUP = article_term_lookup()
-    return _TERM_LOOKUP
-
-
-def enrich_body_text(text: str) -> str:
-    body = apply_vars(text)
-    return linkify_glossary_terms(body, get_term_lookup())
-
-
-def linkify_cell(text: str) -> str:
-    return linkify_inline(enrich_body_text(text) if text else "")
-
-
 def paragraphs(text: str) -> str:
-    body = enrich_body_text(text)
+    body = apply_vars(text)
     if not body:
         return ""
     parts = [p.strip() for p in re.split(r"\n{2,}", body) if p.strip()] or [body]
-    return "\n".join(
-        f"<p>{linkify_inline(p).replace(chr(10), '<br>')}</p>" for p in parts
-    )
-
-
-def pipe_table_html(text: str) -> str:
-    """Pipe-separated rows (3+ columns) → HTML table."""
-    rows = [[cell.strip() for cell in line.split("|")] for line in text.strip().splitlines() if line.strip()]
-    if len(rows) < 2 or not all(len(r) >= 2 for r in rows):
-        return ""
-    width = max(len(r) for r in rows)
-    head = rows[0]
-    while len(head) < width:
-        head.append("")
-    thead = "<thead><tr>" + "".join(f"<th>{linkify_cell(c)}</th>" for c in head) + "</tr></thead>"
-    body_rows: list[str] = []
-    for row in rows[1:]:
-        while len(row) < width:
-            row.append("")
-        body_rows.append(
-            "<tr>" + "".join(f"<td>{linkify_cell(c)}</td>" for c in row[:width]) + "</tr>"
-        )
-    return f"<table>{thead}<tbody>{''.join(body_rows)}</tbody></table>"
-
-
-def affiliate_link_rel(url: str) -> str:
-    rel = "noopener noreferrer"
-    if "px.a8.net" in url or url.startswith(("http://", "https://")):
-        rel += " sponsored"
-    return rel
-
-
-def affiliate_card_html(block: str) -> str:
-    """[affiliate-card]a8_url|image_url|title|price_meta|features|cta[/affiliate-card]
-
-    features: セミコロン区切り（任意）。4要素の旧形式 url|image|title|cta も可。
-    """
-    parts = [p.strip() for p in block.strip().split("|")]
-    if len(parts) < 4:
-        return ""
-    url = parts[0]
-    img = parts[1]
-    title = parts[2]
-    if len(parts) >= 6:
-        meta, features_raw, cta = parts[3], parts[4], parts[5]
-    elif len(parts) == 5:
-        meta, features_raw, cta = parts[3], "", parts[4]
-    else:
-        meta, features_raw, cta = "", "", parts[3]
-    rel = affiliate_link_rel(url)
-    alt = title
-    points = split_semicolon(features_raw)
-    points_html = ""
-    if points:
-        points_html = "<ul>" + "".join(f"<li>{html.escape(p)}</li>" for p in points) + "</ul>"
-    meta_html = f'<p class="article-affiliate-product-card-meta">{html.escape(meta)}</p>' if meta else ""
-    return (
-        '<article class="article-affiliate-product-card">'
-        f'<a class="article-affiliate-product-card-media" href="{html.escape(url)}" target="_blank" rel="{rel}">'
-        f'<img src="{html.escape(img)}" alt="{html.escape(alt)}" loading="lazy" decoding="async" width="480" height="270">'
-        "</a>"
-        '<div class="article-affiliate-product-card-body">'
-        f'<h3 class="article-affiliate-product-card-title">{html.escape(title)}</h3>'
-        f"{meta_html}{points_html}"
-        f'<p class="article-affiliate-product-card-action">'
-        f'<a class="article-affiliate-cta" href="{html.escape(url)}" target="_blank" rel="{rel}">'
-        f"{html.escape(cta)}</a></p></div></article>"
-    )
-
-
-def affiliate_cards_grid_html(content: str) -> str:
-    cards: list[str] = []
-    for match in re.finditer(
-        r"\[affiliate-card\](.*?)\[/affiliate-card\]",
-        content,
-        flags=re.DOTALL | re.IGNORECASE,
-    ):
-        card = affiliate_card_html(match.group(1))
-        if card:
-            cards.append(card)
-    if not cards:
-        return ""
-    return '<div class="article-affiliate-cards-grid">' + "".join(cards) + "</div>"
-
-
-def render_body_block(tag: str, content: str) -> str:
-    tag_l = tag.lower()
-    if tag_l == "table":
-        table_html = pipe_table_html(content)
-        return table_html if table_html else paragraphs(content)
-    if tag_l in ("affiliate-figure", "affiliate-card"):
-        card = affiliate_card_html(content)
-        return card if card else paragraphs(content)
-    if tag_l == "affiliate-cards":
-        grid = affiliate_cards_grid_html(content)
-        return grid if grid else paragraphs(content)
-    return paragraphs(content)
-
-
-def section_body_html(text: str) -> str:
-    """Paragraphs, semicolon lists, [table], [affiliate-card], [affiliate-cards] blocks."""
-    body = enrich_body_text(text)
-    if not body.strip():
-        return ""
-    parts: list[str] = []
-    pos = 0
-    block_re = re.compile(
-        r"\[(table|affiliate-figure|affiliate-card|affiliate-cards)\](.*?)\[/\1\]",
-        flags=re.DOTALL | re.IGNORECASE,
-    )
-    for match in block_re.finditer(body):
-        before = body[pos : match.start()].strip()
-        if before:
-            parts.append(list_or_paragraph(before))
-        parts.append(render_body_block(match.group(1), match.group(2)))
-        pos = match.end()
-    tail = body[pos:].strip()
-    if tail:
-        parts.append(list_or_paragraph(tail))
-    if not parts:
-        return list_or_paragraph(body)
-    return "".join(parts)
+    return "\n".join(f"<p>{html.escape(p).replace(chr(10), '<br>')}</p>" for p in parts)
 
 
 def list_or_paragraph(text: str) -> str:
-    if "\n\n" in text:
-        head, tail = text.split("\n\n", 1)
-        head_html = list_or_paragraph(head)
-        tail_html = paragraphs(tail.strip()) if tail.strip() else ""
-        return head_html + tail_html
-    items = split_semicolon(text)
+    items = split_semicolon(apply_vars(text))
     if len(items) >= 2:
-        return "<ul>" + "".join(f"<li>{linkify_inline(item)}</li>" for item in items) + "</ul>"
+        return "<ul>" + "".join(f"<li>{html.escape(item)}</li>" for item in items) + "</ul>"
     return paragraphs(text)
 
 
@@ -274,7 +104,7 @@ def section_html(article: dict[str, str], idx: int, display_num: int) -> str:
     return (
         f'<section class="seo-article-section" aria-labelledby="{sid}">'
         f'<h2 id="{sid}"><span class="section-heading-num">{display_num}</span>{html.escape(heading)}</h2>'
-        f"{section_body_html(body)}</section>"
+        f"{list_or_paragraph(body)}</section>"
     )
 
 
@@ -314,7 +144,7 @@ def toc_html(article: dict[str, str], has_faq: bool) -> str:
 
 def faq_items(article: dict[str, str]) -> list[dict[str, str]]:
     items: list[dict[str, str]] = []
-    for idx in range(1, 5):
+    for idx in range(1, 4):
         q = apply_vars(article.get(f"faq_{idx}_question", ""))
         a = apply_vars(article.get(f"faq_{idx}_answer", ""))
         if q and a:
@@ -343,11 +173,9 @@ def parse_related_links(
     links: list[str] = []
     seen: set[str] = set()
     for item in split_semicolon(value):
-        target, label = parse_related_link_item(item)
-        if not target:
-            continue
-        if label == target:
-            label = item
+        target, label = item, item
+        if ":" in item:
+            target, label = [x.strip() for x in item.split(":", 1)]
         if not target:
             continue
         if target in by_slug and target not in seen:
@@ -357,10 +185,8 @@ def parse_related_links(
             links.append(f'<a class="related-link" href="{href}">{html.escape(apply_vars(text_label))}</a>')
         elif target.startswith(("http://", "https://")):
             text_label = label or target
-            rel = "noopener noreferrer sponsored" if "px.a8.net" in target else "noopener noreferrer"
             links.append(
-                f'<a class="related-link" href="{html.escape(target)}" target="_blank" rel="{rel}">'
-                f"{html.escape(apply_vars(text_label))}</a>"
+                f'<a class="related-link" href="{html.escape(target)}" target="_blank" rel="noopener noreferrer">{html.escape(apply_vars(text_label))}</a>'
             )
     if len(links) < 2 and article:
         genre = apply_vars(article.get("genre", ""))
@@ -394,7 +220,7 @@ def parse_related_links(
             )
             if len(links) >= 2:
                 break
-        for slug in ("shiken-kamoku", "benkyou-jikan", "past-question-strategy", "glossary-how-to"):
+        for slug in ("exam-overview", "study-plan", "past-question-strategy", "glossary-how-to"):
             if len(links) >= 2:
                 break
             if slug in by_slug and slug not in seen and slug != current_slug:
@@ -709,7 +535,7 @@ def build_index_html(articles: list[dict[str, str]]) -> str:
 </script>"""
     canonical = public_url("articles/index.html")
     title = f"試験ガイド｜{brand_name()}（{exam_name()}）"
-    desc = f"{exam_name()}の試験概要、受験・申込、学習計画、過去問活用、用語整理などの記事一覧です。"
+    desc = f"{exam_name()}の受験フェーズ別ガイド（制度・学習計画・演習・直前・再受験）一覧です。用語の定義は用語解説（知識ハブ）をご覧ください。"
     item_list = [
         {"@type": "ListItem", "position": i, "name": apply_vars(a["title"]), "item": public_url(f"articles/{a['slug']}/")}
         for i, a in enumerate(articles, start=1)
@@ -745,7 +571,7 @@ def build_index_html(articles: list[dict[str, str]]) -> str:
 <main class="site-page-main">
   {breadcrumb_html(rel_path, [("トップ", "index.html"), ("試験ガイド", None)])}
   <h1>試験ガイド</h1>
-  <p class="site-page-lead">{html.escape(exam_name())}の制度理解から学習計画・演習・直前対策まで、受験フェーズ別の記事をまとめています。検索とジャンル絞り込みで目的の記事を探せます。</p>
+  <p class="site-page-lead">{html.escape(exam_name())}の制度理解から学習計画・演習・直前対策まで、受験フェーズ別の<strong>進め方</strong>をまとめています。用語の意味・比較・数値は<a href="../terms/index.html">用語解説（知識ハブ）</a>、問題演習は<a href="../q/index.html">過去問一覧</a>からどうぞ。</p>
   <section class="article-index-panel" aria-labelledby="article-index-heading">
     <div class="article-index-head">
       <div>
@@ -780,8 +606,7 @@ def build_index_html(articles: list[dict[str, str]]) -> str:
 def load_articles() -> list[dict[str, str]]:
     if not ARTICLES_CSV.is_file():
         raise FileNotFoundError(str(ARTICLES_CSV))
-    with ARTICLES_CSV.open(encoding="utf-8-sig", newline="") as f:
-        rows = list(csv.DictReader(f))
+    rows = list(csv.DictReader(ARTICLES_CSV.read_text(encoding="utf-8-sig").splitlines()))
     return sorted(rows, key=lambda x: int(norm(x.get("priority")) or 9999))
 
 
