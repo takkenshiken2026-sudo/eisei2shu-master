@@ -84,7 +84,7 @@ from tools.write_eisei2shu_hub_s44_content import (  # noqa: E402
     NUMBERS_ADD as NUMBERS_ADD_S44,
 )
 from tools.write_eisei2shu_hub_premium_faqs import apply_all as apply_premium_faqs  # noqa: E402
-from tools.hub_merge_data import finalize_hub_rows  # noqa: E402
+from tools.hub_merge_data import apply_hub_collapse, finalize_hub_rows  # noqa: E402
 
 
 def _merge(*groups: list[dict]) -> list[dict]:
@@ -168,6 +168,7 @@ def main() -> None:
         ),
         apply_premium=apply_premium_faqs,
     )
+    comparisons, numbers, mistakes = apply_hub_collapse(DATA, comparisons, numbers, mistakes)
     write_csv(DATA / "comparisons.csv", HEADER_COMPARE, comparisons)
     write_csv(DATA / "numbers.csv", HEADER_NUMBERS, numbers)
     write_csv(DATA / "mistakes.csv", HEADER_MISTAKES, mistakes)
