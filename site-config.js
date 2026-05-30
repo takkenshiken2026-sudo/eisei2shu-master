@@ -106,7 +106,8 @@ window.SITE_CONFIG = {
       "aliases": [
         "関係法令",
         "法令",
-        "労働安全衛生法"
+        "労働安全衛生法",
+        "法令・制度"
       ],
       "legacyGlossaryCat": "関係法令"
     },
@@ -116,7 +117,8 @@ window.SITE_CONFIG = {
       "aliases": [
         "労働衛生",
         "労働衛生一般",
-        "衛生"
+        "衛生",
+        "契約・実務"
       ],
       "legacyGlossaryCat": "労働衛生"
     },
@@ -126,7 +128,8 @@ window.SITE_CONFIG = {
       "aliases": [
         "労働生理",
         "生理",
-        "人体"
+        "人体",
+        "設備・その他"
       ],
       "legacyGlossaryCat": "労働生理"
     }
