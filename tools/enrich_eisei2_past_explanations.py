@@ -215,6 +215,14 @@ def enrich_one(row: dict) -> dict:
     stem = norm(row.get("問"))
     exp = norm(row.get("解説"))
     point = build_explanation_point(category, stem, exp)
+    for bad in (
+        " この記述は本問の正答ではありません。",
+        "本問の正答ではありません",
+        "正答ではありません",
+    ):
+        correct_body = correct_body.replace(bad, "")
+    correct_body = re.sub(r"\s{2,}", " ", correct_body).strip()
+
     return {
         "開催年数": norm(row.get("開催年数")),
         "開催月": norm(row.get("開催月")),
