@@ -1,11 +1,6 @@
 hub_a,hub_b,kind,similarity,slug_a,slug_b,title_a,title_b
 comparisons.csv,comparisons.csv,similar,0.929,kyokusho-zenmen-haiki,kyokusho-zentai-kanki,局所排気装置と全面換気の違い,局所排気装置と全体換気の違い
 comparisons.csv,mistakes.csv,similar,0.880,sekininsha-iinkai,anzen-sekinin-kongou,安全衛生責任者と委員会,安全衛生責任者と委員会の混同
-comparisons.csv,mistakes.csv,similar,0.880,kenshu-anzen-s32,kenshu-anzen-kongou,技能教習と安全衛生教育,技能教習と安全衛生教育の混同
-comparisons.csv,mistakes.csv,similar,0.880,sagyo-shunin-eisei-s32,sagyo-eisei-kongou,作業主任者と衛生管理者,作業主任者と衛生管理者の混同
-comparisons.csv,comparisons.csv,similar,0.889,ionizing-radiation-compare-s33,radiation-mgmt-compare-s35,電離放射線管理の比較,放射線管理の比較
 numbers.csv,numbers.csv,similar,0.909,anzen-eisei-50nin,iinkai-10nin,安全衛生委員会の設置基準,衛生委員会の設置基準
-numbers.csv,numbers.csv,similar,0.900,noise-vibration-num-s35,vibration-mgmt-num-s40,騒音振動管理の数値整理,振動管理の数値整理
-numbers.csv,numbers.csv,similar,0.900,record-retention-num-s35,record-retention-period-num-s40,記録保存の数値整理,記録保存期間の数値整理
-mistakes.csv,mistakes.csv,similar,0.900,noise-vibration-mis-s35,vibration-mgmt-mis-s40,騒音振動管理の典型誤答,振動管理の典型誤答
-mistakes.csv,mistakes.csv,similar,0.900,record-retention-mis-s35,record-retention-period-mis-s40,記録保存の典型誤答,記録保存期間の典型誤答
+numbers.csv,numbers.csv,similar,0.889,risk-assess-impl-num-s40,risk-assess-impl-num-s42,リスクアセスメント実施の数値整理（深化整理）,リスクアセスメント実施の数値整理（頻出再整理）
+mistakes.csv,mistakes.csv,similar,0.889,risk-assess-impl-mis-s40,risk-assess-impl-mis-s42,リスクアセスメント実施の典型誤答（深化整理）,リスクアセスメント実施の典型誤答（頻出再整理）
