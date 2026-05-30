@@ -1,6 +1,5 @@
-// Google Analytics 4
-// - 測定ID: site-config.json → SITE_CONFIG.ga4MeasurementId / window.__GA4_MEASUREMENT_ID__
-// - index.html は <head> の Google タグと併用（SPA 用 ga4PageView）
+// Google Analytics 4 — window.__GA4_MEASUREMENT_ID__ で上書き可（未設定・空なら下記の既定ID）
+// 測定IDの正: tools/html_footer.GA4_MEASUREMENT_ID と揃えること
 (function () {
   var DEFAULT_MID = "G-NYDT6H7XR8";
   var raw = "";
@@ -16,36 +15,26 @@
   var MID = /^G-[A-Za-z0-9]+$/.test(raw) ? raw : "";
   if (!MID) return;
 
-  function pageViewPayload(pagePath, pageTitle) {
+  /**
+   * SPA 等で URL・title が変わったあとに呼ぶ。index.html の gotoPage / popstate から利用。
+   * 引数省略時は現在の location + document.title。
+   */
+  function ga4PageView(pagePath, pageTitle) {
+    if (typeof window.gtag !== "function") return;
     var path = pagePath != null && String(pagePath) ? String(pagePath) : "";
     if (!path && typeof location !== "undefined") {
       path = location.pathname + location.search + location.hash;
     }
     var title = pageTitle != null ? String(pageTitle) : typeof document !== "undefined" ? document.title : "";
-    var o = { page_path: path, page_title: title };
-    if (typeof location !== "undefined" && location.href) {
-      o.page_location = location.href;
-    }
-    return o;
-  }
-
-  /**
-   * SPA 等で URL・title が変わったあとに呼ぶ。index.html の gotoPage / popstate から利用。
-   */
-  function ga4PageView(pagePath, pageTitle) {
-    if (typeof window.gtag !== "function") return;
-    var o = pageViewPayload(pagePath, pageTitle);
     try {
-      // GA4 SPA: 明示的 page_view（config だけよりレポートに載りやすい）
-      window.gtag("event", "page_view", o);
+      var o = { page_path: path, page_title: title };
+      if (typeof location !== "undefined" && location.href) {
+        o.page_location = location.href;
+      }
+      window.gtag("config", MID, o);
     } catch (_e) {}
   }
   window.ga4PageView = ga4PageView;
-
-  // <head> に Google タグを置いたページ（html_footer.ga4_head_snippet）では初期化済み
-  if (window.__GA4_HEAD_INIT__ === MID) {
-    return;
-  }
 
   if (window.__GA4_SNIPPET_INIT__ === MID) return;
   window.__GA4_SNIPPET_INIT__ = MID;
@@ -55,7 +44,7 @@
       ga4PageView();
       return;
     }
-  } catch (_e2) {}
+  } catch (_e) {}
 
   window.dataLayer = window.dataLayer || [];
   function gtag() {
@@ -71,6 +60,14 @@
   document.head.appendChild(s);
 
   try {
-    gtag("config", MID, pageViewPayload());
-  } catch (_e3) {}
+    var cfg0 = {};
+    if (typeof location !== "undefined" && location.href) {
+      cfg0.page_location = location.href;
+      cfg0.page_path = location.pathname + location.search + location.hash;
+    }
+    if (typeof document !== "undefined" && document.title) {
+      cfg0.page_title = document.title;
+    }
+    gtag("config", MID, cfg0);
+  } catch (_e2) {}
 })();
