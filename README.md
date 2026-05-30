@@ -30,7 +30,7 @@
 ## 起動例
 
 ```bash
-cd ~/Desktop/dai2shu-eisei-master
+cd ~/Projects/eisei2shu-master
 python3 -m http.server 8765
 ```
 
