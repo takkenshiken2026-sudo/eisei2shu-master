@@ -1,6 +1,1 @@
-hub_a,hub_b,kind,similarity,slug_a,slug_b,title_a,title_b
-comparisons.csv,comparisons.csv,similar,0.929,kyokusho-zenmen-haiki,kyokusho-zentai-kanki,局所排気装置と全面換気の違い,局所排気装置と全体換気の違い
-comparisons.csv,mistakes.csv,similar,0.880,sekininsha-iinkai,anzen-sekinin-kongou,安全衛生責任者と委員会,安全衛生責任者と委員会の混同
-numbers.csv,numbers.csv,similar,0.909,anzen-eisei-50nin,iinkai-10nin,安全衛生委員会の設置基準,衛生委員会の設置基準
-numbers.csv,numbers.csv,similar,0.889,risk-assess-impl-num-s40,risk-assess-impl-num-s42,リスクアセスメント実施の数値整理（深化整理）,リスクアセスメント実施の数値整理（頻出再整理）
-mistakes.csv,mistakes.csv,similar,0.889,risk-assess-impl-mis-s40,risk-assess-impl-mis-s42,リスクアセスメント実施の典型誤答（深化整理）,リスクアセスメント実施の典型誤答（頻出再整理）
+
