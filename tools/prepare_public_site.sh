@@ -74,8 +74,8 @@ if grep -q 'site-app.css' "$OUT/index.html" 2>/dev/null && [[ ! -f "$OUT/site-ap
   echo "prepare_public_site.sh: index.html が site-app.css を参照していますが public_site にありません。" >&2
   exit 1
 fi
-echo "prepare_public_site.sh: $OUT に $n ファイルを配置しました。"
 if grep -rq 'seo-editorial.css' "$OUT/terms" "$OUT/articles" 2>/dev/null && [[ ! -f "$OUT/seo-editorial.css" ]]; then
   echo "prepare_public_site.sh: 用語・ガイドが seo-editorial.css を参照していますが public_site にありません。" >&2
   exit 1
 fi
+echo "prepare_public_site.sh: $OUT に $n ファイルを配置しました。"
