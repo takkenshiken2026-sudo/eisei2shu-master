@@ -1,0 +1,49 @@
+{
+  "exam": "第二種衛生管理者試験",
+  "format": "past_questions.csv互換（30問×5択・3分野各10問）",
+  "mock_sets": [
+    {
+      "set_id": 1,
+      "exam_year": 9001,
+      "title": "予想模試 第1回",
+      "question_count": 30,
+      "category_distribution": {
+        "関係法令": 10,
+        "労働衛生": 10,
+        "労働生理": 10
+      },
+      "csv_file": "mock_exam_questions.csv"
+    },
+    {
+      "set_id": 2,
+      "exam_year": 9002,
+      "title": "予想模試 第2回",
+      "question_count": 30,
+      "category_distribution": {
+        "関係法令": 10,
+        "労働衛生": 10,
+        "労働生理": 10
+      },
+      "csv_file": "mock_exam_questions.csv"
+    },
+    {
+      "set_id": 3,
+      "exam_year": 9003,
+      "title": "予想模試 第3回",
+      "question_count": 30,
+      "category_distribution": {
+        "関係法令": 10,
+        "労働衛生": 10,
+        "労働生理": 10
+      },
+      "csv_file": "mock_exam_questions.csv"
+    }
+  ],
+  "free_sample": {
+    "exam_year": 8000,
+    "title": "無料サンプル",
+    "question_count": 3,
+    "csv_file": "free_sample_questions.csv"
+  },
+  "source_past_questions": "/Users/otedaiki/Desktop/past_questions.csv"
+}
