@@ -1,0 +1,69 @@
+slug: affiliate-textbooks-recommend
+theme_key: textbooks-recommend
+search_intent: 第二種衛生管理者の独学向けおすすめテキストを比較して選びたい
+title: 第二種衛生管理者のおすすめ参考書・テキスト3選【2026年度版・独学】
+layout: product-comparison
+asp_primary: amazon
+comparison_kind: books
+comparison_title: おすすめテキスト3選（比較）
+price_disclaimer: 価格・在庫・版情報は執筆時点（2026-06-03）のAmazon税込参考です。購入前に必ず販売ページでご確認ください。
+products:
+- rank: 1
+  offer_type: book
+  name: 2026年度版 スッキリわかる 第2種衛生管理者 テキスト&問題集
+  publisher: TAC出版
+  edition: 2026年度版
+  price_yen: 1650
+  price_note: Amazon税込参考・送料別
+  pages: 448
+  format: B5判
+  asin: '4300121273'
+  image_file: eisei2-book-4300121273.webp
+  amazon_url: https://www.amazon.co.jp/dp/4300121273/ref=nosim?tag=ue083093-22
+  for_who: 初学者で図解と演習を1冊にまとめたい人
+  highlights:
+  - イラスト中心で3分野の全体像をつかみやすい
+  - 章末演習でテキストと問題の往復がしやすい
+  - TACブランドで第二種独学の定番として選ばれやすい
+- rank: 2
+  offer_type: book
+  name: 第2種衛生管理者 合格教本&問題集
+  publisher: 技術評論社
+  edition: 2026年度版
+  price_yen: 1650
+  price_note: Amazon税込参考・送料別
+  pages: 496
+  format: B5判
+  asin: '4297154951'
+  image_file: eisei2-book-4297154951.webp
+  amazon_url: https://www.amazon.co.jp/dp/4297154951/ref=nosim?tag=ue083093-22
+  for_who: 解説の厚みと演習量のバランスを重視する人
+  highlights:
+  - 教本パートで論点を丁寧に整理
+  - 問題集パートで演習量を確保しやすい
+  - 技術評論社シリーズで他資格教材との相性がよい
+- rank: 3
+  offer_type: book
+  name: 改訂3版 この1冊で合格! 村中一英の第2種衛生管理者 テキスト&問題集
+  publisher: KADOKAWA
+  edition: 改訂3版
+  price_yen: 1650
+  price_note: Amazon税込参考・送料別
+  pages: 416
+  format: B5判
+  asin: '4046077956'
+  image_file: eisei2-book-4046077956.webp
+  amazon_url: https://www.amazon.co.jp/dp/4046077956/ref=nosim?tag=ue083093-22
+  for_who: 著者の解説トーンで暗記→演習を進めたい人
+  highlights:
+  - 村中一英氏の語り口で条文・数値を整理しやすい
+  - テキストと問題がセットで復習サイクルを組み立てやすい
+  - 改訂版で最新の出題傾向を反映
+related_links:
+- dokugaku-guide:独学合格ガイド
+- past-question-strategy:過去問の使い方
+- kakomon-nannennbun:過去問は何年分
+- affiliate-problem-books:おすすめ問題集
+- affiliate-beginner-material-set:初学者向け教材セット
+- goukaku-kijun:合格基準と足切り
+operator_note: Amazon tag=ue083093-22。2026-06-03 Amazon販売ページで価格確認（各1,650円税込参考）。

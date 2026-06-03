@@ -1,0 +1,69 @@
+slug: affiliate-beginner-material-set
+theme_key: beginner-material-set
+search_intent: 第二種衛生管理者を初学者が独学で始める教材セットを知りたい
+title: 第二種衛生管理者の初学者向け教材セット3選【テキスト・要点・演習2026】
+layout: product-comparison
+asp_primary: amazon
+comparison_kind: books
+comparison_title: 初学者向け教材3選（比較）
+price_disclaimer: 価格は執筆時点（2026-06-03）のAmazon税込参考です。購入前に必ず販売ページでご確認ください。
+products:
+- rank: 1
+  offer_type: book
+  name: 2026年度版 スッキリわかる 第2種衛生管理者 テキスト&問題集
+  publisher: TAC出版
+  edition: 2026年度版
+  price_yen: 1650
+  price_note: Amazon税込参考・送料別
+  pages: 448
+  format: B5判
+  asin: '4300121273'
+  image_file: eisei2-book-4300121273.webp
+  amazon_url: https://www.amazon.co.jp/dp/4300121273/ref=nosim?tag=ue083093-22
+  for_who: 最初の1冊で3分野の全体像をつかみたい初学者
+  highlights:
+  - 図解中心で労働生理・労働衛生・関係法令の輪郭を把握しやすい
+  - 章末演習で理解→確認のサイクルが回しやすい
+  - 本格的な問題集追加前のメインテキストに向く
+- rank: 2
+  offer_type: book
+  name: 第2種衛生管理者 集中レッスン '26年版
+  publisher: 成美堂出版
+  edition: '''26年版'
+  price_yen: 1540
+  price_note: Amazon税込参考・送料別
+  pages: 208
+  format: B5判
+  asin: '4415241069'
+  image_file: eisei2-book-4415241069.webp
+  amazon_url: https://www.amazon.co.jp/dp/4415241069/ref=nosim?tag=ue083093-22
+  for_who: 要点整理から演習へ移りたい人
+  highlights:
+  - レッスン形式で論点を短時間復習
+  - 成美堂の問題集・攻略本へのステップアップがしやすい
+  - 仕事終わりの30分学習と相性がよい
+- rank: 3
+  offer_type: book
+  name: 2026年版 ユーキャンの第2種衛生管理者 重要過去問&予想模試
+  publisher: ユーキャン / 自由国民社
+  edition: 2026年度版
+  price_yen: 1760
+  price_note: Amazon税込参考・送料別
+  pages: 288
+  format: B5判
+  asin: '4426616573'
+  image_file: eisei2-book-4426616573.webp
+  amazon_url: https://www.amazon.co.jp/dp/4426616573/ref=nosim?tag=ue083093-22
+  for_who: テキスト読了後に演習量を確保したい人
+  highlights:
+  - 重要過去問で本試験形式に慣れやすい
+  - 予想模試で直前の総仕上げができる
+  - テキスト1冊＋問題集1冊の2冊構成に組み込みやすい
+related_links:
+- study-plan-beginner:初学者向け学習計画
+- dokugaku-guide:独学合格ガイド
+- past-question-strategy:過去問の使い方
+- affiliate-textbooks-recommend:おすすめテキスト
+- affiliate-problem-books:おすすめ問題集
+- goukaku-kijun:合格基準と足切り
+operator_note: Amazon tag=ue083093-22。集中レッスンはテキスト本体の代替にならない点を本文で明記。 2026-06-03 価格確認。
