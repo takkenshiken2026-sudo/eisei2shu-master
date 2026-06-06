@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://eisei2shu-master.jp/about.html</loc>
-    <lastmod>2026-06-04</lastmod>
+    <lastmod>2026-06-06</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
@@ -23,6 +23,11 @@
   <url>
     <loc>https://eisei2shu-master.jp/articles/about/index.html</loc>
     <lastmod>2026-06-06</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://eisei2shu-master.jp/articles/affiliate-free-vs-paid-study/index.html</loc>
+    <lastmod>2026-05-30</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
@@ -1122,7 +1127,7 @@
   </url>
   <url>
     <loc>https://eisei2shu-master.jp/privacy.html</loc>
-    <lastmod>2026-06-04</lastmod>
+    <lastmod>2026-06-06</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
@@ -9077,7 +9082,7 @@
   </url>
   <url>
     <loc>https://eisei2shu-master.jp/related-sites.html</loc>
-    <lastmod>2026-06-04</lastmod>
+    <lastmod>2026-06-06</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
