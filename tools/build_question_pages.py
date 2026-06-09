@@ -560,7 +560,6 @@ def build_question_html(
   {site_breadcrumb}
   <p class="q-meta-line">{html.escape(context_line)}</p>
   <h1 class="q-h1">{html.escape(heading)}</h1>
-  <p class="q-page-lead">{html.escape(page["stem_plain"])}</p>
   <section class="q-block" aria-labelledby="q-stem-h">
     <h2 id="q-stem-h" class="q-h2">問題</h2>
     <div class="q-stem">{page["stem_html"]}</div>
