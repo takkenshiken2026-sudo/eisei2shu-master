@@ -14,7 +14,6 @@ import html
 from pathlib import Path
 
 from tools.site_config import (
-    base_path,
     brand_logo_lines,
     brand_logo_size_class,
     brand_name,
@@ -30,8 +29,7 @@ from tools.site_config import (
 FORM_URL = contact_url()
 
 # GA4 測定ID（site-analytics.js の DEFAULT_MID と揃えること）
-def _ga4_mid() -> str:
-    return ga4_measurement_id()
+GA4_MEASUREMENT_ID = ga4_measurement_id()
 
 # フッター注記・著作権（共通フッター・静的ガイドの表記揃え）
 FOOTER_DISCLAIMER = footer_disclaimer()
@@ -173,7 +171,7 @@ def footer_href(rel_path: Path, site_rel: str) -> str:
 
 def ga4_head_snippet() -> str:
     """生成 HTML の <head> 内用 Google タグ（site-analytics.js の二重初期化を防ぐ）。"""
-    mid = html.escape(_ga4_mid())
+    mid = html.escape(GA4_MEASUREMENT_ID)
     return (
         "<!-- Google tag (gtag.js) -->\n"
         f'<script async src="https://www.googletagmanager.com/gtag/js?id={mid}"></script>\n'
@@ -191,7 +189,7 @@ def ga4_head_snippet() -> str:
 def analytics_snippet(rel_path: Path) -> str:
     """全静的ページ共通: フッター直後（</body> 直前想定）に置く GA4 タグ。相対パスで site-analytics.js を読む。"""
     src = html.escape(footer_href(rel_path, "site-analytics.js"))
-    mid = html.escape(_ga4_mid())
+    mid = html.escape(GA4_MEASUREMENT_ID)
     return (
         "<!-- GA4: tools/html_footer.analytics_snippet（測定IDは GA4_MEASUREMENT_ID） -->\n"
         f'<script>window.__GA4_MEASUREMENT_ID__="{mid}";</script>\n'
@@ -289,9 +287,6 @@ def _topnav_logo(rel_path: Path) -> str:
 def _learning_nav_href(rel_path: Path, dest: str) -> str:
     """学習ナビのリンク先（#hash は SPA トップ、それ以外は site 相対パス）。"""
     if dest.startswith("#"):
-        bp = base_path()
-        if bp:
-            return f"{bp}{dest}"
         return "/" + dest
     return footer_href(rel_path, dest)
 
