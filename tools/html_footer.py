@@ -33,6 +33,9 @@ FORM_URL = contact_url()
 def _ga4_mid() -> str:
     return ga4_measurement_id()
 
+
+GA4_MEASUREMENT_ID = _ga4_mid()
+
 # フッター注記・著作権（共通フッター・静的ガイドの表記揃え）
 FOOTER_DISCLAIMER = footer_disclaimer()
 SITE_COPYRIGHT = copyright_text()
