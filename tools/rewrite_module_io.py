@@ -27,6 +27,9 @@ PATCH_KEY_ORDER = (
     *(f"faq_{n}_answer" for n in range(1, 5)),
 )
 
+TABLE_ROW_RE = re.compile(r"^\|")
+TABLE_MERGED_ROW_RE = re.compile(r"\|\s*\|\s*\|")
+
 
 def load_rewrites_module(path: Path) -> ModuleType:
     spec = importlib.util.spec_from_file_location(f"rewrite_{path.stem}", path)
@@ -37,6 +40,17 @@ def load_rewrites_module(path: Path) -> ModuleType:
     if not hasattr(mod, "REWRITES"):
         raise ValueError(f"{path} must define REWRITES dict")
     return mod
+
+
+def repair_markdown_tables(text: str) -> str:
+    """chunk 分割で壊れた markdown 表を修復。"""
+    if not text or "| --- |" not in text:
+        return text
+    out = text
+    out = re.sub(r"\|\|\s*", "|\n|", out)
+    out = re.sub(r"([。！？])\s*(\| )", r"\1\n\n\2", out)
+    out = re.sub(r"\n{3,}", "\n\n", out)
+    return out
 
 
 def _chunk_jp_string(text: str, width: int = 42) -> list[str]:
@@ -60,19 +74,42 @@ def _chunk_jp_string(text: str, width: int = 42) -> list[str]:
     return parts
 
 
+def _emit_literal_pieces(text: str) -> list[str]:
+    """implicit concat 用の文字列断片（表·改行を保持）。"""
+    text = repair_markdown_tables(text)
+    if "\n" in text or TABLE_MERGED_ROW_RE.search(text):
+        pieces: list[str] = []
+        lines = text.split("\n")
+        for i, line in enumerate(lines):
+            if i < len(lines) - 1:
+                pieces.append(line + "\n")
+            elif line:
+                pieces.append(line)
+        return pieces
+    if "| --- |" in text:
+        pieces = []
+        for line in text.split("\n"):
+            if line:
+                pieces.append(line + "\n")
+        if pieces and pieces[-1].endswith("\n"):
+            pieces[-1] = pieces[-1][:-1]
+        return pieces
+    chunks = _chunk_jp_string(text)
+    if len(chunks) <= 1 and len(text) < 72:
+        return [text]
+    return chunks
+
+
 def _format_string_field(key: str, value: str, indent: str) -> list[str]:
-    if "\n" in value:
-        lines = [f'{indent}"{key}": (']
-        for line in value.split("\n"):
-            lines.append(f"{indent}    {json.dumps(line, ensure_ascii=False)}")
-        lines.append(f"{indent}),")
-        return lines
-    chunks = _chunk_jp_string(value)
-    if len(chunks) <= 1 and len(value) < 72:
-        return [f'{indent}"{key}": {json.dumps(value, ensure_ascii=False)},']
+    val = value.strip() if value else value
+    if not val:
+        return []
+    pieces = _emit_literal_pieces(val)
+    if len(pieces) == 1 and len(pieces[0]) < 72 and "\n" not in pieces[0]:
+        return [f'{indent}"{key}": {json.dumps(pieces[0], ensure_ascii=False)},']
     lines = [f'{indent}"{key}": (']
-    for chunk in chunks:
-        lines.append(f"{indent}    {json.dumps(chunk, ensure_ascii=False)}")
+    for piece in pieces:
+        lines.append(f"{indent}    {json.dumps(piece, ensure_ascii=False)}")
     lines.append(f"{indent}),")
     return lines
 
