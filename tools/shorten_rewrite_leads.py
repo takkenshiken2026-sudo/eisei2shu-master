@@ -137,32 +137,28 @@ def shorten_lead(lead: str, slug: str) -> str:
     if out and not out.endswith("。"):
         out += "。"
 
-    # まだ長い場合：例示文を短く（または汎用例示へ差し替え）
-    if len(out) > _target_len(slug) + 20:
-        generic_ex = "例えば日曜の演習で誤答した論点は本記事の表を転記し、1週間後に解き直してください。"
-        if re.search(r"例えば|たとえば", out):
-            out = re.sub(r"[^。]*(?:例えば|たとえば)[^。]+[。]", generic_ex, out, count=1)
-        elif example:
-            out = out.rstrip("。") + "。" + generic_ex
-        else:
-            out = out.rstrip("。") + "。" + generic_ex
+    # まだ長い場合：例示文を短く（汎用文への差し替えはしない）
+    if len(out) > _target_len(slug) + 20 and re.search(r"例えば|たとえば", out):
+
+        def _trim_ex(m: re.Match[str]) -> str:
+            s = m.group(0).rstrip("。")
+            if len(s) <= 90:
+                return s + "。"
+            return s[:89].rstrip("、·") + "。"
+
+        out = re.sub(r"[^。]*(?:例えば|たとえば)[^。]+[。]", _trim_ex, out, count=1)
 
     if len(out) > _target_len(slug) + 40 and example:
         short_ex = re.sub(
-            r"(例えば|たとえば)[^。]+",
-            r"\1演習で誤答した論点は本記事の表を転記し、1週間後に解き直してください",
+            r"(例えば|たとえば)[^。]{40,}",
+            lambda m: m.group(0)[: min(len(m.group(0)), 72)],
             out,
             count=1,
         )
         if 80 <= len(short_ex) <= len(out):
             out = short_ex
 
-    # 例示が無い場合は1文追加
-    if not re.search(r"例えば|たとえば", out):
-        out = (
-            out.rstrip("。")
-            + "。例えば日曜の演習で誤答した論点は本記事の表を転記し、1週間後に解き直してください。"
-        )
+    # 例示が無い場合は追加しない（diversify_rewrite_lead_examples.py で補う）
 
     if NOTE_RE.search(out) and out.count("再確認") > 1:
         seen = False
