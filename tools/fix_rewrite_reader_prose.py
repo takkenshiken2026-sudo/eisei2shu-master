@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from tools.editorial_quality import norm  # noqa: E402
+from tools.guide_date_prose import soften_dates_for_column  # noqa: E402
 from tools.fix_guide_week_template_prose import (  # noqa: E402
     fix_action_item,
     fix_section_heading,
@@ -242,6 +242,7 @@ def humanize_lead(
     out = scrub_exam_prefixed_labels(out, exam, slug_titles)
     out = fix_broken_imperatives(out)
     out = re.sub(r"[ \t·]{2,}", "·", out)
+    out = soften_dates_for_column(out, slug=slug, col="lead")
     return out.strip()
 
 
@@ -268,7 +269,8 @@ def humanize_text(
             for p in re.split(r"[;；]", raw)
             if p.strip()
         ]
-        return fix_broken_imperatives(";".join(p for p in parts if p))
+        out = fix_broken_imperatives(";".join(p for p in parts if p))
+        return soften_dates_for_column(out, slug=slug, col=col)
     if col.endswith("_heading"):
         return fix_broken_imperatives(
             fix_section_heading(soften_seibon_extended(raw), section_num=section_num, exam=exam)
@@ -276,8 +278,9 @@ def humanize_text(
     if col in {"meta_description", "user_intent", "key_points"}:
         out = soften_seibon_extended(raw)
         out = shorten_md_links(out, slug_titles, exam=exam)
-        return fix_broken_imperatives(scrub_exam_prefixed_labels(out, exam, slug_titles).strip())
-    # section_body / faq — 週次テンプレ strip しない（本文欠落防止）
+        out = fix_broken_imperatives(scrub_exam_prefixed_labels(out, exam, slug_titles).strip())
+        return soften_dates_for_column(out, slug=slug, col=col)
+    # section_body / faq — 日付整理はしない（具体例の 例えば 场景を維持）
     out = soften_seibon_extended(raw)
     out = shorten_md_links(out, slug_titles, exam=exam)
     return fix_broken_imperatives(scrub_exam_prefixed_labels(out, exam, slug_titles).strip())
