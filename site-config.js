@@ -133,5 +133,13 @@ window.SITE_CONFIG = {
       ],
       "legacyGlossaryCat": "労働生理"
     }
-  ]
+  ],
+  "paidMockExam": {
+    "url": "https://note.com/shikaku_master/n/nc2477f6d98df",
+    "modeTitle": "本番想定模試（PDF・3回分）",
+    "modePurpose": "本番形式で実力確認したい",
+    "priceLabel": "¥590",
+    "scoreMeta": "PDF・3回",
+    "scoreLead": "本番形式の本番想定模試"
+  }
 };

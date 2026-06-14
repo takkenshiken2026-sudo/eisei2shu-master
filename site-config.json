@@ -279,5 +279,14 @@
       "label": "厚生労働省",
       "description": "労働安全衛生法・関連告示"
     }
-  ]
+  ],
+  "paidMockExam": {
+    "url": "https://note.com/shikaku_master/n/nc2477f6d98df",
+    "modeTitle": "本番想定模試（PDF・3回分）",
+    "modePurpose": "本番形式で実力確認したい",
+    "priceLabel": "¥590",
+    "scoreMeta": "PDF・3回",
+    "scoreLead": "本番形式の本番想定模試",
+    "footnote": "※ note で販売する有料コンテンツ（¥590）です。サイト内の無料演習とは別商品です。"
+  }
 }
