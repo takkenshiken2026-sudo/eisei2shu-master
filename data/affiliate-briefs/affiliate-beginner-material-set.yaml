@@ -6,7 +6,7 @@ layout: product-comparison
 asp_primary: amazon
 comparison_kind: books
 comparison_title: 初学者向け教材3選（比較）
-price_disclaimer: 価格は執筆時点（2026-06-03）のAmazon税込参考です。購入前に必ず販売ページでご確認ください。
+price_disclaimer: 価格は執筆時点（2026-06-15）のAmazon税込参考です。購入前に必ず販売ページでご確認ください。
 products:
 - rank: 1
   offer_type: book
@@ -20,7 +20,7 @@ products:
   asin: '4300121273'
   image_file: eisei2-book-4300121273.webp
   amazon_url: https://www.amazon.co.jp/dp/4300121273/ref=nosim?tag=ue083093-22
-  for_who: 最初の1冊で3分野の全体像をつかみたい初学者
+  for_who: 最初の1冊で三科目の骨格をつかみたい初学者
   highlights:
   - 図解中心で労働生理・労働衛生・関係法令の輪郭を把握しやすい
   - 章末演習で理解→確認のサイクルが回しやすい
@@ -66,4 +66,4 @@ related_links:
 - affiliate-textbooks-recommend:おすすめテキスト
 - affiliate-problem-books:おすすめ問題集
 - goukaku-kijun:合格基準と足切り
-operator_note: Amazon tag=ue083093-22。集中レッスンはテキスト本体の代替にならない点を本文で明記。 2026-06-03 価格確認。
+operator_note: Amazon tag=ue083093-22。集中レッスンはテキスト本体の代替にならない点を本文で明記。 2026-06-15 価格確認。

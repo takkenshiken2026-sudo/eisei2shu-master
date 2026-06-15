@@ -281,15 +281,25 @@
     }
   ],
   "guideIndexPicks": {
-    "title": "おすすめの教材",
-    "lead": "2026年度版の比較記事から、テキスト・問題集の選び方へ。",
+    "title": "おすすめの教材セット・テキスト・問題集",
+    "lead": "2026年度版の比較記事から、初学者セット・テキスト・問題集の選び方へ。",
     "leadsByHub": {
-      "articles": "2026年度版の比較記事から、テキスト・問題集の選び方へ。",
+      "articles": "2026年度版の比較記事から、初学者セット・テキスト・問題集の選び方へ。",
       "terms": "用語暗記と併用するテキスト・問題集の比較記事へ。",
-      "q": "無料演習と併用するテキスト・問題集の比較記事へ。"
+      "q": "無料演習と併用する教材セット・問題集の比較記事へ。"
     },
-    "layout": "grid-2",
+    "layout": "grid-3",
     "items": [
+      {
+        "kind": "textbook",
+        "kindLabel": "初学者セット",
+        "title": "初学者向け教材3選【2026年度版】",
+        "description": "TACスッキリ・成美堂集中レッスン・ユーキャン過去問の3冊を比較。30問·3科目前提の購入順を解説します。",
+        "href": "affiliate-beginner-material-set/",
+        "cta": "3冊を比較する",
+        "image": "images/affiliate/eisei2-book-4300121273.webp",
+        "imageAlt": "2026年度版 スッキリわかる 第2種衛生管理者 テキスト&問題集"
+      },
       {
         "kind": "textbook",
         "kindLabel": "テキスト",
@@ -297,8 +307,8 @@
         "description": "TACスッキリ・技評合格教本・村中改訂3版を比較。3分野の章立てと週次計画への組み込み方を解説します。",
         "href": "affiliate-textbooks-recommend/",
         "cta": "3冊を比較する",
-        "image": "images/affiliate/eisei2-book-4300121273.webp",
-        "imageAlt": "2026年度版 スッキリわかる 第2種衛生管理者 テキスト&問題集"
+        "image": "images/affiliate/eisei2-book-4297154951.webp",
+        "imageAlt": "第2種衛生管理者 合格教本&問題集"
       },
       {
         "kind": "problem-book",

@@ -1,0 +1,70 @@
+slug: affiliate-mock-exam-materials
+theme_key: mock-exam-materials
+search_intent: 第二種衛生管理者試験の模試・予想問題を比較して選びたい
+title: 第二種衛生管理者試験の模試・予想問題3選【30問本番形式2026】
+layout: product-comparison
+asp_primary: amazon
+comparison_kind: books
+comparison_title: 模試・予想問題3選（比較）
+price_disclaimer: 価格は執筆時点（2026-06-15）のAmazon税込参考です。試験形式は要項で必ず確認してください。
+products:
+- rank: 1
+  offer_type: book
+  name: 2026年版 ユーキャンの第2種衛生管理者 重要過去問&予想模試
+  publisher: ユーキャン / 自由国民社
+  edition: 2026年度版
+  price_yen: 1760
+  price_note: Amazon税込参考・送料別
+  pages: 288
+  format: B5判
+  asin: '4426616573'
+  image_file: eisei2-book-4426616573.webp
+  amazon_url: https://www.amazon.co.jp/dp/4426616573/ref=nosim?tag=ue083093-22
+  for_who: 予想模試付きで直前の総仕上げをしたい人
+  highlights:
+  - 重要過去問と予想模試を1冊で30問本番形式に慣れやすい
+  - 直前期の模試回数を確保しやすい
+  - ユーキャン系列で要点整理教材との併用がしやすい
+- rank: 2
+  offer_type: book
+  name: 詳解 第2種衛生管理者過去6回問題集 '26年版
+  publisher: 成美堂出版
+  edition: '''26年版'
+  price_yen: 1540
+  price_note: Amazon税込参考・送料別
+  pages: 256
+  format: B5判
+  asin: '4415241077'
+  image_file: eisei2-book-4415241077.webp
+  amazon_url: https://www.amazon.co.jp/dp/4415241077/ref=nosim?tag=ue083093-22
+  for_who: 直近の本試験形式で模試を回したい人
+  highlights:
+  - 過去6回分を解説付きで収録
+  - 13:30開始·180分の本番形式演習に向く
+  - 成美堂集中レッスンからのステップアップがしやすい
+- rank: 3
+  offer_type: book
+  name: 第二種衛生管理者試験問題集 2026年度版
+  publisher: 全国労働基準関係団体連合会
+  edition: 2026年度版
+  price_yen: 2200
+  price_note: Amazon税込参考・送料別
+  pages: 224
+  format: B5判
+  asin: '4867881015'
+  image_file: eisei2-book-4867881015.webp
+  amazon_url: https://www.amazon.co.jp/dp/4867881015/ref=nosim?tag=ue083093-22
+  for_who: 試験実施団体系の形式で模試を受けたい人
+  highlights:
+  - 労基団連発行で本試験形式に近い演習ができる
+  - 科目別の模試分析に向く
+  - 他社問題集との使い分けで弱点補強しやすい
+related_links:
+- mock-exam-how-to:模試の活用法
+- timed-practice:時間を計った演習
+- past-question-strategy:過去問の使い方
+- affiliate-problem-books:おすすめ問題集
+- affiliate-textbooks-recommend:おすすめテキスト
+- goukaku-kijun:合格基準と足切り
+operator_note: Amazon tag=ue083093-22。4426616573 / 4415241077 / 4867881015。2026-06-15
+  価格確認。
