@@ -6,7 +6,7 @@ layout: product-comparison
 asp_primary: amazon
 comparison_kind: books
 comparison_title: おすすめテキスト3選（比較）
-price_disclaimer: 価格・在庫・版情報は執筆時点（2026-06-03）のAmazon税込参考です。購入前に必ず販売ページでご確認ください。
+price_disclaimer: 価格・在庫・版情報は執筆時点（2026-06-12）のAmazon税込参考です。購入前に必ず販売ページでご確認ください。
 products:
 - rank: 1
   offer_type: book
@@ -22,7 +22,7 @@ products:
   amazon_url: https://www.amazon.co.jp/dp/4300121273/ref=nosim?tag=ue083093-22
   for_who: 初学者で図解と演習を1冊にまとめたい人
   highlights:
-  - イラスト中心で3分野の全体像をつかみやすい
+  - イラスト中心で三科目の骨格をつかみやすい
   - 章末演習でテキストと問題の往復がしやすい
   - TACブランドで第二種独学の定番として選ばれやすい
 - rank: 2
@@ -66,4 +66,4 @@ related_links:
 - affiliate-problem-books:おすすめ問題集
 - affiliate-beginner-material-set:初学者向け教材セット
 - goukaku-kijun:合格基準と足切り
-operator_note: Amazon tag=ue083093-22。2026-06-03 Amazon販売ページで価格確認（各1,650円税込参考）。
+operator_note: Amazon tag=ue083093-22。2026-06-12 Amazon販売ページで価格確認（各1,650円税込参考）。
