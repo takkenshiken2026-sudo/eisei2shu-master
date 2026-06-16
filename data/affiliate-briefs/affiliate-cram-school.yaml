@@ -1,0 +1,54 @@
+slug: affiliate-cram-school
+theme_key: cram-school
+search_intent: 第二種衛生管理者向け通学講座を比較して試験直前の集中講習に組み込みたい
+title: 第二種衛生管理者試験の通学講座比較【ウェルネット2日 vs じっくり】独学との併用【2026年度版】
+genre: 独学対策
+layout: product-comparison
+asp_primary: official
+comparison_kind: courses
+comparison_title: おすすめ通学講座2選（比較）
+price_disclaimer: 料金·開催日程·会場は執筆時点（2026-06-16）の各公式ページ参考です。申込前に必ず最新条件を確認してください。
+products:
+  - rank: 1
+    offer_type: course
+    name: ウェルネット 衛生管理者受験対策講座
+    provider: ウェルネット
+    plan_name: 第2種·通学2日間コース（教材込）
+    price_yen: 27500
+    billing_type: lump
+    price_note: 税込·教材込·全国会場
+    duration: 試験日の10日〜1か月前申込目安（公式参考）
+    lecture_hours: 通学2日間（集中）
+    support: 重点整理ノート·精選問題集·受講者限定ページ
+    image_file: eisei2-book-4300121273.webp
+    for_who: 試験直前に2日で3科目を一気に整理したい人
+    highlights:
+      - 第2種通学2日間2万7500円（税込·教材込）
+      - 全国会場·年間開催数業界上位（公式参考）
+      - 短時間集中で出題傾向を押さえる構成
+  - rank: 2
+    offer_type: course
+    name: ウェルネット 衛生管理者受験対策講座
+    provider: ウェルネット
+    plan_name: 第2種·通学じっくりコース（教材込）
+    price_yen: 33000
+    billing_type: lump
+    price_note: 税込·教材込·全国会場
+    duration: 試験日の10日〜1か月前申込目安（公式参考）
+    lecture_hours: 通学2日間（じっくり）
+    support: 2日間コース教材+解説の厚み·受講者限定ページ
+    image_file: eisei2-book-4300121273.webp
+    for_who: 通学2日でも解説の厚みを優先したい人
+    highlights:
+      - 第2種じっくり2日間3万3000円（税込·教材込）
+      - 2日間コースより丁寧な進行（公式参考）
+      - 独学前の基礎整理にも使える通学形式
+related_links:
+  - self-study-without-school:資格学校なし独学
+  - affiliate-correspondence-course:通信講座比較
+  - affiliate-online-course-compare:オンライン講座比較
+  - affiliate-textbooks-recommend:おすすめテキスト3選
+operator_note: |
+  2026-06-16 v2公開。TAC·LEC第2種は通学未開講のためウェルネット2コースを比較。
+  2万7500円·3万3000円は wellnet-jp.com/eisei/openclass で確認。A8未設定·公式直リンクのみ。
+  首都圏の都労基連講習（一般1万9360円）は本文·FAQで言及。

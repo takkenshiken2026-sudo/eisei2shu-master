@@ -1,0 +1,56 @@
+slug: affiliate-online-course-compare
+theme_key: online-course-compare
+search_intent: 第二種衛生管理者向けオンライン講座をSMARTとオンスクで比較して独学に組み込みたい
+title: 第二種衛生管理者のオンライン講座比較【SMART合格講座 vs オンスク】独学との併用【2026年度版】
+genre: 独学対策
+layout: product-comparison
+asp_primary: a8
+comparison_kind: courses
+comparison_title: オンライン講座2選（比較）
+price_disclaimer: 料金·受講条件は執筆時点（2026-06-16）の各公式ページ参考です。申込前に必ず最新の料金·キャンペーンを確認してください。
+products:
+  - rank: 1
+    offer_type: course
+    name: SMART合格講座（第二種衛生管理者）
+    provider: 情報学習支援協会
+    plan_name: 買い切り（視聴3年）
+    price_yen: 25300
+    billing_type: lump
+    price_note: 税込·第二種向け動画約7.5時間
+    duration: 視聴3年間
+    lecture_hours: 約7.5時間
+    support: SMART答練·進捗管理
+    image_file: eisei2-smart-goukaku.jpg
+    a8_url: https://px.a8.net/svt/ejp?a8mat=4B3TF0+DUBUVU+4LOQ+BW0YB&a8ejpredirect=https%3A%2F%2Fwww.joho-gakushu.or.jp%2Feiseikanrisya%2F%3Futm_source%3DAffi%26utm_medium%3Dlist%26utm_campaign%3D01%26_gl%3D1*3gogtr*_gcl_au*NDM5NDE0NjUzLjE3NzkzNDY4MTQ.
+    for_who: 3分野を動画で一気に理解しSMART答練で演習したい人
+    highlights:
+      - 第二種向け動画約7.5時間＋SMART答練
+      - 買い切り2万5300円（税込）で視聴3年
+      - 分割払い対応（公式ページ参照）
+  - rank: 2
+    offer_type: course
+    name: オンスク.JP 衛生管理者オンライン通信講座
+    provider: オンスク.JP
+    plan_name: ウケホーダイ月額（第二種対応）
+    price_label: 月額1078〜1628円（税込）
+    billing_type: monthly
+    price_note: 3か月パック税込4884円〜（申込前LP再確認）
+    duration: 月額または一括パック
+    lecture_hours: 講義50回·練習536問
+    support: スマホ視聴·倍速·進捗管理
+    image_file: eisei2-onsuku-eisei2.jpg
+    a8_url: https://px.a8.net/svt/ejp?a8mat=4B3TF0+DUXAHM+408S+BW0YB&a8ejpredirect=https%3A%2F%2Fonsuku.jp%2Ftraining%2Feisei2
+    for_who: 短期間·低コストで演習量を確保したい社会人
+    highlights:
+      - 講義50回＋練習536問
+      - ウケホーダイ月額1078〜1628円（税込）
+      - スマホ視聴·倍速·ダウンロード教材対応
+related_links:
+  - dokugaku-guide:独学合格ガイド
+  - correspondence-course-guide:通信講座の選び方
+  - affiliate-textbooks-recommend:おすすめテキスト3選
+  - affiliate-problem-books:おすすめ問題集3選
+  - affiliate-beginner-material-set:初学者向け教材セット
+operator_note: |
+  2026-06-16 v2公開。A8 SMART·オンスク（affiliate-smart-vs-onsuku.yaml と同一URL）。
+  SMART2万5300円·オンスク月額は申込前LP再確認。標準slug affiliate-online-course-compare に統合。
