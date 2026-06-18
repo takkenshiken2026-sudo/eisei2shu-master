@@ -60,5 +60,26 @@
     "第一種衛生管理者",
     "第一種と同じ"
   ],
-  "lead_anchor_template": "本試験は全{question_count}問（{total_points}点満点）·{duration_minutes}分·五肢択一。合格は総合{pass_overall_percent}％（{pass_overall_points}点）以上かつ各科目{pass_per_range_percent}％（40点）以上です。"
+  "lead_anchor_template": "本試験は全{question_count}問（{total_points}点満点）·{duration_minutes}分·五肢択一。合格は総合{pass_overall_percent}％（{pass_overall_points}点）以上かつ各科目{pass_per_range_percent}％（40点）以上です。",
+  "eligibility": {
+    "same_for_first_and_second_kind": true,
+    "experience_basis": "労働衛生の実務経験",
+    "rows": [
+      {"education": "大学·短期大学·高等専門学校 卒業", "years": 1, "unit": "年以上"},
+      {"education": "高等学校·中等教育学校 卒業", "years": 3, "unit": "年以上"},
+      {"education": "学歴を問わない場合", "years": 10, "unit": "年以上"}
+    ],
+    "proof_note": "事業者証明書等で実務経験を証明（要項の受験資格表が正本）"
+  },
+  "exam_operations": {
+    "sessions_per_year": 2,
+    "start_time": "13:30",
+    "application_lead_weeks": "試験日の約2か月前から（年度要項で確認）",
+    "venue_type": "全国試験センター"
+  },
+  "official_pages": [
+    {"label": "安全衛生技術試験協会（トップ）", "url": "https://www.jissh.or.jp/", "use": "第二種の受験案内·要項への入口"},
+    {"label": "受験案内·申込", "url": "https://www.jissh.or.jp/", "use": "日程·受験料·申込方法（サイト内の第二種ページ）"},
+    {"label": "出題範囲·公式テキスト", "url": "https://www.jissh.or.jp/", "use": "試験問題の出題範囲·推奨テキスト一覧"}
+  ]
 }
