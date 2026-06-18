@@ -1,0 +1,64 @@
+{
+  "site_id": "eisei2shu-master",
+  "exam_name": "第二種衛生管理者試験",
+  "organizer": "公益財団法人 安全衛生技術試験協会",
+  "organizer_url": "https://www.jissh.or.jp/",
+  "exam_format": {
+    "question_count": 30,
+    "total_points": 300,
+    "duration_minutes": 180,
+    "choice_type": "五肢択一（マークシート）",
+    "pass_overall_percent": 60,
+    "pass_overall_points": 180,
+    "pass_per_range_percent": 40,
+    "pass_per_subject_points": 40,
+    "fee_yen": 8800,
+    "fee_tax": "非課税",
+    "start_time_note": "13:30開始（要項で再確認）"
+  },
+  "subjects": [
+    {
+      "id": "law",
+      "name": "関係法令",
+      "questions": 10,
+      "points": 100,
+      "pass_points": 40
+    },
+    {
+      "id": "eisei",
+      "name": "労働衛生",
+      "questions": 10,
+      "points": 100,
+      "pass_points": 40
+    },
+    {
+      "id": "physio",
+      "name": "労働生理",
+      "questions": 10,
+      "points": 100,
+      "pass_points": 40
+    }
+  ],
+  "study_defaults": {
+    "beginner_hours_min": 60,
+    "beginner_hours_max": 100,
+    "minutes_per_question_exam": 6,
+    "site_practice_bank_note": "当サイトの演習・一問一答は学習用バンクであり、本番の30問·配点とは別に管理する"
+  },
+  "forbidden_phrases": [
+    "44問·180分",
+    "44問·400点",
+    "44問（400点",
+    "100問·180分",
+    "100問·5科目",
+    "5出題範囲",
+    "5範囲×",
+    "400点満点",
+    "240点以上",
+    "各出題範囲40％",
+    "有害業務に係るもの",
+    "第一種衛生管理者",
+    "第一種と同じ"
+  ],
+  "lead_anchor_template": "本試験は全{question_count}問（{total_points}点満点）·{duration_minutes}分·五肢択一。合格は総合{pass_overall_percent}％（{pass_overall_points}点）以上かつ各科目{pass_per_range_percent}％（40点）以上です。"
+}

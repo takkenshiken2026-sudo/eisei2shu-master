@@ -472,9 +472,13 @@ def load_guide_slugs() -> list[dict[str, str]]:
     path = ROOT / "data" / "guide_articles.csv"
     if not path.is_file():
         return []
+    from tools.editorial_quality import is_published_guide
+
     text = path.read_text(encoding="utf-8-sig")
     rows: list[dict[str, str]] = []
     for row in csv.DictReader(text.splitlines()):
+        if not is_published_guide(row):
+            continue
         slug = norm(row.get("slug"))
         title = norm(row.get("title"))
         if slug and title:
