@@ -611,7 +611,7 @@ def build_detail_html(
     <div class="article-meta">
       <span class="meta-category">{html.escape(spec.hub_label)}</span>
       {meta_updated_html(updated)}
-      <span class="meta-updated">{meta_line} · <span>{html.escape(detail_line)}</span></span>
+      <span class="meta-updated">{meta_line}・<span>{html.escape(detail_line)}</span></span>
     </div>
     <h1 class="article-title">{html.escape(article_title)}</h1>
     {multi_paragraph_html(article_lead)}

@@ -7,7 +7,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-JISSH_TOP = ("安全衛生技術試験協会（公式）", "https://www.jissh.or.jp/")
+JISSH_TOP = ("安全衛生技術試験協会（公式）", "https://www.exam.or.jp/")
 EXAM_PORTAL = ("安全衛生技術試験協会 試験案内（公式）", "https://www.exam.or.jp/")
 JISSH_VENUE_HUB = ("安全衛生技術試験協会 試験実施場所（公式）", "https://www.exam.or.jp/h_aramashi/")
 

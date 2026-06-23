@@ -152,7 +152,7 @@ def meta_line(product: dict[str, Any], *, brief: dict[str, Any] | None = None) -
             parts.append(html.escape(support))
     if not parts:
         return ""
-    return f'<p class="affiliate-product-meta">{" · ".join(parts)}</p>'
+    return f'<p class="affiliate-product-meta">{"・".join(parts)}</p>'
 
 
 def supplement_html(product: dict[str, Any]) -> str:

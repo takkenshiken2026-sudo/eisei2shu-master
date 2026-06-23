@@ -1817,7 +1817,7 @@ body.is-solving .site-footer{display:none!important}
       </div>
 
       <div style="font-size:12px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:8px 12px;margin-top:16px;line-height:1.65">
-        ※ 掲載問題は、公式過去問そのものではなく、著作権上の配慮と最新法令への対応のため問題文・選択肢を編集した「過去問形式」の演習問題です。試験本番の原文・合格基準・試験日程などは<a href="https://www.jissh.or.jp/" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline">安全衛生技術試験協会（公式）</a>等の公式情報を、法令・通達の原文は<a href="https://www.mlit.go.jp/" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline">国土交通省</a>等のウェブサイトをご確認ください。
+        ※ 掲載問題は、公式過去問そのものではなく、著作権上の配慮と最新法令への対応のため問題文・選択肢を編集した「過去問形式」の演習問題です。試験本番の原文・合格基準・試験日程などは<a href="https://www.exam.or.jp/" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline">安全衛生技術試験協会（公式）</a>等の公式情報を、法令・通達の原文は<a href="https://www.mlit.go.jp/" target="_blank" rel="noopener" style="color:var(--text2);text-decoration:underline">国土交通省</a>等のウェブサイトをご確認ください。
       </div>
 
     </div>
@@ -6251,11 +6251,11 @@ function renderStudyDiaryTimelineList(){
     const {answered,correct,pct}=getStudyDayAnswerStats(iso);
     const memoBlock=memo
       ? `<div class="study-diary-tl-memo">${escapeHTML(memo)}</div>`
-      : `<div class="study-diary-tl-memo empty">メモなし · タップで編集</div>`;
+      : `<div class="study-diary-tl-memo empty">メモなし ・ タップで編集</div>`;
     return `<div class="study-diary-tl-item" role="button" tabindex="0" onclick="editStudyDiaryFromTimeline('${iso}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();editStudyDiaryFromTimeline('${iso}');}" aria-label="${y}年${m}月${d}日の学習日記を開く">
       <div class="study-diary-tl-head">
         <span class="study-diary-tl-date">${y}年${m}月${d}日（${wd}）</span>
-        <span class="study-diary-tl-stats">解答${answered} · 正${correct} · ${pct}%</span>
+        <span class="study-diary-tl-stats">解答${answered} ・ 正${correct} ・ ${pct}%</span>
       </div>
       ${memoBlock}
     </div>`;
@@ -7274,7 +7274,7 @@ function renderScorePaidMockPromo(opts){
       <span class="score-paid-mock-strip-tag">有料</span>
       <span class="score-paid-mock-strip-body">
         <span class="score-paid-mock-strip-title">${escapeAttr(m.modeTitle)}</span>
-        <span class="score-paid-mock-strip-meta">${escapeAttr(m.scoreMeta)} · ${escapeAttr(m.priceLabel)} · note</span>
+        <span class="score-paid-mock-strip-meta">${escapeAttr(m.scoreMeta)} ・ ${escapeAttr(m.priceLabel)} ・ note</span>
       </span>
       <span class="score-paid-mock-strip-cta">詳細 ↗</span>
     </a>`;

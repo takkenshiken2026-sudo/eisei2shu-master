@@ -1,13 +1,13 @@
 slug: affiliate-smart-course-guide
 theme_key: smart-course-guide
-search_intent: 第二種衛生管理者向けSMART合格講座の料金·動画·答練·独学との進め方を知りたい
-title: 第二種衛生管理者 SMART合格講座の特徴と進め方【2026年度版·独学併用】
+search_intent: 第二種衛生管理者向けSMART合格講座の料金・動画・答練・独学との進め方を知りたい
+title: 第二種衛生管理者 SMART合格講座の特徴と進め方【2026年度版・独学併用】
 genre: 独学対策
 layout: product-comparison
 asp_primary: a8
 comparison_kind: courses
 comparison_title: SMART合格講座（第二種）
-price_disclaimer: 料金·受講条件は執筆時点（2026-06-16）の公式ページ参考です。申込前に必ず最新情報を確認してください。
+price_disclaimer: 料金・受講条件は執筆時点（2026-06-16）の公式ページ参考です。申込前に必ず最新情報を確認してください。
 products:
 - rank: 1
   offer_type: course
@@ -24,7 +24,7 @@ products:
   price_yen: 25300
   duration: 視聴3年間
   lecture_hours: 約7.5時間
-  support: SMART答練·進捗管理
+  support: SMART答練・進捗管理
 related_links:
   - dokugaku-guide:独学合格ガイド
   - goukaku-kijun:合格基準と足切り
@@ -37,4 +37,4 @@ related_links:
   - affiliate-free-vs-paid-study:無料と有料教材の使い分け
 operator_note: |
   2026-06-16 v2公開。単品深掘り（比較は affiliate-online-course-compare へ）。
-  affiliate-smart-vs-onsuku は archived·リダイレクト統合済み。
+  affiliate-smart-vs-onsuku は archived・リダイレクト統合済み。

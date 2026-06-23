@@ -432,14 +432,14 @@ def build_question_html(
 
     if is_orig:
         title_mid = f"実践演習・{field_ja} 第{num}問"
-        context_line = f"実践演習 · {field_ja}"
+        context_line = f"実践演習・{field_ja}"
         crumb_items: list[tuple[str, str | None]] = [
             ("トップ", "index.html"),
             (title_mid, None),
         ]
     else:
         title_mid = f"{breadcrumb_label_past(r['era_raw'], r['month_raw'])}・{field_ja} 第{num}問"
-        context_line = f"{page['wareki']} · {field_ja}"
+        context_line = f"{page['wareki']}・{field_ja}"
         crumb_items = [
             ("トップ", "index.html"),
             ("過去問一覧", "q/index.html"),

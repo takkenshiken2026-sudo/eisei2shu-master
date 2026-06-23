@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-_JISSH = "https://www.jissh.or.jp/"
+_JISSH = "https://www.exam.or.jp/"
 _LEC = "https://www.lec-jp.com/eisei/"
 _TAC = "https://www.tac-school.co.jp/kouza_eiseikanri/"
 _SMART = (
@@ -60,12 +60,12 @@ REWRITES: dict[str, dict[str, str]] = {
         "fact_checked_at": "2026-06-16",
         "last_reviewed_at": "2026-06-16",
         "source_checked_at": "2026-06-16",
-        "sources": "安全衛生技術試験協会（公式）|https://www.jissh.or.jp/",
+        "sources": "安全衛生技術試験協会（公式）|https://www.exam.or.jp/",
         "original_note": (
             "手書きリライト 2026-06-16。"
             "3スタイル: 公式オンライン·書類チェック·講座付帯。"
             "試験協会は申込代行を認めていない旨を明記。"
-            "TAC第2種2026未開講。related_linksにjissh.or.jp·LEC·SMART公式直リンク。"
+            "TAC第2種2026未開講。related_linksにexam.or.jp·LEC·SMART公式直リンク。"
         ),
         "section_1_heading": "6/16（月）：支援サービスを選ぶ3基準（要項正本·資格·公式URL）",
         "section_1_body": (
@@ -75,7 +75,7 @@ REWRITES: dict[str, dict[str, str]] = {
             "たとえば6/16（月）要項PDF保存直後に実施するのが定番です。\n\n"
             "| 観点 | 確認内容 |\n"
             "| --- | --- |\n"
-            "| 正本 | 要項PDF（jissh.or.jp）の申込章·受験資格表 |\n"
+            "| 正本 | 要項PDF（exam.or.jp）の申込章·受験資格表 |\n"
             "| 資格 | 学歴区分·労働衛生の実務年数の該当1行 |\n"
             "| 公式URL | 申込画面のドメインが試験協会公式か |\n\n"
             "6/22（日）までに受験資格記事と学歴·実務記事で該当1行を確定し、"
@@ -159,7 +159,7 @@ REWRITES: dict[str, dict[str, str]] = {
             "| 11/15頃 | 合格発表·Web結果確認（要項参照） |\n\n"
             "個人情報は写真·住所·証明書が絡むため、"
             "プライバシーポリシー·代行範囲·返金条件を契約前に確認します。"
-            "8/1（金）にjissh.or.jpをブックマークし、"
+            "8/1（金）にexam.or.jpをブックマークし、"
             "支援会社の案内URLが一致するか照合してから契約してください。"
         ),
         "section_7_heading": "申込後は学習に戻る（17週逆算）",

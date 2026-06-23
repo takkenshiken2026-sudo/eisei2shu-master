@@ -18,7 +18,7 @@ SAMPLE_BANNER_INNER = (
     "CSV 執筆時は {doc_link} とテンプレ CSV をあわせて参照してください。</p>"
     '<p class="knowledge-hub-sample-banner-links">'
     '<a href="{samples_href}">サンプル一覧</a>'
-    '<span aria-hidden="true">·</span>'
+    '<span aria-hidden="true">・</span>'
     '<a href="{type_href}">{type_label}一覧</a>'
     "</p></div>"
 )

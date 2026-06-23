@@ -2,7 +2,7 @@
   "site_id": "eisei2shu-master",
   "exam_name": "第二種衛生管理者試験",
   "organizer": "公益財団法人 安全衛生技術試験協会",
-  "organizer_url": "https://www.jissh.or.jp/",
+  "organizer_url": "https://www.exam.or.jp/",
   "exam_format": {
     "question_count": 30,
     "total_points": 300,
@@ -43,7 +43,7 @@
     "beginner_hours_min": 60,
     "beginner_hours_max": 100,
     "minutes_per_question_exam": 6,
-    "site_practice_bank_note": "当サイトの演習・一問一答は学習用バンクであり、本番の30問·配点とは別に管理する"
+    "site_practice_bank_note": "当サイトの演習・一問一答は学習用バンクであり、本番の30問・配点とは別に管理する"
   },
   "first_kind_reference": {
     "question_count": 44,
@@ -53,8 +53,8 @@
     "note": "比較説明のみ。第一種の詳細は第一種サイト・要項が正本"
   },
   "forbidden_phrases": [
-    "100問·180分",
-    "100問·5科目",
+    "100問・180分",
+    "100問・5科目",
     "第一種は100問",
     "第一種（100問）",
     "100問形式",
@@ -70,13 +70,13 @@
     "第一種衛生管理者",
     "第一種と同じ"
   ],
-  "lead_anchor_template": "本試験は全{question_count}問（{total_points}点満点）·{duration_minutes}分·五肢択一。合格は総合{pass_overall_percent}％（{pass_overall_points}点）以上かつ各科目{pass_per_range_percent}％（40点）以上です。",
+  "lead_anchor_template": "本試験は全{question_count}問（{total_points}点満点）・{duration_minutes}分・五肢択一。合格は総合{pass_overall_percent}％（{pass_overall_points}点）以上かつ各科目{pass_per_range_percent}％（40点）以上です。",
   "eligibility": {
     "same_for_first_and_second_kind": true,
     "experience_basis": "労働衛生の実務経験",
     "rows": [
-      {"education": "大学·短期大学·高等専門学校 卒業", "years": 1, "unit": "年以上"},
-      {"education": "高等学校·中等教育学校 卒業", "years": 3, "unit": "年以上"},
+      {"education": "大学・短期大学・高等専門学校 卒業", "years": 1, "unit": "年以上"},
+      {"education": "高等学校・中等教育学校 卒業", "years": 3, "unit": "年以上"},
       {"education": "学歴を問わない場合", "years": 10, "unit": "年以上"}
     ],
     "proof_note": "事業者証明書等で実務経験を証明（要項の受験資格表が正本）"
@@ -88,8 +88,8 @@
     "venue_type": "全国試験センター"
   },
   "official_pages": [
-    {"label": "安全衛生技術試験協会（トップ）", "url": "https://www.jissh.or.jp/", "use": "第二種の受験案内·要項への入口"},
-    {"label": "受験案内·申込", "url": "https://www.jissh.or.jp/", "use": "日程·受験料·申込方法（サイト内の第二種ページ）"},
-    {"label": "出題範囲·公式テキスト", "url": "https://www.jissh.or.jp/", "use": "試験問題の出題範囲·推奨テキスト一覧"}
+    {"label": "安全衛生技術試験協会（トップ）", "url": "https://www.exam.or.jp/", "use": "第二種の受験案内・要項への入口"},
+    {"label": "受験案内・申込", "url": "https://www.exam.or.jp/", "use": "日程・受験料・申込方法（サイト内の第二種ページ）"},
+    {"label": "出題範囲・公式テキスト", "url": "https://www.exam.or.jp/", "use": "試験問題の出題範囲・推奨テキスト一覧"}
   ]
 }
