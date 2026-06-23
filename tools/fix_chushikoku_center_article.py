@@ -30,7 +30,7 @@ from tools.archive.eisei2shu_guide_content_lib import (  # noqa: E402
 CSV_PATH = ROOT / "data" / "guide_articles.csv"
 TOPIC = "中国四国安全衛生技術センター"
 SLUG = "chushikoku-center"
-OFFICIAL_URL = "安全衛生技術試験協会（公式）|https://www.jissh.or.jp/"
+OFFICIAL_URL = "安全衛生技術試験協会（公式）|https://www.exam.or.jp/"
 
 SECTIONS = [
     ("基本情報", "section_1"),

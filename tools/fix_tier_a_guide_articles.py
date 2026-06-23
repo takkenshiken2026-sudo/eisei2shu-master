@@ -28,7 +28,7 @@ from tools.guide_coherence_rules import (  # noqa: E402
 )
 
 GUIDE_CSV = ROOT / "data" / "guide_articles.csv"
-OFFICIAL_URL = "安全衛生技術試験協会（公式）|https://www.jissh.or.jp/"
+OFFICIAL_URL = "安全衛生技術試験協会（公式）|https://www.exam.or.jp/"
 
 GARBAGE_PHRASES = (
     "の観点で整理します",

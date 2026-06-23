@@ -849,7 +849,7 @@ def build_term_html(
         meta_bits.append(badge_html)
     if category and not badge_html:
         meta_bits.append(f"<span>{html.escape(category)}</span>")
-    meta_line = " · ".join(meta_bits)
+    meta_line = "・".join(meta_bits)
 
     crumb_items: list[tuple[str, str | None]] = [
         ("トップ", "index.html"),

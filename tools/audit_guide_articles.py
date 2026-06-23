@@ -120,7 +120,11 @@ def audit_html(slug: str, lookup: dict[str, str]) -> list[str]:
         if not h or h.startswith(("#", "http", "mailto:")):
             continue
         if h.startswith("../"):
-            target = (html_path.parent / h).resolve()
+            # URL フラグメント(#...)・クエリ(?...)を除いてファイル存在を判定する
+            path_part = h.split("#", 1)[0].split("?", 1)[0]
+            if not path_part:
+                continue
+            target = (html_path.parent / path_part).resolve()
             if not target.exists():
                 issues.append(f"broken href: {h}")
 

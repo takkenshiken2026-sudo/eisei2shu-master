@@ -156,7 +156,7 @@ def page_heading(page: dict) -> str:
 
 
 def page_context_line(page: dict) -> str:
-    return f"{past_year_label(page)} · {page['category']}"
+    return f"{past_year_label(page)}・{page['category']}"
 
 
 def page_title_seo(page: dict) -> str:

@@ -457,7 +457,7 @@ def build_practice_question_html(
   {site_breadcrumb}
   {study_modes_note}
   {q_hub_links_html(rel_path, current="practice")}
-  <p class="q-meta-line">実践演習 · {html.escape(page["category"])}</p>
+  <p class="q-meta-line">実践演習・{html.escape(page["category"])}</p>
   <h1 class="q-h1">{html.escape(heading)}</h1>
   {lead_html}
   <section class="q-block" aria-labelledby="q-stem-h">
@@ -601,7 +601,7 @@ def build_ichimon_question_html(
   {site_breadcrumb}
   {study_modes_note}
   {q_hub_links_html(rel_path, current="ichimon")}
-  <p class="q-meta-line">一問一答 · {html.escape(page["category"])}</p>
+  <p class="q-meta-line">一問一答・{html.escape(page["category"])}</p>
   {source_line}
   <h1 class="q-h1">{html.escape(heading)}</h1>
   <section class="q-block" aria-labelledby="q-stem-h">

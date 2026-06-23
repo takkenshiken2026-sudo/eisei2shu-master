@@ -343,7 +343,7 @@ def hub_meta_line(*, hub_short: str, category: str) -> str:
         bits.append(badge)
     if category:
         bits.append(f"<span>{html.escape(category)}</span>")
-    return " · ".join(bits)
+    return "・".join(bits)
 
 
 def hub_breadcrumb_json_ld(

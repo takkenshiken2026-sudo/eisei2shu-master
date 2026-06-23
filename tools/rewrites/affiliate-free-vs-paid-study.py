@@ -49,7 +49,7 @@ REWRITES: dict[str, dict[str, str]] = {
         "fact_checked_at": "2026-06-16",
         "last_reviewed_at": "2026-06-16",
         "source_checked_at": "2026-06-16",
-        "sources": "安全衛生技術試験協会（公式）|https://www.jissh.or.jp/",
+        "sources": "安全衛生技術試験協会（公式）|https://www.exam.or.jp/",
         "original_note": (
             "手書きリライト 2026-06-16。asp=internal。"
             "related_links Amazon3本: 4300121273 / 4426616573 / 4415241077。"
