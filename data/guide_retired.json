@@ -188,6 +188,7 @@
     "juken-ryo-sougohiyo": "exam-fees",
     "goukakuritsu": "pass-rate",
     "goukaku-happyo-kakunin": "pass-announcement-guide",
-    "juken-shikaku": "exam-eligibility"
+    "juken-shikaku": "exam-eligibility",
+    "goukaku-kijun": "pass-score"
   }
 }
