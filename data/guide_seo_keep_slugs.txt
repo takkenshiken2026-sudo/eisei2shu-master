@@ -29,13 +29,8 @@ field-rights-basics
 field-rights-past-question-focus
 final-day-checklist
 glossary-how-to
-goukaku-happyo-kakunin
 goukaku-kijun
-goukakuritsu
 ikkagetsu-goukaku
-juken-ryo-hiyo
-juken-ryo-sougohiyo
-juken-shikaku
 official-info-sources
 pass-announcement-guide
 pass-rate
