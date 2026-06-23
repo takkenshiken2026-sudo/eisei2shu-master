@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-18",
+  "updated": "2026-06-23",
   "redirects": {
     "compare-similar-qualifications": "past-question-strategy",
     "exam-purpose-and-career": "past-question-strategy",
@@ -183,6 +183,8 @@
     "menkyo-shinsei": "past-question-strategy",
     "tokubetsu-kyoiku-chigai": "past-question-strategy",
     "tokubetsu-kyoiku-jugyomae": "past-question-strategy",
-    "affiliate-smart-vs-onsuku": "affiliate-online-course-compare"
+    "affiliate-smart-vs-onsuku": "affiliate-online-course-compare",
+    "juken-ryo-hiyo": "exam-fees",
+    "juken-ryo-sougohiyo": "exam-fees"
   }
 }
