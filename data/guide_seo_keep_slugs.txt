@@ -29,7 +29,6 @@ field-rights-basics
 field-rights-past-question-focus
 final-day-checklist
 glossary-how-to
-goukaku-kijun
 ikkagetsu-goukaku
 official-info-sources
 pass-announcement-guide
