@@ -65,6 +65,7 @@ from question_slug_lib import (
 )
 from csv_to_eisei2_master import discover_pool_years, make_id
 from render_learning_hub import render_session_hub_page_body
+from seo_utils import NOINDEX_ROBOTS_META
 
 FIELD_LABEL_JA = {"law": "関係法令", "rights": "労働衛生", "limit": "労働生理"}
 EXPLANATION_META_CSV = "eisei2_past_explanation_meta.csv"
@@ -539,7 +540,7 @@ def build_question_html(
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(desc)}">
-{ROBOTS_INDEX_FOLLOW}
+{NOINDEX_ROBOTS_META if is_orig else ROBOTS_INDEX_FOLLOW}
 <link rel="canonical" href="{html.escape(canonical)}">
 <meta property="og:type" content="article">
 <meta property="og:title" content="{html.escape(title)}">
@@ -909,7 +910,9 @@ def main() -> None:
             ),
             encoding="utf-8",
         )
-        urls_for_sitemap.append(canonical)
+        # 実践演習(orig)ページは noindex のため sitemap には載せない。
+        if not r["is_orig"]:
+            urls_for_sitemap.append(canonical)
 
     hub_canonical = public_url(base_url, site_prefix, "q/index.html")
     static_urls = [
