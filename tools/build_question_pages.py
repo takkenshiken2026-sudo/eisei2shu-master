@@ -454,8 +454,14 @@ def build_question_html(
         )
         crumb_items.append((title_mid, None))
 
-    title = f"{title_mid}｜{BRAND_NAME}（{EXAM_NAME_OFFICIAL}）"
-    desc = meta_description(r["text"])
+    if is_orig:
+        title = f"{title_mid}｜{BRAND_NAME}（{EXAM_NAME_OFFICIAL}）"
+        desc = meta_description(r["text"])
+    else:
+        # 過去問は検索意図キーワードをタイトルに付与し、解説要約を説明文(snippet)に使う。
+        title = f"{title_mid}の解説｜第二種衛生管理者 過去問｜{BRAND_NAME}"
+        exp_summary = (row.get("explanation_summary") or "").strip()
+        desc = meta_description(exp_summary or r["text"])
     canonical = r["canonical"]
     heading = title_mid
 
