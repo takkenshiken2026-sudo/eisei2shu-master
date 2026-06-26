@@ -141,5 +141,14 @@ window.SITE_CONFIG = {
     "priceLabel": "¥590",
     "scoreMeta": "PDF・3回",
     "scoreLead": "本番形式の本番想定模試"
+  },
+  "coursePromo": {
+    "url": "https://px.a8.net/svt/ejp?a8mat=4B3TF0+DUXAHM+408S+BW0YB&a8ejpredirect=https%3A%2F%2Fonsuku.jp%2Ftraining%2Feisei2",
+    "modeTitle": "オンスク.JP 衛生管理者オンライン通信講座",
+    "modePurpose": "スマホで講義50回・練習536問を回したい",
+    "priceLabel": "月額1,078円〜",
+    "tagLabel": "PR",
+    "footnote": "※ オンスク.JP公式サイトへ移動します。料金・受講条件は申込前に各ページでご確認ください。",
+    "lpUrl": "https://onsuku.jp/training/eisei2"
   }
 };
