@@ -541,6 +541,22 @@ def build_related_links_html(
                 f"{ylabel} 第{other_q}問",
             )
 
+    # 同科目の他設問へのリンク（同一分野の内部リンククラスタを強化）
+    cat_now = page.get("category") or ""
+    siblings = [
+        p
+        for p in all_pages
+        if (p.get("category") or "") == cat_now
+        and (p["year"], p["qno"]) != (y, qn)
+    ]
+    siblings.sort(key=lambda p: (abs(p["qno"] - qn), -p["year"]))
+    for pg in siblings[:4]:
+        ylabel = pg.get("year_label") or pg.get("wareki") or f"{pg['year']}年"
+        add_auto(
+            rel_href(rel_path, pg["rel_path"]),
+            f"{ylabel} {cat_now}第{pg['qno']}問",
+        )
+
     for gl in glossary_links_for_tags(page.get("tags") or [], glossary_lookup):
         href = rel_href(rel_path, normalize_glossary_href(gl["href"]))
         add_auto(href, gl["label"])
@@ -565,7 +581,7 @@ def build_related_links_html(
     if not links:
         return ""
 
-    limit = 8
+    limit = 12
     link_html = "".join(
         f'<a class="related-link" href="{html.escape(href)}">{html.escape(label)}</a>'
         for href, label in links[:limit]
