@@ -103,13 +103,12 @@ def exam_schedule_tools_html(rows: list[dict[str, str]]) -> str:
     return f"""<section class="exam-schedule-table-section" aria-labelledby="exam-schedule-tools-title">
 <h2 class="u-visually-hidden" id="exam-schedule-tools-title">試験日の絞り込み</h2>
 <div class="exam-schedule-apply-box">
-<p class="exam-schedule-apply-lead">試験日が決まったら、<strong>安全衛生技術試験協会</strong>のオンライン受験申請システムから申し込みます（受験料8,800円・希望日の約2か月前から先着）。</p>
 <div class="exam-schedule-apply-actions">
-<a class="exam-schedule-apply-btn" href="{html.escape(OFFICIAL_APPLICATION_URL, quote=True)}" target="_blank" rel="noopener noreferrer">オンライン受験申請へ（公式）</a>
-<a class="exam-schedule-apply-guide" href="{html.escape(APPLICATION_GUIDE_HREF, quote=True)}">申込の流れ（当サイト）</a>
+<a class="exam-schedule-apply-btn" href="{html.escape(OFFICIAL_APPLICATION_URL, quote=True)}" target="_blank" rel="noopener noreferrer">オンライン受験申請（公式）</a>
+<a class="exam-schedule-apply-guide" href="{html.escape(APPLICATION_GUIDE_HREF, quote=True)}">申込の流れ</a>
+<a class="exam-schedule-apply-guide" href="{html.escape(OFFICIAL_SCHEDULE_URL, quote=True)}" target="_blank" rel="noopener noreferrer">協会の日程ページ</a>
 </div>
 </div>
-<p class="exam-schedule-table-note">本日以降の試験日のみ表示しています。最新の変更は必ず<a href="{html.escape(OFFICIAL_SCHEDULE_URL, quote=True)}" target="_blank" rel="noopener noreferrer">安全衛生技術試験協会の日程ページ</a>で確認してください。</p>
 <div class="exam-schedule-table-tools">
 <label class="exam-schedule-sort-label" for="exam-schedule-sort">並び順</label>
 <select id="exam-schedule-sort" class="exam-schedule-sort-select" aria-label="並び順">

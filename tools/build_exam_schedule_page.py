@@ -21,7 +21,6 @@ from tools.exam_schedule_page_content import (  # noqa: E402
     PAGE_SLUG,
     PAGE_TITLE,
     faq_items,
-    page_sections,
 )
 from tools.exam_schedule_table import (
     exam_schedule_table_html,
@@ -39,7 +38,6 @@ from tools.html_footer import (  # noqa: E402
     site_page_wrap_open,
 )
 from tools.knowledge_hub_seo import faq_section_html  # noqa: E402
-from tools.seo_body_markup import seo_section_body_html  # noqa: E402
 from tools.seo_editorial_chrome import (  # noqa: E402
     seo_brand_asset_tags,
     seo_editorial_article_class,
@@ -98,15 +96,6 @@ def quality_panel_html(fact_checked_at: str) -> str:
     )
 
 
-def section_html(heading: str, body: str, section_num: int, section_id: str) -> str:
-    body_html = seo_section_body_html(body)
-    return (
-        f'<section class="seo-article-section" aria-labelledby="{section_id}">'
-        f'<h2 id="{section_id}"><span class="section-heading-num">{section_num}</span>'
-        f"{html.escape(heading)}</h2>{body_html}</section>"
-    )
-
-
 def related_links_html() -> str:
     links = [
         ("../articles/exam-schedule/", "試験日程・逆算の目安"),
@@ -137,13 +126,8 @@ def build_page_html() -> str:
         exam_schedule_table_html(schedule_rows, show_heading=False, show_note=False),
         quality_panel_html(fact_checked),
     ]
-    section_num = 1
-    for idx, (heading, body) in enumerate(page_sections()):
-        body_parts.append(section_html(heading, body, section_num, f"exam-dates-sec-{idx + 1}"))
-        section_num += 1
-    body_parts.append(
-        faq_section_html(faq_list, heading_id="exam-dates-faq", section_num=section_num)
-    )
+    if faq_list:
+        body_parts.append(faq_section_html(faq_list, heading_id="exam-dates-faq", section_num=1))
     body_parts.append(related_links_html())
 
     graph: list[dict] = [
