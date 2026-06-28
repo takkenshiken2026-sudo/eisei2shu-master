@@ -45,7 +45,7 @@ from tools.site_config import brand_name, exam_name, public_url  # noqa: E402
 
 OUTPUT_DIR = ROOT / PAGE_SLUG
 REL_PATH = Path(PAGE_SLUG) / "index.html"
-EXAM_DATES_CSS_VER = "20260628-exam-schedule-fix"
+EXAM_DATES_CSS_VER = "20260628-exam-schedule-text"
 
 AUTHOR_NAME = "二衛マスター編集部"
 AUTHOR_PROFILE = (

@@ -89,7 +89,7 @@ def exam_schedule_tools_html(rows: list[dict[str, str]]) -> str:
 <a class="exam-schedule-apply-guide" href="{html.escape(APPLICATION_GUIDE_HREF, quote=True)}">申込の流れ（当サイト）</a>
 </div>
 </div>
-<p class="exam-schedule-table-note">会場名・地域・年月で絞り込めます。<strong class="exam-schedule-weekend-mark">赤字</strong>は土日祝日に実施する試験日です（公式ページと同じ表記）。最新の変更は必ず<a href="{html.escape(OFFICIAL_SCHEDULE_URL, quote=True)}" target="_blank" rel="noopener noreferrer">安全衛生技術試験協会の日程ページ</a>で確認してください。</p>
+<p class="exam-schedule-table-note">最新の変更は必ず<a href="{html.escape(OFFICIAL_SCHEDULE_URL, quote=True)}" target="_blank" rel="noopener noreferrer">安全衛生技術試験協会の日程ページ</a>で確認してください。</p>
 <div class="exam-schedule-table-tools">
 <label class="exam-schedule-sort-label" for="exam-schedule-sort">並び順</label>
 <select id="exam-schedule-sort" class="exam-schedule-sort-select" aria-label="並び順">
@@ -142,13 +142,12 @@ def exam_schedule_list_rows_html(rows: list[dict[str, str]]) -> str:
     parts: list[str] = []
     for row in rows:
         iso = row.get("exam_date") or ""
-        weekend = row.get("weekend_or_holiday") == "1"
         weekday = row.get("weekday_ja") or ""
         venue = row.get("venue_name") or ""
         region = row.get("region") or ""
         vid = row.get("venue_id") or ""
-        date_cls = "exam-schedule-date weekend" if weekend else "exam-schedule-date"
-        weekday_cls = "exam-schedule-weekday weekend" if weekend else "exam-schedule-weekday"
+        date_cls = "exam-schedule-date"
+        weekday_cls = "exam-schedule-weekday"
         parts.append(
             f'<tr data-date="{html.escape(iso)}" data-venue-id="{html.escape(vid)}" '
             f'data-region="{html.escape(region)}" data-venue-name="{html.escape(venue)}">'
@@ -196,7 +195,7 @@ def exam_schedule_calendar_html(rows: list[dict[str, str]]) -> str:
                 day_spans = []
                 for r in sorted(days, key=lambda x: x["exam_date"]):
                     day_num = datetime.strptime(r["exam_date"], "%Y-%m-%d").day
-                    cls = "exam-schedule-cal-day weekend" if r.get("weekend_or_holiday") == "1" else "exam-schedule-cal-day"
+                    cls = "exam-schedule-cal-day"
                     day_spans.append(f'<span class="{cls}">{day_num}</span>')
                 month_cells.append(
                     f'<td>{"".join(day_spans) if day_spans else "—"}</td>'

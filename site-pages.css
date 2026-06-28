@@ -6722,13 +6722,6 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
   font-size: var(--exam-schedule-tool-fs);
   font-weight: 600;
 }
-.exam-schedule-date.weekend,
-.exam-schedule-weekday.weekend,
-.exam-schedule-weekend-mark,
-.exam-schedule-cal-day.weekend {
-  color: #c0392b;
-  font-weight: 700;
-}
 .exam-schedule-list-table td {
   vertical-align: middle;
 }
