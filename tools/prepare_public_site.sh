@@ -22,6 +22,7 @@ for f in \
   site-knowledge-hub-index.js \
   site-priority-index.js \
   site-analytics.js \
+  site-exam-schedule.js \
   CNAME \
   robots.txt \
   sitemap.xml \
@@ -38,7 +39,7 @@ do
   fi
   cp "$f" "$OUT/"
 done
-for d in articles q terms; do
+for d in articles q terms exam-dates; do
   if [[ -d "$ROOT/$d" ]]; then
     cp -R "$ROOT/$d" "$OUT/"
   fi

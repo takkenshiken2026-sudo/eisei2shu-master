@@ -25,6 +25,14 @@ def run(cmd: list[str]) -> None:
     subprocess.run(cmd, cwd=ROOT, check=True)
 
 
+def maybe_run_exam_schedule_page(py: str) -> None:
+    from tools.site_config import exam_schedule_enabled
+
+    script = ROOT / "tools" / "build_exam_schedule_page.py"
+    if script.is_file() and exam_schedule_enabled():
+        run([py, str(script)])
+
+
 def main() -> int:
     ensure_python_deps()
     py = sys.executable
@@ -38,6 +46,7 @@ def main() -> int:
     run([py, "tools/build_practice_ichimon_pages.py"])
     run([py, "tools/build_article_pages.py"])
     run([py, "tools/build_guide_retire_redirects.py"])
+    maybe_run_exam_schedule_page(py)
     run([py, "tools/build_glossary_pages.py"])
     run([py, "tools/build_hub_retire_redirects.py"])
     run([py, "tools/build_sitemap.py"])

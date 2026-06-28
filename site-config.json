@@ -11,6 +11,21 @@
   "learningNavLabelOverrides": {
     "tnav-orig": "オリジナル問題"
   },
+  "learningNavExtras": [
+    {
+      "id": "tnav-exam-dates",
+      "label": "試験日検索",
+      "href": "exam-dates/index.html",
+      "after": "tnav-glossary",
+      "icon": "calendar",
+      "pageCurrent": "exam-dates"
+    }
+  ],
+  "examSchedule": {
+    "enabled": true,
+    "csvPath": "data/exam_schedule_eisei2.csv",
+    "officialScheduleUrl": "https://www.exam.or.jp/schedule/h_nittei502/"
+  },
   "theme": {
     "accent": "#4a8f6a",
     "accentText": "#ffffff",
