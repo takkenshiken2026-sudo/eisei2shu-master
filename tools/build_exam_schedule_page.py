@@ -23,7 +23,12 @@ from tools.exam_schedule_page_content import (  # noqa: E402
     faq_items,
     page_sections,
 )
-from tools.exam_schedule_table import exam_schedule_table_html, latest_fetched_at, load_schedule_rows  # noqa: E402
+from tools.exam_schedule_table import (
+    exam_schedule_table_html,
+    filter_upcoming_rows,
+    latest_fetched_at,
+    load_schedule_rows,
+)  # noqa: E402
 from tools.html_footer import (  # noqa: E402
     ROBOTS_INDEX_FOLLOW,
     breadcrumb_html,
@@ -121,7 +126,7 @@ def related_links_html() -> str:
 
 
 def build_page_html() -> str:
-    schedule_rows = load_schedule_rows()
+    schedule_rows = filter_upcoming_rows(load_schedule_rows())
     fact_checked = (latest_fetched_at(schedule_rows) or date.today().isoformat())[:10]
     canonical = public_url(f"{PAGE_SLUG}/")
     title = f"{PAGE_TITLE}｜{brand_name()}"

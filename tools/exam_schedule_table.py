@@ -8,7 +8,7 @@ import csv
 import html
 import json
 from collections import defaultdict
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 
 from tools.exam_schedule_page_content import (  # noqa: E402
@@ -40,6 +40,25 @@ def load_schedule_rows(csv_path: Path | None = None) -> list[dict[str, str]]:
         return []
     with path.open(encoding="utf-8", newline="") as f:
         return list(csv.DictReader(f))
+
+
+def filter_upcoming_rows(
+    rows: list[dict[str, str]],
+    *,
+    as_of: date | None = None,
+) -> list[dict[str, str]]:
+    """本日（サイト生成日）以降の試験日のみ残す。"""
+    today = as_of or date.today()
+    out: list[dict[str, str]] = []
+    for row in rows:
+        iso = str(row.get("exam_date") or "").strip()
+        try:
+            exam_day = datetime.strptime(iso, "%Y-%m-%d").date()
+        except ValueError:
+            continue
+        if exam_day >= today:
+            out.append(row)
+    return out
 
 
 def latest_fetched_at(rows: list[dict[str, str]]) -> str:
@@ -80,6 +99,7 @@ def exam_schedule_tools_html(rows: list[dict[str, str]]) -> str:
         f"{html.escape(region)}</button>"
         for region in sorted({r.get("region") or "" for r in rows if r.get("region")})
     )
+    month_min = date.today().strftime("%Y-%m")
     return f"""<section class="exam-schedule-table-section" aria-labelledby="exam-schedule-tools-title">
 <h2 class="u-visually-hidden" id="exam-schedule-tools-title">試験日の絞り込み</h2>
 <div class="exam-schedule-apply-box">
@@ -89,7 +109,7 @@ def exam_schedule_tools_html(rows: list[dict[str, str]]) -> str:
 <a class="exam-schedule-apply-guide" href="{html.escape(APPLICATION_GUIDE_HREF, quote=True)}">申込の流れ（当サイト）</a>
 </div>
 </div>
-<p class="exam-schedule-table-note">最新の変更は必ず<a href="{html.escape(OFFICIAL_SCHEDULE_URL, quote=True)}" target="_blank" rel="noopener noreferrer">安全衛生技術試験協会の日程ページ</a>で確認してください。</p>
+<p class="exam-schedule-table-note">本日以降の試験日のみ表示しています。最新の変更は必ず<a href="{html.escape(OFFICIAL_SCHEDULE_URL, quote=True)}" target="_blank" rel="noopener noreferrer">安全衛生技術試験協会の日程ページ</a>で確認してください。</p>
 <div class="exam-schedule-table-tools">
 <label class="exam-schedule-sort-label" for="exam-schedule-sort">並び順</label>
 <select id="exam-schedule-sort" class="exam-schedule-sort-select" aria-label="並び順">
@@ -113,7 +133,7 @@ def exam_schedule_tools_html(rows: list[dict[str, str]]) -> str:
 </div>
 </div>
 <label class="exam-schedule-sort-label" for="exam-schedule-month">年月</label>
-<input type="month" id="exam-schedule-month" class="exam-schedule-month-input" aria-label="年月で絞り込み">
+<input type="month" id="exam-schedule-month" class="exam-schedule-month-input" aria-label="年月で絞り込み" min="{month_min}">
 <span class="exam-schedule-table-count" id="exam-schedule-count" aria-live="polite"></span>
 </div>
 <div class="exam-schedule-region-chips" role="group" aria-label="地域で絞り込み">
@@ -186,20 +206,24 @@ def exam_schedule_calendar_html(rows: list[dict[str, str]]) -> str:
             period_rows = by_period[period_label]
             months = _calendar_months_for_period(period_label)
             month_cells: list[str] = []
+            has_dates = False
             for month in months:
                 days = [
                     r
                     for r in period_rows
                     if datetime.strptime(r["exam_date"], "%Y-%m-%d").month == month
                 ]
+                if days:
+                    has_dates = True
                 day_spans = []
                 for r in sorted(days, key=lambda x: x["exam_date"]):
                     day_num = datetime.strptime(r["exam_date"], "%Y-%m-%d").day
-                    cls = "exam-schedule-cal-day"
-                    day_spans.append(f'<span class="{cls}">{day_num}</span>')
+                    day_spans.append(f'<span class="exam-schedule-cal-day">{day_num}</span>')
                 month_cells.append(
                     f'<td>{"".join(day_spans) if day_spans else "—"}</td>'
                 )
+            if not has_dates:
+                continue
             month_headers = "".join(f"<th>{m}月</th>" for m in months)
             period_html.append(
                 f'<h3 class="exam-schedule-period-title">{html.escape(period_label)}</h3>'
@@ -208,6 +232,9 @@ def exam_schedule_calendar_html(rows: list[dict[str, str]]) -> str:
                 f'<tbody><tr><th scope="row">実施日</th>{"".join(month_cells)}</tr></tbody>'
                 f"</table></div>"
             )
+
+        if not period_html:
+            continue
 
         blocks.append(
             f'<section class="exam-schedule-venue-block" id="{html.escape(vid)}" '
@@ -252,7 +279,7 @@ def exam_schedule_table_html(
     show_calendar: bool = True,
 ) -> str:
     if not rows:
-        return '<p class="exam-schedule-table-note">試験日程データがありません。</p>'
+        return '<p class="exam-schedule-table-note">本日以降に受験可能な試験日はありません。協会の日程ページで次回の公開を確認してください。</p>'
     parts = [exam_schedule_tools_html(rows)]
     if show_calendar:
         parts.append(exam_schedule_calendar_html(rows))
