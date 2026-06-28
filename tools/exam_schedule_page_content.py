@@ -18,6 +18,8 @@ META_DESCRIPTION = (
     "土日祝の試験日も表示。最新情報は安全衛生技術試験協会公式で確認。"
 )
 OFFICIAL_SCHEDULE_URL = "https://www.exam.or.jp/schedule/h_nittei502/"
+OFFICIAL_APPLICATION_URL = "https://www.exam.or.jp/online/"
+APPLICATION_GUIDE_HREF = "../articles/exam-application-flow/"
 
 
 def page_sections() -> list[tuple[str, str]]:

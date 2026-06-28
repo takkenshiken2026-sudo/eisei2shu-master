@@ -11,7 +11,11 @@ from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+from tools.exam_schedule_page_content import (  # noqa: E402
+    APPLICATION_GUIDE_HREF,
+    OFFICIAL_APPLICATION_URL,
+    OFFICIAL_SCHEDULE_URL,
+)
 
 MONTH_LABELS = ("1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月")
 
@@ -78,7 +82,14 @@ def exam_schedule_tools_html(rows: list[dict[str, str]]) -> str:
     )
     return f"""<section class="exam-schedule-table-section" aria-labelledby="exam-schedule-tools-title">
 <h2 class="u-visually-hidden" id="exam-schedule-tools-title">試験日の絞り込み</h2>
-<p class="exam-schedule-table-note">会場名・地域・年月で絞り込めます。<strong class="exam-schedule-weekend-mark">赤字</strong>は土日祝日に実施する試験日です（公式ページと同じ表記）。最新の変更は必ず<a href="https://www.exam.or.jp/schedule/h_nittei502/" target="_blank" rel="noopener noreferrer">安全衛生技術試験協会の日程ページ</a>で確認してください。</p>
+<div class="exam-schedule-apply-box">
+<p class="exam-schedule-apply-lead">試験日が決まったら、<strong>安全衛生技術試験協会</strong>のオンライン受験申請システムから申し込みます（受験料8,800円・希望日の約2か月前から先着）。</p>
+<div class="exam-schedule-apply-actions">
+<a class="exam-schedule-apply-btn" href="{html.escape(OFFICIAL_APPLICATION_URL, quote=True)}" target="_blank" rel="noopener noreferrer">オンライン受験申請へ（公式）</a>
+<a class="exam-schedule-apply-guide" href="{html.escape(APPLICATION_GUIDE_HREF, quote=True)}">申込の流れ（当サイト）</a>
+</div>
+</div>
+<p class="exam-schedule-table-note">会場名・地域・年月で絞り込めます。<strong class="exam-schedule-weekend-mark">赤字</strong>は土日祝日に実施する試験日です（公式ページと同じ表記）。最新の変更は必ず<a href="{html.escape(OFFICIAL_SCHEDULE_URL, quote=True)}" target="_blank" rel="noopener noreferrer">安全衛生技術試験協会の日程ページ</a>で確認してください。</p>
 <div class="exam-schedule-table-tools">
 <label class="exam-schedule-sort-label" for="exam-schedule-sort">並び順</label>
 <select id="exam-schedule-sort" class="exam-schedule-sort-select" aria-label="並び順">

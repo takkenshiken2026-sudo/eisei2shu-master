@@ -6353,6 +6353,51 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
   color: var(--text2);
   font-size: var(--fs-sub);
 }
+.exam-schedule-apply-box {
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--accent-border);
+  border-radius: var(--r2);
+  background: var(--bg);
+  box-shadow: 0 1px 3px var(--accent-shadow);
+}
+.exam-schedule-apply-lead {
+  margin: 0 0 0.75rem;
+  color: var(--ink);
+  font-size: var(--fs-sub);
+  line-height: 1.55;
+}
+.exam-schedule-apply-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
+}
+.exam-schedule-apply-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  padding: 0.45rem 1rem;
+  border-radius: var(--r2);
+  background: var(--accent);
+  color: var(--accent-text, #fff);
+  font-size: var(--fs-sub);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 1px 3px var(--accent-shadow);
+}
+.exam-schedule-apply-btn:hover {
+  background: var(--accent-emphasis);
+  color: var(--accent-text, #fff);
+}
+.exam-schedule-apply-guide {
+  color: var(--ink);
+  font-size: var(--fs-sub);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
 .exam-schedule-table-tools {
   display: flex;
   flex-wrap: wrap;
@@ -6491,6 +6536,9 @@ html:not(.js) .terms-idx-seo-fallback .terms-idx-seo-list a {
   background: var(--accent-hover-surface);
 }
 .exam-schedule-pref-clear.hide {
+  display: none;
+}
+.exam-schedule-pref-listbox.hide {
   display: none;
 }
 .exam-schedule-pref-listbox {

@@ -99,18 +99,20 @@
     render();
   }
 
-  function openVenueList() {
-    if (!venueBox || !venueList) return;
-    venueBox.classList.add('open');
-    venueList.classList.remove('hide');
-    if (venueInput) venueInput.setAttribute('aria-expanded', 'true');
-  }
-
   function closeVenueList() {
     if (!venueBox || !venueList) return;
     venueBox.classList.remove('open');
     venueList.classList.add('hide');
+    venueList.hidden = true;
     if (venueInput) venueInput.setAttribute('aria-expanded', 'false');
+  }
+
+  function openVenueList() {
+    if (!venueBox || !venueList) return;
+    venueBox.classList.add('open');
+    venueList.classList.remove('hide');
+    venueList.hidden = false;
+    if (venueInput) venueInput.setAttribute('aria-expanded', 'true');
   }
 
   function filterVenueOptions() {
@@ -178,5 +180,6 @@
     });
   });
 
+  closeVenueList();
   render();
 })();
