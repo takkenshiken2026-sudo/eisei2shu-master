@@ -29,6 +29,22 @@ from enrich_past_explanation_choices import build_row_fields, choice_texts, norm
 
 GENERIC_WRONG_MARK = "出題趣旨・問題文の条件に照らすと正答"
 
+# 抽出時に先頭の判定節が「（N）節 (N)節…」と全角→半角括弧で重複してしまう
+# ケースがある。冗長な先頭エコーを取り除き、2番目（本文につながる方）を残す。
+_LEADING_ECHO_RE = re.compile(r"^\s*（(\d)）(.{3,70}?)\s*\(\1\)\2")
+
+
+def strip_leading_echo(text: str) -> str:
+    if not text:
+        return text
+    m = _LEADING_ECHO_RE.match(text)
+    if not m:
+        return text
+    second = text.find(f"({m.group(1)})", m.start(2))
+    if second <= 0:
+        return text
+    return text[second:].lstrip()
+
 DEFAULT_OUT = ROOT / "data" / "eisei2_past_explanation_meta.csv"
 META_FIELDS = [
     "開催年数",
@@ -222,6 +238,8 @@ def enrich_one(row: dict) -> dict:
     ):
         correct_body = correct_body.replace(bad, "")
     correct_body = re.sub(r"\s{2,}", " ", correct_body).strip()
+    summary = strip_leading_echo(summary)
+    correct_body = strip_leading_echo(correct_body)
 
     return {
         "開催年数": norm(row.get("開催年数")),
