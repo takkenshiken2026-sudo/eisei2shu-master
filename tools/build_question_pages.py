@@ -455,8 +455,20 @@ def build_question_html(
         crumb_items.append((title_mid, None))
 
     if is_orig:
-        title = f"{title_mid}｜{BRAND_NAME}（{EXAM_NAME_OFFICIAL}）"
-        desc = meta_description(r["text"])
+        # 問題文の貼り付け検索からのクリックを促すため、タイトルで解説・答えを訴求し、
+        # スニペット先頭に「正答＋解説」を示す（問題文の丸写しにしない）。
+        title = f"{title_mid}の解説【答え】｜{BRAND_NAME}（{EXAM_NAME_OFFICIAL}）"
+        correct_no = page.get("correct")
+        exp_summary = (row.get("explanation_summary") or "").strip()
+        exp_body = re.sub(r"\s+", " ", (exp_summary or r.get("exp") or "")).strip()
+        if exp_body.startswith("（解説") or exp_body.startswith("(解説"):
+            exp_body = r["text"]
+        # 解説がすでに「正答は…」で始まる場合は重複を避ける
+        if correct_no and not re.match(r"^正[答解]", exp_body):
+            ans_part = f"正答は（{correct_no}）。"
+        else:
+            ans_part = ""
+        desc = meta_description(f"{title_mid}の正答と解説。{ans_part}{exp_body or r['text']}")
     else:
         # 過去問は検索意図キーワードをタイトルに付与し、解説要約を説明文(snippet)に使う。
         title = f"{title_mid}の解説｜第二種衛生管理者 過去問｜{BRAND_NAME}"
