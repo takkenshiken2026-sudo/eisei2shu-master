@@ -91,6 +91,14 @@ def ichimon_meta_snippet(statement: str, *, answer: str = "") -> str:
     return _ICHIMON_META_SUFFIX_RE.sub("", s).rstrip("。． ")
 
 
+def _clean_explanation(text: str) -> str:
+    """解説文を meta 用に整形。未入力プレースホルダは空扱いにする。"""
+    s = re.sub(r"\s+", " ", (text or "")).strip()
+    if not s or s.startswith("（解説") or s.startswith("(解説"):
+        return ""
+    return s
+
+
 def question_meta_description(
     mode: str,
     *,
@@ -98,30 +106,34 @@ def question_meta_description(
     category: str,
     body: str = "",
     answer_tail: str = "",
+    explanation: str = "",
 ) -> str:
-    """各問ページの meta description（問題文抜粋＋正答＋モード横断の一言）。"""
+    """各問ページの meta description。
+
+    問題文を丸ごと検索窓に貼り付けて「答え」を探す利用者が多いため、
+    スニペット先頭で「正答＋解説」を明示してクリック価値を伝える。
+    解説文があれば本文の代わりに要約を載せ、無い場合のみ問題文抜粋にフォールバックする。
+    """
     c = seo_copy()
-    prefix = f"{headline}・{category}。"
+    ans = (answer_tail or "").strip()
+    ans_part = f"正答は{ans}。" if ans else ""
     if mode == "past":
         tail = f"{c['mockExam']}対策や{c['studyModes']}と併用して学習できます。"
     elif mode == "practice":
-        tail = (
-            f"{c['mockExam']}前の演習として{c['studyModes']}と併用できます。"
-            "選択肢と解説を掲載。"
-        )
+        tail = f"{c['mockExam']}前の演習として{c['studyModes']}と併用できます。"
     else:
-        tail = f"{c['mockExam']}前の確認に。{c['studyModes']}と併用できます。正誤と解説を掲載。"
-    ans = (answer_tail or "").strip()
-    ans_part = f" 正答: {ans}。" if ans else ""
-    core = body.strip() if body.strip() else tail
-    if body.strip():
-        combo = prefix + core + ans_part
-        if len(combo) + len(tail) <= 140:
+        tail = f"{c['mockExam']}前の確認に。{c['studyModes']}と併用できます。"
+    exp = _clean_explanation(explanation)
+    # 解説文がすでに「正答は…」で始まる場合は重複を避けて正答表記を省く
+    if exp and re.match(r"^正[答解]", exp):
+        ans_part = ""
+    prefix = f"{headline}・{category}の正答と解説。{ans_part}"
+    core = exp or body.strip()
+    combo = prefix + core
+    if len(combo) <= 150:
+        if len(combo) + len(tail) <= 155:
             return meta_description(combo + tail, 155)
-        if len(combo) <= 150:
-            return meta_description(combo, 155)
-        return meta_description(prefix + core[: max(40, 120 - len(prefix) - len(ans_part))] + ans_part, 155)
-    combo = prefix + ans_part + tail if ans_part else prefix + tail
+        return meta_description(combo, 155)
     return meta_description(combo, 155)
 
 
@@ -192,11 +204,11 @@ def question_page_title(
     category: str = "",
     year_label: str = "",
 ) -> str:
-    """各問ページの <title>。"""
-    return (
-        f"{question_h1(mode, year=year, qno=qno, question_id=question_id, category=category, year_label=year_label)}"
-        f"｜{brand_name()}"
+    """各問ページの <title>。検索意図（解説・答え）をタイトルで明示してクリック率を高める。"""
+    h1 = question_h1(
+        mode, year=year, qno=qno, question_id=question_id, category=category, year_label=year_label
     )
+    return f"{h1}【解説・答え】｜{brand_name()}"
 
 
 def question_meta_headline(

@@ -366,7 +366,8 @@ def build_practice_question_html(
         headline=question_meta_headline("practice", qno=page["qno"]),
         category=page["category"],
         body=stem,
-        answer_tail=str(page["correct"]) if page.get("correct") is not None else "",
+        answer_tail=f"（{page['correct']}）" if page.get("correct") is not None else "",
+        explanation=page.get("exp", ""),
     )
     study_modes_note = study_modes_note_html()
     canonical = public_url(base_url, page["rel_path"])
@@ -519,6 +520,7 @@ def build_ichimon_question_html(
         category=page["category"],
         body=ichimon_meta_snippet(stmt),
         answer_tail=ans,
+        explanation=page.get("exp", ""),
     )
     study_modes_note = study_modes_note_html()
     canonical = public_url(base_url, page["rel_path"])
