@@ -31,6 +31,7 @@ from tools.index_spa_patch import (  # noqa: E402
     INDEX_NOSCRIPT_MARKER_START,
 )
 from tools.site_config import (  # noqa: E402
+    adsense_client_id,
     base_path,
     clean_origin,
     exam_name,
@@ -718,6 +719,44 @@ def _ga4_tracking(root: Path) -> list[Issue]:
     return issues
 
 
+def _adsense_page_issues(root: Path, rel: str) -> list[Issue]:
+    """公開 HTML の AdSense <head> タグ整合性。"""
+    path = root / rel
+    if not path.is_file():
+        return []
+    text = path.read_text(encoding="utf-8")
+    client = (adsense_client_id() or "").strip()
+    if not client:
+        return []
+    needle = f"pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={client}"
+    if needle not in text:
+        return [Issue(f"{rel}: AdSense スクリプトがありません（期待 client={client!r}）")]
+    head_m = re.search(r"<head\b[^>]*>([\s\S]*?)</head>", text, re.I)
+    if not head_m or needle not in head_m.group(1):
+        return [Issue(f"{rel}: AdSense スクリプトが <head> 内にありません")]
+    return []
+
+
+def _adsense_tracking(root: Path) -> list[Issue]:
+    """adsenseClientId 設定時は代表ページの head にスクリプトがあること。"""
+    client = (adsense_client_id() or "").strip()
+    if not client:
+        return []
+    if not re.fullmatch(r"ca-pub-\d+", client):
+        return [Issue(f"adsenseClientId の形式が不正です: {client!r}")]
+    issues: list[Issue] = []
+    for rel in (
+        "index.html",
+        "about.html",
+        "privacy.html",
+        "related-sites.html",
+        "articles/index.html",
+        "terms/index.html",
+    ):
+        issues.extend(_adsense_page_issues(root, rel))
+    return issues
+
+
 def _static_chrome(root: Path) -> list[Issue]:
     """docs/site-chrome.md — ヘッダー topnav 統一・旧 q-static-header 禁止。"""
     issues: list[Issue] = []
@@ -831,6 +870,7 @@ def main() -> int:
     issues.extend(_responsive_css_source(root))
     issues.extend(_viewport_and_static_css(root))
     issues.extend(_ga4_tracking(root))
+    issues.extend(_adsense_tracking(root))
     issues.extend(_static_page_site_leaks(root))
     issues.extend(_guide_index_picks(root))
 

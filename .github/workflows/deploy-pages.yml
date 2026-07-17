@@ -34,6 +34,7 @@ jobs:
           python3 tools/patch_q_brand_heads.py
           python3 tools/build_exam_schedule_page.py
           python3 tools/build_sitemap.py
+          python3 tools/patch_adsense_head.py
 
       - name: Bundle public files
         run: bash tools/prepare_public_site.sh
