@@ -53,6 +53,9 @@ done
 if [[ -f "$ROOT/privacy-terms.html" ]]; then
   cp "$ROOT/privacy-terms.html" "$OUT/"
 fi
+if [[ -f "$ROOT/ads.txt" ]]; then
+  cp "$ROOT/ads.txt" "$OUT/"
+fi
 # SPA トップ（index.html）用。CSS/JS を index から分離したサイト向け。
 for f in site-spa.css site-spa-fields.js site-app.css; do
   if [[ -f "$ROOT/$f" ]]; then

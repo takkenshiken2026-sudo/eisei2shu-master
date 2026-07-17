@@ -754,6 +754,17 @@ def _adsense_tracking(root: Path) -> list[Issue]:
         "terms/index.html",
     ):
         issues.extend(_adsense_page_issues(root, rel))
+    pub_id = client.removeprefix("ca-")
+    ads = root / "ads.txt"
+    if not ads.is_file():
+        issues.append(Issue("ads.txt がありません（AdSense 審査で「ads.txt が不明」になります）"))
+    else:
+        text = ads.read_text(encoding="utf-8")
+        expected = f"google.com, {pub_id}, DIRECT, f08c47fec0942fa0"
+        if expected not in text:
+            issues.append(
+                Issue(f"ads.txt: 期待行がありません（{expected!r}）")
+            )
     return issues
 
 
