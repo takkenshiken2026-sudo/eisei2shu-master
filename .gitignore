@@ -3,4 +3,8 @@
 /sitemap.xml
 /public_site/
 
+# ビルドスクリプトが作る CSV バックアップ（コミット不要）
+data/*.csv.bak-*
+data/*.csv.bak.*
+
 .DS_Store

@@ -392,6 +392,33 @@ def _overlaps_correct_choice_text(text: str, page: dict) -> bool:
     return len(nt) >= 24 and len(no) >= 24 and (nt in no or no in nt)
 
 
+# 「正しい／誤り／ため／〜であり」等の判断・根拠を示す語。選択肢の引用に
+# これらが加わる解説は、単なる肢の再掲ではなく“なぜそうなるか”を説明している。
+_REASONING_MARKERS = re.compile(
+    r"誤り|誤っ|正しく|正しい|正確|不適|適切|特徴|であり|のため|ため[。、]|"
+    r"から[。、]|ので|に対し|一方|実際|正しくは|該当|理由|根拠|なぜ|区別|"
+    r"混同|逆|異なる|相当|に当たる|べき|必要|される|によって|における"
+)
+
+
+def _adds_reasoning_beyond_choice(text: str, page: dict) -> bool:
+    """選択肢を引用していても、根拠・判断を加えて“解説”になっているか。
+
+    正答肢の丸写しは省くべきだが、「(4)では『…』としているが、これは静脈性
+    出血の特徴であり誤り」のように理由節を伴う要約は、AdSense が嫌う薄い定型
+    文の代わりに残すべき本文である。肢に無い語を 2 つ以上足していれば採用する。
+    """
+    n = norm(text)
+    if len(n) < 20 or not _REASONING_MARKERS.search(n):
+        return False
+    cor_idx = _correct_choice_index(page.get("correct"))
+    opts = page.get("opts") or []
+    if not cor_idx or not (1 <= cor_idx <= len(opts)):
+        return True
+    extra = _keyword_tokens(n) - _keyword_tokens(opts[cor_idx - 1])
+    return len(extra) >= 2
+
+
 def _compact_wrong_note_vs_choice(choice_text: str, note: str) -> str:
     """他肢解説が選択肢全文と酷似する場合、対比だけに短縮する。"""
     opt, n = norm(choice_text), norm(note)
@@ -427,6 +454,10 @@ def _pick_explanation_lead(page: dict, row: dict, summary: str) -> str:
         candidates.append(lead)
     for cand in candidates:
         if cand and not _overlaps_correct_choice_text(cand, page):
+            return cand
+    # 肢と重なっても、根拠を伴う要約は薄い定型文より価値が高いので残す。
+    for cand in candidates:
+        if cand and _adds_reasoning_beyond_choice(cand, page):
             return cand
     return ""
 
@@ -1242,8 +1273,17 @@ def build_explanation_html(page: dict, row: dict) -> str:
         correct_body = ""
     elif correct_body and _is_thin_enrich_summary(correct_body):
         cb = _substantive_explanation_lead(row) or correct_body
-        correct_body = "" if _overlaps_correct_choice_text(cb, page) else cb
-    elif correct_body and _overlaps_correct_choice_text(correct_body, page):
+        if not _overlaps_correct_choice_text(cb, page) or _adds_reasoning_beyond_choice(
+            cb, page
+        ):
+            correct_body = cb
+        else:
+            correct_body = ""
+    elif (
+        correct_body
+        and _overlaps_correct_choice_text(correct_body, page)
+        and not _adds_reasoning_beyond_choice(correct_body, page)
+    ):
         correct_body = ""
     if summary and correct_body:
         sm = _normalize_for_compare(summary)
@@ -1276,8 +1316,18 @@ def build_explanation_html(page: dict, row: dict) -> str:
                         f'<p class="q-exp-correct-opt"><strong>（{idx}）</strong> '
                         f"{text_to_html(note)}</p>"
                     )
-        elif correct_body:
-            correct_inner.append(f"<p>{text_to_html(correct_body)}</p>")
+        else:
+            # summary（explanation_summary 由来の実質的な解説）は従来メタ用途にのみ
+            # 使われ本文に出ていなかった。重複除去で correct_body から要約一致文が
+            # 抜かれると定型文だけが残るため、要約を本文リードとして描画する。
+            segs: list[str] = []
+            if summary and not _is_redundant_answer_lead(summary, correct):
+                segs.append(summary)
+            if correct_body:
+                segs.append(correct_body)
+            merged = dedupe_prose("\n\n".join(segs))
+            if merged:
+                correct_inner.append(f"<p>{text_to_html(merged)}</p>")
         if correct_inner:
             parts.append(
                 '<section class="q-exp-section" aria-labelledby="q-exp-correct-h">'
