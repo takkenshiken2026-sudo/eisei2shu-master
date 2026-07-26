@@ -35,13 +35,17 @@ def _valid_client_id(raw: str) -> str:
 
 
 def adsense_head_snippet() -> str:
-    """生成 HTML の <head> 内用 AdSense タグ。未設定・不正 ID なら空文字。"""
+    """生成 HTML の <head> 内用 AdSense タグ。未設定・不正 ID なら空文字。
+
+    サイト所有確認用の meta タグと配信用スクリプトをまとめて出力する。
+    """
     client = _valid_client_id(adsense_client_id())
     if not client:
         return ""
     esc = html.escape(client, quote=True)
     return (
         f"{ADSENSE_MARKER_START}\n"
+        f'<meta name="google-adsense-account" content="{esc}">\n'
         f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={esc}"\n'
         f'     crossorigin="anonymous"></script>\n'
         f"{ADSENSE_MARKER_END}"
