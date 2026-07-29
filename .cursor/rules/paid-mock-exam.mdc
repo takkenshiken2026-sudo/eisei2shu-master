@@ -21,6 +21,8 @@ globs:
 
 `modeTitle` / `modePurpose` / `priceLabel` / `footnote` 必須。`scoreMeta`・`scoreLead` で結果画面文言をサイト別に。
 
+画像バナー（任意）: `bannerImage` + `bannerAlt` を設定するとモード選択・結果画面で画像 CTA を表示。画像は `images/affiliate/{資格略称}-paid-mock-note-banner.webp`（1024×576）。未設定時は従来のテキストカード／ストリップ。
+
 ## 作業フロー
 
 1. 変更は **exam-site-shell テンプレ**の `index.html` から（未反映サイトは sync）
