@@ -141,7 +141,10 @@ window.SITE_CONFIG = {
     "modePurpose": "本番形式で実力確認したい",
     "priceLabel": "¥590",
     "scoreMeta": "PDF・3回",
-    "scoreLead": "本番形式の本番想定模試"
+    "scoreLead": "本番形式の本番想定模試",
+    "bannerImage": "images/affiliate/eisei2-paid-mock-note-banner.webp",
+    "bannerAlt": "第二種衛生管理者試験 2026年版 有料模試 PDF版 3回分 590円 noteで購入する",
+    "footnote": "※ note で販売する有料コンテンツ（¥590）です。サイト内の無料演習とは別商品です。"
   },
   "coursePromo": {
     "url": "https://px.a8.net/svt/ejp?a8mat=4B3TF0+DUXAHM+408S+BW0YB&a8ejpredirect=https%3A%2F%2Fonsuku.jp%2Ftraining%2Feisei2",
