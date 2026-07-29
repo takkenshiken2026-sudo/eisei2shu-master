@@ -142,7 +142,7 @@ window.SITE_CONFIG = {
     "priceLabel": "¥590",
     "scoreMeta": "PDF・3回",
     "scoreLead": "本番形式の本番想定模試",
-    "bannerImage": "images/affiliate/eisei2-paid-mock-note-banner.webp",
+    "bannerImage": "images/affiliate/eisei-kanrisha-2shu-mock-exam-2026.webp",
     "bannerAlt": "第二種衛生管理者試験 2026年版 本番想定模試｜590円｜PDF・3回分入り｜noteで購入する",
     "footnote": "※ note で販売する有料コンテンツ（¥590）です。サイト内の無料演習とは別商品です。"
   },
