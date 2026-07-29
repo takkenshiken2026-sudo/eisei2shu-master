@@ -155,6 +155,8 @@ window.SITE_CONFIG = {
     "footnote": "※ オンスク.JP公式サイトへ移動します。料金・受講条件は申込前に各ページでご確認ください。",
     "lpUrl": "https://onsuku.jp/training/eisei2",
     "scoreLead": "オンスクの講義50回と練習536問",
-    "scoreMeta": "講義50回・練習536問"
+    "scoreMeta": "講義50回・練習536問",
+    "bannerImage": "images/affiliate/eiseikanrisha2shu-onsuku.webp",
+    "bannerAlt": "オンスク.JP 衛生管理者オンライン通信講座｜月額1,078円〜｜講義50回・練習536問"
   }
 };
