@@ -566,6 +566,8 @@ def course_promo() -> dict[str, str] | None:
         "afbLeadUrl",
         "scoreLead",
         "scoreMeta",
+        "bannerImage",
+        "bannerAlt",
     ):
         val = raw.get(key)
         if val is not None and str(val).strip():

@@ -649,11 +649,11 @@ details.rich-detail summary{display:none}
 .promo-banners-row{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;align-items:start;margin:8px 0 14px}
 .promo-banners-row:not(:has(> :not([hidden]) + :not([hidden]))){grid-template-columns:minmax(0,360px);justify-content:center}
 .promo-banners-row > [hidden]{display:none!important}
-.paid-mock-banner{margin:0;display:block;max-width:none;width:100%;min-width:0}
-.paid-mock-banner__link{display:block;border-radius:var(--r2);overflow:hidden;border:1px solid var(--border);box-shadow:var(--sh);text-decoration:none;transition:box-shadow .15s,transform .15s,border-color .15s}
-.paid-mock-banner__link:hover{box-shadow:var(--sh2);border-color:var(--text2);transform:translateY(-1px)}
-.paid-mock-banner__link img{display:block;width:100%;height:auto;aspect-ratio:1672/941;object-fit:contain;background:#fff}
-.paid-mock-banner__foot{margin:8px 0 0;font-size:11px;color:var(--text3);line-height:1.55;text-align:center}
+.paid-mock-banner,.course-promo-banner{margin:0;display:block;max-width:none;width:100%;min-width:0}
+.paid-mock-banner__link,.course-promo-banner__link{display:block;border-radius:var(--r2);overflow:hidden;border:1px solid var(--border);box-shadow:var(--sh);text-decoration:none;transition:box-shadow .15s,transform .15s,border-color .15s}
+.paid-mock-banner__link:hover,.course-promo-banner__link:hover{box-shadow:var(--sh2);border-color:var(--text2);transform:translateY(-1px)}
+.paid-mock-banner__link img,.course-promo-banner__link img{display:block;width:100%;height:auto;aspect-ratio:1672/941;object-fit:contain;background:#fff}
+.paid-mock-banner__foot,.course-promo-banner__foot{margin:8px 0 0;font-size:11px;color:var(--text3);line-height:1.55;text-align:center}
 .score-paid-mock-banner{display:block;max-width:none;width:100%;margin:0;border-radius:var(--r2);overflow:hidden;border:1px solid var(--paid-mock-accent-border);box-shadow:0 2px 10px var(--paid-mock-accent-shadow);text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s}
 .score-paid-mock-banner:hover{border-color:var(--paid-mock-accent);box-shadow:0 4px 14px var(--paid-mock-accent-shadow);transform:translateY(-1px)}
 .score-paid-mock-banner img{display:block;width:100%;height:auto;aspect-ratio:1672/941;object-fit:contain;background:#fff}
@@ -923,7 +923,7 @@ details.rich-detail summary{display:none}
   .mode-card-v2{padding:13px 14px;gap:10px;min-height:86px}
   .promo-banners-row{grid-template-columns:1fr;max-width:none}
   .promo-banners-row:not(:has(> :not([hidden]) + :not([hidden]))){grid-template-columns:1fr;justify-content:stretch}
-  .paid-mock-banner,.score-paid-mock-banner{max-width:360px;margin-left:auto;margin-right:auto}
+  .paid-mock-banner,.course-promo-banner,.score-paid-mock-banner{max-width:360px;margin-left:auto;margin-right:auto}
   .mode-num-v2{width:18px}
   .mode-purpose-v2,.mode-title-v2{white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-overflow:ellipsis}
   .mode-purpose-v2{font-size:12px;margin-bottom:2px;line-height:1.4}
@@ -7257,7 +7257,7 @@ function injectQuizStartEnhancements(){
   }
   modeList.appendChild(weakCard);
 
-  if(!startEl.querySelector('#promo-banners-row') && !startEl.querySelector('#paid-mock-inject')){
+  if(!startEl.querySelector('#promo-banners-row') && !startEl.querySelector('#paid-mock-inject') && !startEl.querySelector('#course-promo-banner')){
     injectPromoBannersRow(startEl, modeList);
   }
   if(!startEl.querySelector('#course-promo-inject') && !startEl.querySelector('#course-promo-banner')){
@@ -7281,13 +7281,15 @@ function getCoursePromoConfig(){
     footnote: String(cfg.footnote||'').trim(),
     scoreLead: String(cfg.scoreLead||'オンライン通信講座').trim(),
     scoreMeta: String(cfg.scoreMeta||'').trim(),
+    bannerImage: String(cfg.bannerImage||'').trim(),
+    bannerAlt: String(cfg.bannerAlt||cfg.modeTitle||'').trim(),
     afbLeadUrl: String(cfg.afbLeadUrl||'').trim(),
   };
 }
 
 function injectCoursePromoCard(modeList){
   const c=getCoursePromoConfig();
-  if(!c.url) return;
+  if(!c.url||c.bannerImage) return;
   const num=nextModeCardNum(modeList);
   const wrapper=document.createElement('div');
   wrapper.id='course-promo-inject';
@@ -7364,15 +7366,43 @@ function buildPaidMockBannerEl(){
   return wrapper;
 }
 
+function buildCoursePromoBannerEl(){
+  const c=getCoursePromoConfig();
+  if(!c.url||!c.bannerImage) return null;
+  const label=c.bannerAlt||`${c.modeTitle}（${c.tagLabel}）`;
+  const wrapper=document.createElement('div');
+  wrapper.id='course-promo-banner';
+  wrapper.className='course-promo-banner';
+  wrapper.innerHTML=`
+    <a class="course-promo-banner__link" href="${escapeAttr(c.url)}" target="_blank" rel="nofollow sponsored noopener noreferrer" aria-label="${escapeAttr(label)}">
+      <img src="${escapeAttr(c.bannerImage)}" alt="${escapeAttr(c.bannerAlt||c.modeTitle)}" width="1672" height="941" loading="lazy" decoding="async">
+    </a>
+    ${c.footnote?`<p class="course-promo-banner__foot">${escapeAttr(c.footnote)}</p>`:''}`;
+  if(c.afbLeadUrl){
+    const px=document.createElement('img');
+    px.src=c.afbLeadUrl;
+    px.width=1;
+    px.height=1;
+    px.alt='';
+    px.decoding='async';
+    px.style.cssText='border:none;width:1px;height:1px;position:absolute;opacity:0;pointer-events:none';
+    wrapper.appendChild(px);
+  }
+  return wrapper;
+}
+
 function injectPromoBannersRow(startEl, modeList){
   const paid=buildPaidMockBannerEl();
-  if(!paid){
+  const course=buildCoursePromoBannerEl();
+  if(!paid&&!course){
     injectPaidMockExamCard(modeList);
     return;
   }
   const row=ensurePromoBannersRow(startEl, modeList);
   row.replaceChildren();
-  row.appendChild(paid);
+  if(paid) row.appendChild(paid);
+  if(course) row.appendChild(course);
+  if(!paid) injectPaidMockExamCard(modeList);
 }
 
 function injectPaidMockExamCard(modeList){
