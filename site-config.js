@@ -37,11 +37,6 @@ window.SITE_CONFIG = {
         "key": "q"
       },
       {
-        "label": "用語解説",
-        "href": "terms/index.html",
-        "key": "terms"
-      },
-      {
         "label": "試験ガイド",
         "href": "articles/index.html",
         "key": "articles"
@@ -72,11 +67,6 @@ window.SITE_CONFIG = {
         "label": "過去問一覧",
         "href": "q/index.html",
         "key": "q"
-      },
-      {
-        "label": "用語解説",
-        "href": "terms/index.html",
-        "key": "terms"
       },
       {
         "label": "試験ガイド",
@@ -145,18 +135,5 @@ window.SITE_CONFIG = {
     "bannerImage": "images/affiliate/eisei-kanrisha-2shu-mock-exam-2026.webp",
     "bannerAlt": "第二種衛生管理者試験 2026年版 本番想定模試｜590円｜PDF・3回分入り｜noteで購入する",
     "footnote": "※ note で販売する有料コンテンツ（¥590）です。サイト内の無料演習とは別商品です。"
-  },
-  "coursePromo": {
-    "url": "https://px.a8.net/svt/ejp?a8mat=4B3TF0+DUXAHM+408S+BW0YB&a8ejpredirect=https%3A%2F%2Fonsuku.jp%2Ftraining%2Feisei2",
-    "modeTitle": "オンスク.JP 衛生管理者オンライン通信講座",
-    "modePurpose": "スマホで講義50回・練習536問を回したい",
-    "priceLabel": "月額1,078円〜",
-    "tagLabel": "PR",
-    "footnote": "※ オンスク.JP公式サイトへ移動します。料金・受講条件は申込前に各ページでご確認ください。",
-    "lpUrl": "https://onsuku.jp/training/eisei2",
-    "scoreLead": "オンスクの講義50回と練習536問",
-    "scoreMeta": "講義50回・練習536問",
-    "bannerImage": "images/affiliate/eiseikanrisha2shu-onsuku.webp",
-    "bannerAlt": "オンスク.JP 衛生管理者オンライン通信講座｜月額1,078円〜｜講義50回・練習536問"
   }
 };
